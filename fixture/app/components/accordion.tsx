@@ -1,0 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-restricted-imports */
+import { MockAccordion } from './__tests__/accordion'
+import { MockAvatar } from './__tests__/avatar'
+
+console.log(MockAccordion)
+console.log(MockAvatar)
