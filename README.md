@@ -100,6 +100,27 @@ Learn more from
 
 Because of the tabs instead of spaces, we need to use a custom `.editorconfig` file for github, otherwise the indents will be a bit off.
 
+
+## VSCode Setup
+
+To make sure your editor is using the correct settings, you can add the following to your `.vscode/settings.json` and `.vscode/extensions.json` files.
+
+```json
+// .vscode/settings.json​
+{​
+  "editor.codeActionsOnSave": {"source.fixAll.eslint": "explicit"},
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true​
+}
+```
+
+```json
+// .vscode/extensions.json​
+{
+  "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+}
+```
+
 ## License
 
 MIT
