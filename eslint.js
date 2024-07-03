@@ -2,6 +2,7 @@ import globals from 'globals'
 
 const ERROR = 'error'
 const WARN = 'warn'
+const OFF = 'off'
 
 function has(pkg) {
 	try {
@@ -370,6 +371,7 @@ export const config = [
 					'@typescript-eslint': (await import('typescript-eslint')).plugin,
 				},
 				rules: {
+					'no-unused-vars': OFF,
 					'@typescript-eslint/no-unused-vars': [
 						WARN,
 						{
@@ -393,17 +395,40 @@ export const config = [
 					'prefer-const': ERROR, // TS provides better types with const
 					'prefer-rest-params': ERROR, // TS provides better types with rest args over arguments
 					'prefer-spread': ERROR, // TS transpiles spread to apply, so no need for manual apply
+
+					'dot-notation': OFF,
 					'@typescript-eslint/dot-notation': ERROR,
+
+					'no-array-constructor': OFF,
 					'@typescript-eslint/no-array-constructor': ERROR,
+
+					'no-dupe-class-members': OFF,
+					'@typescript-eslint/no-dupe-class-members': OFF, // ts(2393) & ts(2300)
+
 					'no-implied-eval': ERROR,
 					'@typescript-eslint/no-implied-eval': ERROR,
+
+					'no-invalid-this': OFF,
 					'@typescript-eslint/no-invalid-this': ERROR,
+
+					'no-loop-func': OFF,
 					'@typescript-eslint/no-loop-func': ERROR,
+
+					'no-loss-of-precision': OFF,
 					'@typescript-eslint/no-loss-of-precision': ERROR,
+
+					'no-return-await': OFF,
 					'@typescript-eslint/return-await': ERROR,
+
+					'no-shadow': OFF,
 					'@typescript-eslint/no-shadow': ERROR,
+
+					'no-use-before-define': OFF,
 					'@typescript-eslint/no-use-before-define': [ERROR, 'nofunc'],
+
+					'no-useless-constructor': OFF,
 					'@typescript-eslint/no-useless-constructor': ERROR,
+
 					'@typescript-eslint/adjacent-overload-signatures': ERROR,
 					'@typescript-eslint/await-thenable': ERROR,
 					'@typescript-eslint/ban-ts-comment': ERROR,
