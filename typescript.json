@@ -6,6 +6,7 @@
 		"module": "preserve",
 		"target": "ES2022",
 		"strict": true,
+		"strictNullChecks": true,
 		"skipLibCheck": true,
 		"allowImportingTsExtensions": true,
 		"noUncheckedIndexedAccess": true,
