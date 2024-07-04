@@ -7,9 +7,9 @@
 </div>
 
 ```
-npm install @nerdfish/config
-pnpm install @nerdfish/config
-yarn add @nerdfish/config
+npm install @nerdfish/config --save-dev
+pnpm install @nerdfish/config --save-dev
+yarn add @nerdfish/config --dev
 ```
 
 ## Usage
