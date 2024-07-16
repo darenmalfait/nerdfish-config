@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat'
 import globals from 'globals'
 
 const ERROR = 'error'
@@ -240,7 +241,7 @@ export const config = [
 	// JSX/TSX files
 	hasReact
 		? {
-				files: ['**/*.tsx', '**/*.jsx'],
+				files: ['**/*.ts?(x)', '**/*.js?(x)'],
 				settings: {
 					react: {
 						version: 'detect',
@@ -248,6 +249,9 @@ export const config = [
 				},
 				plugins: {
 					react: (await import('eslint-plugin-react')).default,
+					'react-hooks': fixupPluginRules(
+						await import('eslint-plugin-react-hooks'),
+					),
 				},
 				languageOptions: {
 					parser: (await import('typescript-eslint')).parser,
@@ -313,26 +317,6 @@ export const config = [
 					'react/self-closing-comp': ERROR,
 					'react/style-prop-object': ERROR,
 					'react/void-dom-elements-no-children': ERROR,
-				},
-			}
-		: null,
-
-	// react-hook rules are applicable in ts/js/tsx/jsx, but only with React as a
-	// dep
-	hasReact
-		? {
-				files: ['**/*.ts?(x)', '**/*.js?(x)'],
-				settings: {
-					react: {
-						version: 'detect',
-					},
-				},
-				plugins: {
-					'react-hooks': (await import('eslint-plugin-react-hooks')).default,
-				},
-				rules: {
-					'react-hooks/rules-of-hooks': ERROR,
-					'react-hooks/exhaustive-deps': WARN,
 				},
 			}
 		: null,
