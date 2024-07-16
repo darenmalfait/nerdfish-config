@@ -249,9 +249,6 @@ export const config = [
 				},
 				plugins: {
 					react: (await import('eslint-plugin-react')).default,
-					'react-hooks': fixupPluginRules(
-						await import('eslint-plugin-react-hooks'),
-					),
 				},
 				languageOptions: {
 					parser: (await import('typescript-eslint')).parser,
@@ -272,8 +269,6 @@ export const config = [
 						ERROR,
 						{ extensions: ['.jsx', '.tsx'] },
 					],
-					'react-hooks/exhaustive-deps': WARN,
-					'react-hooks/rules-of-hooks': ERROR,
 					'react/jsx-no-comment-textnodes': ERROR,
 					'react/jsx-no-duplicate-props': ERROR,
 					'react/jsx-no-leaked-render': [
@@ -317,6 +312,28 @@ export const config = [
 					'react/self-closing-comp': ERROR,
 					'react/style-prop-object': ERROR,
 					'react/void-dom-elements-no-children': ERROR,
+				},
+			}
+		: null,
+
+	// react-hook rules are applicable in ts/js/tsx/jsx, but only with React as a
+	// dep
+	hasReact
+		? {
+				files: ['**/*.ts?(x)', '**/*.js?(x)'],
+				settings: {
+					react: {
+						version: 'detect',
+					},
+				},
+				plugins: {
+					'react-hooks': fixupPluginRules(
+						await import('eslint-plugin-react-hooks'),
+					),
+				},
+				rules: {
+					'react-hooks/rules-of-hooks': ERROR,
+					'react-hooks/exhaustive-deps': WARN,
 				},
 			}
 		: null,
