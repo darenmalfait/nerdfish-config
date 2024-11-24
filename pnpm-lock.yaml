@@ -49,31 +49,31 @@ importers:
         version: 8.15.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3)
     devDependencies:
       '@commitlint/cli':
-        specifier: 19.5.0
+        specifier: ^19.5.0
         version: 19.5.0(@types/node@20.14.9)(typescript@5.6.3)
       '@commitlint/config-conventional':
-        specifier: 19.5.0
+        specifier: ^19.5.0
         version: 19.5.0
       '@types/react':
-        specifier: 18.3.12
+        specifier: ^18.3.12
         version: 18.3.12
       eslint:
-        specifier: 9.15.0
+        specifier: ^9.15.0
         version: 9.15.0(jiti@1.21.6)
       husky:
-        specifier: 9.1.6
+        specifier: ^9.1.6
         version: 9.1.6
       npm-run-all2:
-        specifier: 7.0.1
+        specifier: ^7.0.1
         version: 7.0.1
       prettier:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       react:
-        specifier: 18.3.1
+        specifier: ^18.3.1
         version: 18.3.1
       typescript:
-        specifier: 5.6.3
+        specifier: ^5.6.3
         version: 5.6.3
 
 packages:
