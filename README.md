@@ -24,7 +24,7 @@ code --install-extension bradlc.vscode-tailwindcss
 Create a `biome.json` file in your project root with the following contents:
 
 ```json
-"@nerdfish/config/biome"
+{ "extends": ["@nerdfish/config/biome"] }
 ```
 
 ### VSCode Setup
