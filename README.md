@@ -12,7 +12,72 @@ pnpm install @nerdfish/config --save-dev
 yarn add @nerdfish/config --dev
 ```
 
-## Usage
+## Biomejs (experimental)
+
+If you're running VS Code, ensure you have the following extensions installed:
+
+```
+code --install-extension biomejs.biome
+code --install-extension bradlc.vscode-tailwindcss
+```
+
+Create a `biome.json` file in your project root with the following contents:
+
+```json
+"@nerdfish/config/biome"
+```
+
+### VSCode Setup
+
+Create a `.vscode/settings.json` file with the following contents to enable full formatting and fixing on save:
+
+```json
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "emmet.showExpandedAbbreviation": "never",
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}
+```
+
+Ensure your `tsconfig.json` (if it exists) includes your new ESLint config and that `strictNullChecks` is enabled.
+
+```json
+{
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
+```
+
+Lastly, ensure you have the following scripts in your `package.json`:
+
+```json
+"lint:fix": "npx biome check --write ./",
+"lint": "npx biome check",
+```
+
+## Prettier/Eslint Usage
 
 The inspiration and codebase was taken from [epicweb config](https://github.com/epicweb-dev/config), and modified to fit the needs of nerdfish.
 
@@ -45,7 +110,56 @@ export default {
 
 </details>
 
-### TypeScript
+
+
+### ESLint
+
+Create a `eslint.config.js` file in your project root with the following
+content:
+
+```js
+import { config as defaultConfig } from '@nerdfish/config/eslint'
+
+/** @type {import("eslint").Linter.Config} */
+export default [...defaultConfig]
+```
+
+<details>
+  <summary>Customizing ESLint</summary>
+
+Learn more from
+[the Eslint docs here](https://eslint.org/docs/latest/extend/shareable-configs#overriding-settings-from-shareable-configs).
+
+</details>
+
+### Github
+
+Because of the tabs instead of spaces, we need to use a custom `.editorconfig` file for github, otherwise the indents will be a bit off.
+
+
+### VSCode Setup
+
+To make sure your editor is using the correct settings, you can add the following to your `.vscode/settings.json` and `.vscode/extensions.json` files.
+
+```json
+// .vscode/settings.json​
+{​
+  "editor.codeActionsOnSave": {"source.fixAll.eslint": "explicit"},
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true​
+}
+```
+
+```json
+// .vscode/extensions.json​
+{
+  "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+}
+```
+
+
+
+## TypeScript
 
 Create a `tsconfig.json` file in your project root with the following content:
 
@@ -75,51 +189,6 @@ Learn more from
 [the TypeScript docs here](https://www.typescriptlang.org/tsconfig/#extends).
 
 </details>
-
-### ESLint
-
-Create a `eslint.config.js` file in your project root with the following
-content:
-
-```js
-import { config as defaultConfig } from '@nerdfish/config/eslint'
-
-/** @type {import("eslint").Linter.Config} */
-export default [...defaultConfig]
-```
-
-<details>
-  <summary>Customizing ESLint</summary>
-
-Learn more from
-[the Eslint docs here](https://eslint.org/docs/latest/extend/shareable-configs#overriding-settings-from-shareable-configs).
-
-</details>
-
-### Github
-
-Because of the tabs instead of spaces, we need to use a custom `.editorconfig` file for github, otherwise the indents will be a bit off.
-
-
-## VSCode Setup
-
-To make sure your editor is using the correct settings, you can add the following to your `.vscode/settings.json` and `.vscode/extensions.json` files.
-
-```json
-// .vscode/settings.json​
-{​
-  "editor.codeActionsOnSave": {"source.fixAll.eslint": "explicit"},
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true​
-}
-```
-
-```json
-// .vscode/extensions.json​
-{
-  "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
-}
-```
 
 ## License
 

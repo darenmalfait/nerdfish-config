@@ -1,3 +1,3 @@
 import console from 'node:console'
 
-console.log('hi')
+console.info('hi')
