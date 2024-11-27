@@ -18,19 +18,27 @@
 				"noAutofocus": "off"
 			},
 			"complexity": {
-				"useSimplifiedLogicExpression": "off"
+				"useSimplifiedLogicExpression": "off",
+				"noBannedTypes": {
+					"level": "error",
+					"fix": "safe"
+				}
 			},
 			"correctness": {
 				"noNodejsModules": "off",
 				"noUndeclaredDependencies": "off",
 				"useImportExtensions": "off"
 			},
+			"performance": {
+				"noReExportAll": "off"
+			},
 			"nursery": {
 				"all": true,
 				"useImportRestrictions": "off",
 				"noProcessEnv": "off",
 				"useComponentExportOnlyModules": "off",
-				"useExplicitType": "off"
+				"useExplicitType": "off",
+				"noCommonJs": "off"
 			},
 			"style": {
 				"noNamespaceImport": "off",
