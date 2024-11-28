@@ -86,17 +86,6 @@
 					}
 				}
 			}
-		},
-		{
-			"include": ["**/packages/**"],
-			"linter": {
-				"rules": {
-					"performance": {
-						"noBarrelFile": "off",
-						"noReExportAll": "off"
-					}
-				}
-			}
 		}
 	],
 	"vcs": {
