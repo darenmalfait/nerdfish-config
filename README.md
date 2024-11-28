@@ -39,8 +39,8 @@ Create a `.vscode/settings.json` file with the following contents to enable full
   "editor.formatOnPaste": true,
   "emmet.showExpandedAbbreviation": "never",
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
+    "quickfix.biome": "always",
+		"source.organizeImports.biome": "always"
   },
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"

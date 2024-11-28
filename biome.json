@@ -1,99 +1,18 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
 	"formatter": {
 		"enabled": true,
-		"formatWithErrors": true,
-		"indentStyle": "tab",
 		"indentWidth": 2,
-		"lineEnding": "lf",
-		"lineWidth": 80,
-		"attributePosition": "auto"
-	},
-	"organizeImports": { "enabled": true },
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"all": true,
-			"a11y": {
-				"noAutofocus": "off"
-			},
-			"complexity": {
-				"useSimplifiedLogicExpression": "off",
-				"noBannedTypes": {
-					"level": "error",
-					"fix": "safe"
-				}
-			},
-			"correctness": {
-				"noNodejsModules": "off",
-				"noUndeclaredDependencies": "off",
-				"useImportExtensions": "off"
-			},
-			"performance": {
-				"noReExportAll": "off"
-			},
-			"nursery": {
-				"all": true,
-				"useImportRestrictions": "off",
-				"noProcessEnv": "off",
-				"useComponentExportOnlyModules": "off",
-				"useExplicitType": "off",
-				"noCommonJs": "off"
-			},
-			"style": {
-				"noNamespaceImport": "off",
-				"noDefaultExport": "off",
-				"noImplicitBoolean": "off",
-				"useExplicitLengthCheck": "off",
-				"useFilenamingConvention": {
-					"level": "error",
-					"options": {
-						"requireAscii": true,
-						"filenameCases": ["kebab-case"]
-					}
-				},
-				"useSingleVarDeclarator": "off"
-			},
-			"suspicious": {
-				"noReactSpecificProps": "off",
-				"noConsole": {
-					"level": "error",
-					"options": {
-						"allow": ["info", "warn", "error"]
-					}
-				}
-			}
-		}
+		"indentStyle": "tab"
 	},
 	"javascript": {
 		"formatter": {
-			"arrowParentheses": "always",
-			"attributePosition": "auto",
-			"bracketSameLine": false,
-			"bracketSpacing": true,
-			"enabled": true,
-			"indentStyle": "tab",
-			"indentWidth": 2,
-			"jsxQuoteStyle": "double",
-			"lineEnding": "lf",
 			"lineWidth": 80,
-			"quoteProperties": "asNeeded",
 			"quoteStyle": "single",
-			"semicolons": "asNeeded",
-			"trailingCommas": "es5"
-		}
-	},
-	"css": {
-		"formatter": {
-			"indentStyle": "tab",
-			"indentWidth": 2,
-			"lineEnding": "lf",
-			"lineWidth": 80,
-			"quoteStyle": "double"
-		},
-		"parser": {
-			"allowWrongLineComments": false,
-			"cssModules": false
+			"semicolons": "asNeeded"
 		}
 	},
 	"json": {
@@ -102,21 +21,61 @@
 			"indentStyle": "tab",
 			"indentWidth": 2,
 			"lineEnding": "lf",
-			"lineWidth": 80,
-			"trailingCommas": "none"
-		},
-		"linter": {
-			"enabled": true
+			"lineWidth": 80
 		},
 		"parser": {
 			"allowComments": false,
 			"allowTrailingCommas": false
 		}
 	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useButtonType": "off",
+				"useAltText": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"suspicious": {
+				"noConsole": {
+					"level": "error",
+					"options": {
+						"allow": ["info", "warn", "error"]
+					}
+				}
+			},
+			"style": {
+				"useImportType": "error",
+				"useExportType": "error",
+				"useFilenamingConvention": {
+					"level": "error",
+					"options": {
+						"requireAscii": true,
+						"filenameCases": ["kebab-case"]
+					}
+				}
+			}
+		}
+	},
+	"overrides": [
+		{
+			"include": ["**/*.test.ts"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off"
+					}
+				}
+			}
+		}
+	],
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": true,
-		"defaultBranch": "main"
+		"useIgnoreFile": true
 	}
 }

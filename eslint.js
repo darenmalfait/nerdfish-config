@@ -328,7 +328,7 @@ export const config = [
 				},
 				plugins: {
 					'react-hooks': fixupPluginRules(
-						await import('eslint-plugin-react-hooks')
+						await import('eslint-plugin-react-hooks'),
 					),
 				},
 				rules: {
