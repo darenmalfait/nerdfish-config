@@ -33,23 +33,15 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"a11y": {
-				"noSvgWithoutTitle": "off",
-				"useButtonType": "off",
-				"useAltText": "off"
+			"correctness": {
+				"useHookAtTopLevel": "error"
 			},
-			"complexity": {
-				"noBannedTypes": "off"
-			},
-			"suspicious": {
-				"noConsole": {
-					"level": "error",
-					"options": {
-						"allow": ["info", "warn", "error"]
-					}
-				}
+			"performance": {
+				"noBarrelFile": "error",
+				"noReExportAll": "error"
 			},
 			"style": {
+				"noNegationElse": "error",
 				"useImportType": "error",
 				"useExportType": "error",
 				"useFilenamingConvention": {
@@ -59,6 +51,28 @@
 						"filenameCases": ["kebab-case"]
 					}
 				}
+			},
+			"suspicious": {
+				"noConsoleLog": "warn",
+				"noEmptyBlockStatements": "warn",
+				"noSkippedTests": "error"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "error",
+					"options": {
+						"attributes": ["className", "class"],
+						"functions": ["cn", "tv", "cva", "clsx", "cx", "tw"]
+					}
+				}
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useButtonType": "off",
+				"useAltText": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
 			}
 		}
 	},
@@ -69,6 +83,17 @@
 				"rules": {
 					"suspicious": {
 						"noExplicitAny": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["**/packages/**"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noBarrelFile": "off",
+						"noReExportAll": "off"
 					}
 				}
 			}
