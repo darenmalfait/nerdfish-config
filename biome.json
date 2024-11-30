@@ -55,7 +55,7 @@
 				}
 			},
 			"suspicious": {
-				"noConsoleLog": "warn",
+				"noConsoleLog": "error",
 				"noEmptyBlockStatements": "warn",
 				"noSkippedTests": "error"
 			},
