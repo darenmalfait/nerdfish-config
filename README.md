@@ -29,44 +29,46 @@ Create a `biome.json` file in your project root with the following contents:
 
 ### VSCode Setup
 
-Create a `.vscode/settings.json` file with the following contents to enable full formatting and fixing on save:
+Create a `.vscode/settings.json` file with the following contents to enable full
+formatting and fixing on save:
 
 ```json
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.defaultFormatter": "biomejs.biome",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "emmet.showExpandedAbbreviation": "never",
-  "editor.codeActionsOnSave": {
-    "quickfix.biome": "always",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"emmet.showExpandedAbbreviation": "never",
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "always",
 		"source.organizeImports.biome": "always"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  }
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }
 ```
 
-Ensure your `tsconfig.json` (if it exists) includes your new ESLint config and that `strictNullChecks` is enabled.
+Ensure your `tsconfig.json` (if it exists) includes your new ESLint config and
+that `strictNullChecks` is enabled.
 
 ```json
 {
-  "compilerOptions": {
-    "strictNullChecks": true
-  }
+	"compilerOptions": {
+		"strictNullChecks": true
+	}
 }
 ```
 
@@ -79,7 +81,9 @@ Lastly, ensure you have the following scripts in your `package.json`:
 
 ## Prettier/Eslint Usage
 
-The inspiration and codebase was taken from [epicweb config](https://github.com/epicweb-dev/config), and modified to fit the needs of nerdfish.
+The inspiration and codebase was taken from
+[epicweb config](https://github.com/epicweb-dev/config), and modified to fit the
+needs of nerdfish.
 
 ### Prettier
 
@@ -110,8 +114,6 @@ export default {
 
 </details>
 
-
-
 ### ESLint
 
 Create a `eslint.config.js` file in your project root with the following
@@ -134,30 +136,41 @@ Learn more from
 
 ### Github
 
-Because of the tabs instead of spaces, we need to use a custom `.editorconfig` file for github, otherwise the indents will be a bit off.
-
+Because of the tabs instead of spaces, we need to use a custom `.editorconfig`
+file for github, otherwise the indents will be a bit off.
 
 ### VSCode Setup
 
-To make sure your editor is using the correct settings, you can add the following to your `.vscode/settings.json` and `.vscode/extensions.json` files.
+Create a `.vscode/settings.json` file with the following contents to enable full
+formatting and fixing on save:
 
 ```json
-// .vscode/settings.json​
-{​
-  "editor.codeActionsOnSave": {"source.fixAll.eslint": "explicit"},
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true​
-}
-```
-
-```json
-// .vscode/extensions.json​
 {
-  "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"emmet.showExpandedAbbreviation": "never",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }
 ```
-
-
 
 ## TypeScript
 

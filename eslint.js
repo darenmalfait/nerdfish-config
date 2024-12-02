@@ -40,6 +40,7 @@ export const config = [
 	{
 		plugins: {
 			import: (await import('eslint-plugin-import-x')).default,
+			unicorn: (await import('eslint-plugin-unicorn')).default,
 		},
 		languageOptions: {
 			globals: {
@@ -198,6 +199,7 @@ export const config = [
 			radix: ERROR,
 			'require-yield': ERROR,
 			'symbol-description': ERROR,
+			'unicorn/filename-case': [WARN, { case: 'kebabCase' }],
 			'use-isnan': ERROR,
 			'valid-typeof': ERROR,
 			'vars-on-top': ERROR,
@@ -328,7 +330,7 @@ export const config = [
 				},
 				plugins: {
 					'react-hooks': fixupPluginRules(
-						await import('eslint-plugin-react-hooks')
+						await import('eslint-plugin-react-hooks'),
 					),
 				},
 				rules: {

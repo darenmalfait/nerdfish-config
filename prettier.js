@@ -7,7 +7,7 @@ export const config = {
 	endOfLine: 'lf',
 	htmlWhitespaceSensitivity: 'css',
 	insertPragma: false,
-	jsxSingleQuote: false,
+	jsxSingleQuote: true,
 	printWidth: 80,
 	proseWrap: 'always',
 	quoteProps: 'as-needed',

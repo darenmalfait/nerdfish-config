@@ -1,11 +1,2 @@
-#!/bin/sh
-PATH="/usr/local/bin:$PATH"
-
-if [ -f $HOME/n/bin/n ]
-then
-  PATH="$HOME/n/bin:$PATH"
-fi
-
-. "$(dirname "$0")/_/husky.sh"
-
+# .husky/pre-commit
 npm run checks
