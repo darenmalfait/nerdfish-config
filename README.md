@@ -12,6 +12,12 @@ pnpm install @nerdfish/config --save-dev
 yarn add @nerdfish/config --dev
 ```
 
+create a `reset.d.ts` file in your project root with the following content:
+
+```ts
+import '@nerdfish/config/reset.d.ts'
+```
+
 ## Biomejs (experimental)
 
 If you're running VS Code, ensure you have the following extensions installed:
@@ -180,7 +186,6 @@ Create a `tsconfig.json` file in your project root with the following content:
 {
 	"extends": ["@nerdfish/config/typescript"],
 	"include": [
-		"@nerdfish/config/reset.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.js",
