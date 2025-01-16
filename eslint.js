@@ -1,4 +1,5 @@
 import { fixupPluginRules } from '@eslint/compat'
+
 import globals from 'globals'
 
 const ERROR = 'error'
@@ -16,6 +17,7 @@ function has(pkg) {
 
 const hasTypeScript = has('typescript')
 const hasReact = has('react')
+const hasNext = has('next')
 const hasTestingLibrary = has('@testing-library/dom')
 const hasJestDom = has('@testing-library/jest-dom')
 const hasVitest = has('vitest')
@@ -261,6 +263,9 @@ export const config = [
 					},
 				},
 				rules: {
+					...(await import('eslint-plugin-react')).default.configs[
+						'jsx-runtime'
+					].rules,
 					'react/jsx-key': WARN,
 					'react/display-name': [ERROR, { ignoreTranspilerName: false }],
 					'react/iframe-missing-sandbox': WARN,
@@ -336,8 +341,32 @@ export const config = [
 					),
 				},
 				rules: {
+					...fixupPluginRules(await import('eslint-plugin-react-hooks')).configs
+						.recommended.rules,
 					'react-hooks/rules-of-hooks': ERROR,
 					'react-hooks/exhaustive-deps': WARN,
+				},
+			}
+		: null,
+
+	hasNext
+		? {
+				files: ['**/*.ts?(x)', '**/*.js?(x)'],
+				settings: {
+					react: {
+						version: 'detect',
+					},
+				},
+				plugins: {
+					'@next/next': (await import('@next/eslint-plugin-next')).default,
+				},
+				rules: {
+					...(await import('@next/eslint-plugin-next')).default.configs
+						.recommended.rules,
+					...(await import('@next/eslint-plugin-next')).default.configs[
+						'core-web-vitals'
+					].rules,
+					'@next/next/no-img-element': ERROR,
 				},
 			}
 		: null,
