@@ -17,7 +17,6 @@ function has(pkg) {
 
 const hasTypeScript = has('typescript')
 const hasReact = has('react')
-const hasNext = has('next')
 const hasTestingLibrary = has('@testing-library/dom')
 const hasJestDom = has('@testing-library/jest-dom')
 const hasVitest = has('vitest')
@@ -345,28 +344,6 @@ export const config = [
 						.recommended.rules,
 					'react-hooks/rules-of-hooks': ERROR,
 					'react-hooks/exhaustive-deps': WARN,
-				},
-			}
-		: null,
-
-	hasNext
-		? {
-				files: ['**/*.ts?(x)', '**/*.js?(x)'],
-				settings: {
-					react: {
-						version: 'detect',
-					},
-				},
-				plugins: {
-					'@next/next': (await import('@next/eslint-plugin-next')).default,
-				},
-				rules: {
-					...(await import('@next/eslint-plugin-next')).default.configs
-						.recommended.rules,
-					...(await import('@next/eslint-plugin-next')).default.configs[
-						'core-web-vitals'
-					].rules,
-					'@next/next/no-img-element': ERROR,
 				},
 			}
 		: null,
