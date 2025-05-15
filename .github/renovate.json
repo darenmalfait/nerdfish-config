@@ -1,6 +1,6 @@
 {
 	"extends": [
-		"local>darenmalfait/daren-renovate-config:default",
+		"local>darenmalfait/nerdfish-renovate-config:default",
 		"schedule:monthly"
 	],
 	"packageRules": []
