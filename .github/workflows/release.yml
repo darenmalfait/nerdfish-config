@@ -65,9 +65,8 @@ jobs:
         run: pnpm install
 
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@ba330626c4750c19d8299de843f05c7aa5574f62 # v5.0.2
+        uses: cycjimmy/semantic-release-action@v6
         with:
-          semantic_version: 25.0.1
           branches: |
             [
               '+([0-9])?(.{+([0-9]),x}).x',
