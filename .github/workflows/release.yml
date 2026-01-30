@@ -15,7 +15,7 @@ jobs:
       - name: ⎔ Setup node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         name: Install pnpm
@@ -38,8 +38,7 @@ jobs:
     name: 🚀 Release
     needs: [checks]
     runs-on: ubuntu-latest
-    if:
-      ${{ github.repository == 'darenmalfait/nerdfish-config' &&
+    if: ${{ github.repository == 'darenmalfait/nerdfish-config' &&
       contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
@@ -49,7 +48,7 @@ jobs:
       - name: ⎔ Setup node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         name: Install pnpm
@@ -68,7 +67,7 @@ jobs:
       - name: 🚀 Release
         uses: cycjimmy/semantic-release-action@b1b432f13acb7768e0c8efdec416d363a57546f2 # v4.1.1
         with:
-          semantic_version: 17
+          semantic_version: 25.0.1
           branches: |
             [
               '+([0-9])?(.{+([0-9]),x}).x',
@@ -80,4 +79,3 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
