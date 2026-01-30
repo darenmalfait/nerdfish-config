@@ -38,6 +38,9 @@ jobs:
     name: 🚀 Release
     needs: [checks]
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     if: ${{ github.repository == 'darenmalfait/nerdfish-config' &&
       contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
