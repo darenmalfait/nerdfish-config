@@ -132,6 +132,21 @@ import { config as defaultConfig } from '@nerdfish/config/eslint'
 export default [...defaultConfig]
 ```
 
+#### Opinionated testing rules (optional)
+
+Strict Testing Library, BDD structure, MSW lifecycle, and partial-mock rules live in a
+separate flat config. Opt in per repo:
+
+```js
+import { config as defaultConfig } from '@nerdfish/config/eslint'
+import { config as testingConfig } from '@nerdfish/config/eslint/testing'
+
+/** @type {import("eslint").Linter.Config} */
+export default [...defaultConfig, ...testingConfig]
+```
+
+You can also import `plugin` from the same path and enable individual rules.
+
 <details>
   <summary>Customizing ESLint</summary>
 

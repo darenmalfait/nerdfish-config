@@ -1,2 +1,4 @@
-// biome-ignore lint/performance/noBarrelFile: point of entry
-export { default } from './eslint.js'
+import testingRules from './eslint/rules/testing/index.js'
+import eslint from './eslint.js'
+
+export default [...eslint, ...testingRules]

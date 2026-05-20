@@ -10,10 +10,6 @@
     "typescript",
     "nerdfish"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/darenmalfait/nerdfish-config.git"
-  },
   "license": "MIT",
   "author": "Daren Malfait <daren@nerdfish.be> (https://nerdfish.be/)",
   "type": "module",
@@ -23,7 +19,8 @@
     "./biome": "./biome.json",
     "./typescript": "./typescript.json",
     "./reset.d.ts": "./reset.d.ts",
-    "./eslint": "./eslint.js"
+    "./eslint": "./eslint.js",
+    "./eslint/testing": "./eslint/rules/testing/index.js"
   },
   "main": "index.js",
   "scripts": {
@@ -34,38 +31,37 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "prepare": "husky",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p samples/app/testing/__tests__"
   },
   "dependencies": {
-    "@eslint/compat": "^1.4.1",
+    "@eslint/compat": "^1.2.3",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@vitest/eslint-plugin": "^1.1.10",
-    "eslint-plugin-import-x": "^4.16.2",
-    "eslint-plugin-jest-dom": "^5.5.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-testing-library": "^6.5.0",
+    "@vitest/eslint-plugin": "^1.0.1",
+    "eslint-plugin-import-x": "^4.4.2",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-testing-library": "^6.4.0",
     "eslint-plugin-unicorn": "^59.0.1",
-    "@vitest/eslint-plugin": "^1.6.18",
-    "globals": "^16.5.0",
-    "prettier-plugin-packagejson": "^2.5.22",
-    "prettier-plugin-tailwindcss": "^0.8.0",
+    "globals": "^16.0.0",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "tslib": "^2.8.1",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.14.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@types/react": "^18.3.29",
-    "eslint": "^9.39.4",
-    "husky": "^9.1.7",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/react": "^18.3.12",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.6",
     "npm-run-all2": "^8.0.4",
-    "prettier": "^3.8.3",
+    "prettier": "^3.3.3",
     "react": "^18.3.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.6.3"
   },
-  "packageManager": "pnpm@10.33.4",
+  "packageManager": "pnpm@10.28.2",
   "publishConfig": {
     "access": "public"
   }
