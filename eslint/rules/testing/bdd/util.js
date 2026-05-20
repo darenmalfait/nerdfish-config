@@ -1,3 +1,5 @@
+import { getCallName } from '../../util.js'
+
 const SKIP_ASSERTION_SEARCH_IN_CALLBACKS = new Set([
 	'describe',
 	'it',
@@ -6,29 +8,11 @@ const SKIP_ASSERTION_SEARCH_IN_CALLBACKS = new Set([
 	'When',
 ])
 
-export function getCallName(callee) {
-	if (!callee) {
-		return null
-	}
-
-	if (callee.type === 'Identifier') {
-		return callee.name
-	}
-
-	if (
-		callee.type === 'MemberExpression' &&
-		!callee.computed &&
-		callee.property.type === 'Identifier'
-	) {
-		return callee.property.name
-	}
-
-	return null
-}
-
 /** `describe(...)` and `test.describe(...)` */
 export function isDescribeCall(node) {
-	return node?.type === 'CallExpression' && getCallName(node.callee) === 'describe'
+	return (
+		node?.type === 'CallExpression' && getCallName(node.callee) === 'describe'
+	)
 }
 
 /** `it(...)`, `test(...)`, and `test.only` / `test.skip` title callbacks */
@@ -71,10 +55,7 @@ function isExpectCall(node) {
 	)
 }
 
-function isSkippableCallbackArgument(
-	skipFunctionArguments,
-	argument,
-) {
+function isSkippableCallbackArgument(skipFunctionArguments, argument) {
 	return (
 		skipFunctionArguments &&
 		(argument.type === 'FunctionExpression' ||
@@ -82,11 +63,7 @@ function isSkippableCallbackArgument(
 	)
 }
 
-function pushCallExpressionChildren(
-	node,
-	stack,
-	skipFunctionArguments,
-) {
+function pushCallExpressionChildren(node, stack, skipFunctionArguments) {
 	if (node.callee && typeof node.callee === 'object') {
 		stack.push(node.callee)
 	}
@@ -112,10 +89,7 @@ function pushAstChildren(node, stack) {
 			}
 			continue
 		}
-		if (
-			typeof value === 'object' &&
-			typeof value.type === 'string'
-		) {
+		if (typeof value === 'object' && typeof value.type === 'string') {
 			stack.push(value)
 		}
 	}

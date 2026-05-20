@@ -1,5 +1,5 @@
 // Guideline registry id: testing.bdd.given-only-setup
-import { hasExpectCall } from '../common/util.js'
+import { hasExpectCall } from './util.js'
 const meta = {
 	type: 'problem',
 	docs: {

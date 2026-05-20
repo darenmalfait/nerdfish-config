@@ -1,5 +1,5 @@
 // Guideline registry id: testing.spec.msw-server-lifecycle
-import { getCallName } from './util.js'
+import { getCallName } from '../../util.js'
 
 const meta = {
 	type: 'problem',
@@ -101,10 +101,7 @@ function enqueueTraversalTargets(stack, value) {
 		return
 	}
 
-	if (
-		typeof value === 'object' &&
-		typeof value.type === 'string'
-	) {
+	if (typeof value === 'object' && typeof value.type === 'string') {
 		stack.push(value)
 	}
 }
