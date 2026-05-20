@@ -1,13 +1,13 @@
 import { testFiles } from '../test-files.js'
-import noCssSelectorsInTests from './no-css-selectors-in-tests.js'
-import noStoredElementQueries from './no-stored-element-queries.js'
-import noTestidQueries from './no-testid-queries.js'
-import noTestingInternals from './no-testing-internals.js'
-import noTranslationLiteralAssertions from './no-translation-literal-assertions.js'
-import noWithinFindbyOnStaleScope from './no-within-findby-on-stale-scope.js'
-import preferAccessibleQueries from './prefer-accessible-queries.js'
-import specMswServerLifecycle from './spec-msw-server-lifecycle.js'
-import specPartialMocksUseJestRequireActual from './spec-partial-mocks-use-jest-require-actual.js'
+import { noCssSelectorsInTestsRule } from './no-css-selectors-in-tests.js'
+import { noStoredElementQueriesRule } from './no-stored-element-queries.js'
+import { noTestidQueriesRule } from './no-testid-queries.js'
+import { noTestingInternalsRule } from './no-testing-internals.js'
+import { noTranslationLiteralAssertionsRule } from './no-translation-literal-assertions.js'
+import { noWithinFindbyOnStaleScopeRule } from './no-within-findby-on-stale-scope.js'
+import { preferAccessibleQueriesRule } from './prefer-accessible-queries.js'
+import { specMswServerLifecycleRule } from './spec-msw-server-lifecycle.js'
+import { specPartialMocksUseJestRequireActualRule } from './spec-partial-mocks-use-jest-require-actual.js'
 
 const ERROR = 'error'
 
@@ -29,16 +29,16 @@ export const testingRules = {
 /** @type {import('eslint').ESLint.Plugin} */
 export const plugin = {
 	rules: {
-		'no-css-selectors-in-tests': noCssSelectorsInTests,
-		'no-stored-element-queries': noStoredElementQueries,
-		'no-testid-queries': noTestidQueries,
-		'no-testing-internals': noTestingInternals,
-		'no-translation-literal-assertions': noTranslationLiteralAssertions,
-		'no-within-findby-on-stale-scope': noWithinFindbyOnStaleScope,
-		'prefer-accessible-queries': preferAccessibleQueries,
-		'spec-msw-server-lifecycle': specMswServerLifecycle,
+		'no-css-selectors-in-tests': noCssSelectorsInTestsRule,
+		'no-stored-element-queries': noStoredElementQueriesRule,
+		'no-testid-queries': noTestidQueriesRule,
+		'no-testing-internals': noTestingInternalsRule,
+		'no-translation-literal-assertions': noTranslationLiteralAssertionsRule,
+		'no-within-findby-on-stale-scope': noWithinFindbyOnStaleScopeRule,
+		'prefer-accessible-queries': preferAccessibleQueriesRule,
+		'spec-msw-server-lifecycle': specMswServerLifecycleRule,
 		'spec-partial-mocks-use-jest-require-actual':
-			specPartialMocksUseJestRequireActual,
+			specPartialMocksUseJestRequireActualRule,
 	},
 }
 

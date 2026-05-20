@@ -1,70 +1,10 @@
 // Guideline registry id: no-translation-literal-assertions
-const meta = {
-	type: 'problem',
-	docs: {
-		description:
-			'Disallow translated literal assertions; prefer translation keys or semantic queries.',
-		guidelineRuleId: 'no-translation-literal-assertions',
-	},
-	schema: [],
-	messages: {
-		noTranslationLiteral:
-			'Avoid asserting translated literal text via {{queryName}}. Prefer translation keys or semantic queries instead.',
-	},
-}
-
-function getMemberPropertyName(callee) {
-	if (
-		callee?.type === 'MemberExpression' &&
-		!callee.computed &&
-		callee.property.type === 'Identifier'
-	) {
-		return callee.property.name
-	}
-
-	return null
-}
-
-function isLikelyTranslationKey(value) {
-	return /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/i.test(value)
-}
-
-function getStaticStringValue(node) {
-	if (node?.type === 'Literal' && typeof node.value === 'string') {
-		return node.value.trim()
-	}
-
-	if (node?.type === 'TemplateLiteral' && node.expressions.length === 0) {
-		return node.quasis
-			.map((quasi) => quasi.value.cooked ?? '')
-			.join('')
-			.trim()
-	}
-
-	return null
-}
-
-function getObjectProperty(objectExpression, propertyName) {
-	if (objectExpression?.type !== 'ObjectExpression') {
-		return null
-	}
-
-	return (
-		objectExpression.properties.find((property) => {
-			if (property.type !== 'Property' || property.computed) {
-				return false
-			}
-
-			if (property.key.type === 'Identifier') {
-				return property.key.name === propertyName
-			}
-
-			return (
-				property.key.type === 'Literal' && property.key.value === propertyName
-			)
-		}) ?? null
-	)
-}
+import {
+	getMemberPropertyName,
+	getObjectProperty,
+	isLikelyTranslationKey,
+	resolveStaticStringValue,
+} from './util.js'
 
 const TEXT_QUERY_NAMES = new Set([
 	'findAllByText',
@@ -83,21 +23,31 @@ const ROLE_QUERY_NAMES = new Set([
 	'queryByRole',
 ])
 
-const rule = {
-	meta,
+export const noTranslationLiteralAssertionsRule = {
+	meta: {
+		type: 'problem',
+		docs: {
+			description:
+				'Disallow translated literal assertions; prefer translation keys or semantic queries.',
+			guidelineRuleId: 'no-translation-literal-assertions',
+		},
+		schema: [],
+		messages: {
+			noTranslationLiteral:
+				'Avoid asserting translated literal text via {{queryName}}. Prefer translation keys or semantic queries instead.',
+		},
+	},
 	create(context) {
 		return {
 			CallExpression(node) {
 				const queryName = getMemberPropertyName(node.callee)
 
-				if (!TEXT_QUERY_NAMES.has(queryName)) {
-					if (!ROLE_QUERY_NAMES.has(queryName)) {
-						return
-					}
-
+				if (ROLE_QUERY_NAMES.has(queryName)) {
 					const [, optionsArg] = node.arguments
 					const nameProperty = getObjectProperty(optionsArg, 'name')
-					const value = getStaticStringValue(nameProperty?.value)
+					const value = resolveStaticStringValue(nameProperty?.value, {
+						trim: true,
+					})
 					if (!value || isLikelyTranslationKey(value)) {
 						return
 					}
@@ -110,8 +60,12 @@ const rule = {
 					return
 				}
 
+				if (!TEXT_QUERY_NAMES.has(queryName)) {
+					return
+				}
+
 				const [firstArg] = node.arguments
-				const value = getStaticStringValue(firstArg)
+				const value = resolveStaticStringValue(firstArg, { trim: true })
 				if (!value || isLikelyTranslationKey(value)) {
 					return
 				}
@@ -125,5 +79,3 @@ const rule = {
 		}
 	},
 }
-
-export default rule

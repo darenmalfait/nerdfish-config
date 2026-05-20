@@ -1,36 +1,17 @@
 // Guideline registry id: testing.spec.msw-server-lifecycle
 import { getCallName, getFirstCallback, walkAst } from '../../util.js'
 
-const meta = {
-	type: 'problem',
-	docs: {
-		description:
-			'Ensure MSW server lifecycle hooks are set with beforeAll/afterEach/afterAll.',
-		guidelineRuleId: 'testing.spec.msw-server-lifecycle',
-	},
-	schema: [],
-	messages: {
-		missingBeforeAll:
-			'Add beforeAll/test.beforeAll(() => server.listen()) to set up the MSW server.',
-		missingAfterEach:
-			'Add afterEach/test.afterEach(() => server.resetHandlers()) to reset MSW handlers.',
-		missingAfterAll:
-			'Add afterAll/test.afterAll(() => server.close()) to shut down the MSW server.',
-	},
-}
-
 const LIFECYCLE_HOOKS = {
 	beforeAll: 'listen',
 	afterEach: 'resetHandlers',
 	afterAll: 'close',
 }
-const SERVER_TOUCH_METHODS = new Set([
-	'use',
-	...Object.values(LIFECYCLE_HOOKS),
-])
+const SERVER_TOUCH_METHODS = new Set(['use', ...Object.values(LIFECYCLE_HOOKS)])
 
 function isLifecycleHookCall(node, hookName) {
-	return node?.type === 'CallExpression' && getCallName(node.callee) === hookName
+	return (
+		node?.type === 'CallExpression' && getCallName(node.callee) === hookName
+	)
 }
 
 function isSetupServerCall(node) {
@@ -77,8 +58,24 @@ function hookCallbackInvokesServerMethod(callback, methodName) {
 	return invokes
 }
 
-const rule = {
-	meta,
+export const specMswServerLifecycleRule = {
+	meta: {
+		type: 'problem',
+		docs: {
+			description:
+				'Ensure MSW server lifecycle hooks are set with beforeAll/afterEach/afterAll.',
+			guidelineRuleId: 'testing.spec.msw-server-lifecycle',
+		},
+		schema: [],
+		messages: {
+			missingBeforeAll:
+				'Add beforeAll/test.beforeAll(() => server.listen()) to set up the MSW server.',
+			missingAfterEach:
+				'Add afterEach/test.afterEach(() => server.resetHandlers()) to reset MSW handlers.',
+			missingAfterAll:
+				'Add afterAll/test.afterAll(() => server.close()) to shut down the MSW server.',
+		},
+	},
 	create(context) {
 		const found = {
 			beforeAll: false,
@@ -131,5 +128,3 @@ const rule = {
 		}
 	},
 }
-
-export default rule
