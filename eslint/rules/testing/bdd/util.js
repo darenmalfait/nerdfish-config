@@ -2,9 +2,21 @@ import {
 	getCallName,
 	getFirstCallback,
 	getSecondCallback,
+	isFunctionNode,
 	resolveStaticStringArg,
 	walkAst,
 } from '../../util.js'
+
+const NON_TEST_CASE_IT_TEST_MEMBERS = new Set([
+	'afterAll',
+	'afterEach',
+	'beforeAll',
+	'beforeEach',
+	'describe',
+	'extend',
+	'step',
+	'use',
+])
 
 const NESTED_BDD_SCOPE_CALLS = new Set([
 	'describe',
@@ -25,8 +37,53 @@ export function isTestCaseCall(node) {
 		return false
 	}
 
-	const callName = getCallName(node.callee)
-	return callName === 'it' || callName === 'test'
+	const callee = node.callee
+
+	if (callee?.type === 'Identifier') {
+		return callee.name === 'it' || callee.name === 'test'
+	}
+
+	if (
+		callee?.type === 'MemberExpression' &&
+		!callee.computed &&
+		callee.object?.type === 'Identifier'
+	) {
+		const base = callee.object.name
+		if (base !== 'it' && base !== 'test') {
+			return false
+		}
+
+		const member =
+			callee.property?.type === 'Identifier' ? callee.property.name : null
+		if (!member || NON_TEST_CASE_IT_TEST_MEMBERS.has(member)) {
+			return false
+		}
+
+		return true
+	}
+
+	return false
+}
+
+export function isInsideTestCaseCallback(node) {
+	let current = node.parent
+
+	while (current) {
+		if (isFunctionNode(current)) {
+			const parent = current.parent
+			if (
+				parent?.type === 'CallExpression' &&
+				isTestCaseCall(parent) &&
+				getSecondCallback(parent) === current
+			) {
+				return true
+			}
+		}
+
+		current = current.parent
+	}
+
+	return false
 }
 
 export function isNamedTestBlock(node) {
