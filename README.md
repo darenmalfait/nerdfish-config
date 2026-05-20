@@ -134,18 +134,42 @@ export default [...defaultConfig]
 
 #### Opinionated testing rules (optional)
 
-Strict Testing Library, BDD structure, MSW lifecycle, and partial-mock rules live in a
-separate flat config. Opt in per repo:
+Everything below is part of **`@nerdfish/config`** — install once, no extra
+packages.
+
+| What you import                       | What it enables                                       |
+| ------------------------------------- | ----------------------------------------------------- |
+| `@nerdfish/config/eslint/testing`     | Testing Library queries, MSW lifecycle, partial mocks |
+| `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
+
+Spread the flat configs you need:
 
 ```js
 import { config as defaultConfig } from '@nerdfish/config/eslint'
 import { config as testingConfig } from '@nerdfish/config/eslint/testing'
+import { config as testingBddConfig } from '@nerdfish/config/eslint/testing/bdd'
 
 /** @type {import("eslint").Linter.Config} */
-export default [...defaultConfig, ...testingConfig]
+export default [
+	...defaultConfig,
+	...testingConfig,
+	// ...testingBddConfig, // optional
+]
 ```
 
-You can also import `plugin` from the same path and enable individual rules.
+**ESLint plugin namespaces (not npm packages).** Custom rules still need a
+plugin name in flat config. Ours are `@nerdfish/testing` and
+`@nerdfish/testing-bdd` — they look like package names but only label rule IDs,
+e.g. `@nerdfish/testing/no-testid-queries` and
+`@nerdfish/testing-bdd/bdd-split-on-and`.
+
+We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
+`.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
+redefined plugin. BDD stays a separate subpath export; the namespace split is an
+implementation detail of that opt-in.
+
+To cherry-pick rules, import `plugin` (and `testingRules` / `bddRules`) from the
+matching subpath and wire them into your own config block.
 
 <details>
   <summary>Customizing ESLint</summary>
@@ -200,12 +224,7 @@ Create a `tsconfig.json` file in your project root with the following content:
 ```json
 {
 	"extends": ["@nerdfish/config/typescript"],
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		"**/*.js",
-		"**/*.jsx"
-	],
+	"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
 	"compilerOptions": {
 		"paths": {
 			"#app/*": ["./app/*"],

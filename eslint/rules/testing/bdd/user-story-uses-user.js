@@ -1,5 +1,5 @@
 // Guideline registry id: testing.bdd.user-story-uses-user
-import { getStringTitleArgument, isDescribeCall } from './util.js'
+import { getStringTitleArgument, isDescribeCall } from '../common/util.js'
 
 const meta = {
 	type: 'problem',

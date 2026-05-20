@@ -20,7 +20,8 @@
     "./typescript": "./typescript.json",
     "./reset.d.ts": "./reset.d.ts",
     "./eslint": "./eslint.js",
-    "./eslint/testing": "./eslint/rules/testing/index.js"
+    "./eslint/testing": "./eslint/rules/testing/common/index.js",
+    "./eslint/testing/bdd": "./eslint/rules/testing/bdd/index.js"
   },
   "main": "index.js",
   "scripts": {

@@ -1,5 +1,5 @@
 // Guideline registry id: testing.bdd.when-no-assertions
-import { hasExpectCall } from './util.js'
+import { hasExpectCall } from '../common/util.js'
 const meta = {
 	type: 'problem',
 	docs: {

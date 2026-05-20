@@ -1,4 +1,5 @@
-import testingRules from './eslint/rules/testing/index.js'
-import eslint from './eslint.js'
+import bddRules from './eslint/rules/testing/bdd/index.js'
+import testingRules from './eslint/rules/testing/common/index.js'
+import baseConfig from './eslint.js'
 
-export default [...eslint, ...testingRules]
+export default [...baseConfig, ...testingRules, ...bddRules]
