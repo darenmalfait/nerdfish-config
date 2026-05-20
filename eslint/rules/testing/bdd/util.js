@@ -128,18 +128,61 @@ export function getParentDescribe(node) {
 	return null
 }
 
-function bodyHasMultipleActions(body) {
+const LIFECYCLE_HOOK_CALLS = new Set([
+	'afterAll',
+	'afterEach',
+	'beforeAll',
+	'beforeEach',
+])
+
+function getExpressionStatementCallExpression(statement) {
+	if (statement?.type !== 'ExpressionStatement') {
+		return null
+	}
+
+	let expression = statement.expression
+	if (expression?.type === 'AwaitExpression') {
+		expression = expression.argument
+	}
+
+	return expression?.type === 'CallExpression' ? expression : null
+}
+
+function isTestHarnessStatement(statement) {
+	const callExpression = getExpressionStatementCallExpression(statement)
+	if (!callExpression) {
+		return false
+	}
+
+	if (
+		isDescribeCall(callExpression) ||
+		isTestCaseCall(callExpression) ||
+		isHelperCall(callExpression, 'Given') ||
+		isHelperCall(callExpression, 'When')
+	) {
+		return true
+	}
+
+	const callName = getCallName(callExpression.callee)
+	return callName !== null && LIFECYCLE_HOOK_CALLS.has(callName)
+}
+
+function bodyHasMultipleActions(body, { excludeTestHarness = false } = {}) {
 	if (!body) {
 		return false
 	}
 
 	if (body.type === 'BlockStatement') {
-		if (body.body.length > 1) {
+		const statements = excludeTestHarness
+			? body.body.filter((statement) => !isTestHarnessStatement(statement))
+			: body.body
+
+		if (statements.length > 1) {
 			return true
 		}
 
-		if (body.body.length === 1) {
-			const statement = body.body[0]
+		if (statements.length === 1) {
+			const statement = statements[0]
 			return (
 				statement.type === 'ExpressionStatement' &&
 				statement.expression.type === 'SequenceExpression'
@@ -152,10 +195,13 @@ function bodyHasMultipleActions(body) {
 	return body.type === 'SequenceExpression'
 }
 
-export function callbackHasMultipleActions(callback) {
+export function callbackHasMultipleActions(
+	callback,
+	{ excludeTestHarness = false } = {},
+) {
 	const body = callback.body
 
-	if (bodyHasMultipleActions(body)) {
+	if (bodyHasMultipleActions(body, { excludeTestHarness })) {
 		return true
 	}
 

@@ -39,7 +39,10 @@ export const bddWhenSingleCoherentActionRule = {
 				}
 
 				const callback = getSecondCallback(node)
-				if (!callback || !callbackHasMultipleActions(callback)) {
+				if (
+					!callback ||
+					!callbackHasMultipleActions(callback, { excludeTestHarness: true })
+				) {
 					return
 				}
 

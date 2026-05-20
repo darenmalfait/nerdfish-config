@@ -7,8 +7,11 @@ describe('User Story: user can submit the form', () => {
 		})
 
 		describe('When the user submits valid input', () => {
-			it('shows a success message', async () => {
+			beforeEach(() => {
 				clickSubmit()
+			})
+
+			it('shows a success message', async () => {
 				expect(
 					await screen.findByRole('status', { name: 'form.success' }),
 				).toBeInTheDocument()
