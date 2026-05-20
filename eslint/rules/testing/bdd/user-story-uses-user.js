@@ -1,19 +1,6 @@
 // Guideline registry id: testing.bdd.user-story-uses-user
-import { getStringTitleArgument, isDescribeCall } from './util.js'
-
-const meta = {
-	type: 'problem',
-	docs: {
-		description:
-			'Require user stories to mention "user" unless they are explicitly permission-specific.',
-		guidelineRuleId: 'testing.bdd.user-story-uses-user',
-	},
-	schema: [],
-	messages: {
-		userStoryUsesUser:
-			'User story descriptions should mention "user" unless the action is explicitly permission-specific.',
-	},
-}
+import { resolveStaticStringArg } from '../../util.js'
+import { isDescribeCall } from './util.js'
 
 const USER_STORY_PREFIX = 'User Story:'
 const USER_WORD_REGEX = /\buser\b/i
@@ -29,8 +16,20 @@ function isPermissionSpecific(description) {
 	)
 }
 
-const rule = {
-	meta,
+export const bddUserStoryUsesUserRule = {
+	meta: {
+		type: 'problem',
+		docs: {
+			description:
+				'Require user stories to mention "user" unless they are explicitly permission-specific.',
+			guidelineRuleId: 'testing.bdd.user-story-uses-user',
+		},
+		schema: [],
+		messages: {
+			userStoryUsesUser:
+				'User story descriptions should mention "user" unless the action is explicitly permission-specific.',
+		},
+	},
 	create(context) {
 		return {
 			CallExpression(node) {
@@ -38,7 +37,7 @@ const rule = {
 					return
 				}
 
-				const title = getStringTitleArgument(node)
+				const title = resolveStaticStringArg(node)
 				if (!title?.value.startsWith(USER_STORY_PREFIX)) {
 					return
 				}
@@ -59,5 +58,3 @@ const rule = {
 		}
 	},
 }
-
-export default rule

@@ -1,5 +1,5 @@
 // Guideline registry id: testing.spec.msw-server-lifecycle
-import { getCallName } from '../../util.js'
+import { getCallName, getFirstCallback, walkAst } from '../../util.js'
 
 const meta = {
 	type: 'problem',
@@ -19,18 +19,18 @@ const meta = {
 	},
 }
 
-const LIFECYCLE_METHODS = {
+const LIFECYCLE_HOOKS = {
 	beforeAll: 'listen',
 	afterEach: 'resetHandlers',
 	afterAll: 'close',
 }
-const SERVER_USAGE_METHODS = new Set([
+const SERVER_TOUCH_METHODS = new Set([
 	'use',
-	...Object.values(LIFECYCLE_METHODS),
+	...Object.values(LIFECYCLE_HOOKS),
 ])
 
-function isLifecycleCall(node, name) {
-	return node?.type === 'CallExpression' && getCallName(node.callee) === name
+function isLifecycleHookCall(node, hookName) {
+	return node?.type === 'CallExpression' && getCallName(node.callee) === hookName
 }
 
 function isSetupServerCall(node) {
@@ -41,31 +41,12 @@ function isSetupServerCall(node) {
 	)
 }
 
-function getCallback(node) {
-	const [firstArg] = node.arguments
-	if (!firstArg) {
-		return null
-	}
-	if (
-		firstArg.type === 'FunctionExpression' ||
-		firstArg.type === 'ArrowFunctionExpression'
-	) {
-		return firstArg
-	}
-	return null
-}
-
 function isServerMethodCall(node, methodName) {
-	if (node?.type !== 'CallExpression') {
-		return false
-	}
-
-	const callee = node.callee
-	if (callee?.type !== 'MemberExpression' || callee.computed) {
-		return false
-	}
-
+	const callee = node?.callee
 	return (
+		node?.type === 'CallExpression' &&
+		callee?.type === 'MemberExpression' &&
+		!callee.computed &&
 		callee.object?.type === 'Identifier' &&
 		callee.object.name === 'server' &&
 		callee.property?.type === 'Identifier' &&
@@ -73,63 +54,27 @@ function isServerMethodCall(node, methodName) {
 	)
 }
 
-function isAnyServerMethodCall(node, methodNames) {
-	if (methodNames.size === 0) {
-		return false
-	}
-
+function usesAnyServerMethod(node, methodNames) {
 	for (const methodName of methodNames) {
 		if (isServerMethodCall(node, methodName)) {
 			return true
 		}
 	}
-
 	return false
 }
 
-function enqueueTraversalTargets(stack, value) {
-	if (!value) {
-		return
-	}
+function hookCallbackInvokesServerMethod(callback, methodName) {
+	let invokes = false
 
-	if (Array.isArray(value)) {
-		for (const item of value) {
-			if (item && typeof item === 'object') {
-				stack.push(item)
-			}
-		}
-		return
-	}
-
-	if (typeof value === 'object' && typeof value.type === 'string') {
-		stack.push(value)
-	}
-}
-
-function callbackContainsServerCall(callback, methodName) {
-	const stack = [callback.body]
-	const seen = new Set()
-
-	while (stack.length > 0) {
-		const current = stack.pop()
-		if (!current || typeof current !== 'object') {
-			continue
-		}
-		if (seen.has(current)) {
-			continue
-		}
-		seen.add(current)
-
-		if (isServerMethodCall(current, methodName)) {
+	walkAst(callback.body, (node) => {
+		if (isServerMethodCall(node, methodName)) {
+			invokes = true
 			return true
 		}
+		return false
+	})
 
-		for (const value of Object.values(current)) {
-			enqueueTraversalTargets(stack, value)
-		}
-	}
-
-	return false
+	return invokes
 }
 
 const rule = {
@@ -140,34 +85,36 @@ const rule = {
 			afterEach: false,
 			afterAll: false,
 		}
-		let hasMsw = false
+		let usesMsw = false
 
 		return {
 			CallExpression(node) {
 				if (
 					isSetupServerCall(node) ||
-					isAnyServerMethodCall(node, SERVER_USAGE_METHODS)
+					usesAnyServerMethod(node, SERVER_TOUCH_METHODS)
 				) {
-					hasMsw = true
+					usesMsw = true
 				}
 
-				for (const [lifecycle, method] of Object.entries(LIFECYCLE_METHODS)) {
-					if (!isLifecycleCall(node, lifecycle)) {
+				for (const [hookName, serverMethod] of Object.entries(
+					LIFECYCLE_HOOKS,
+				)) {
+					if (!isLifecycleHookCall(node, hookName)) {
 						continue
 					}
 
-					const callback = getCallback(node)
+					const callback = getFirstCallback(node)
 					if (!callback) {
-						return
+						continue
 					}
 
-					if (callbackContainsServerCall(callback, method)) {
-						found[lifecycle] = true
+					if (hookCallbackInvokesServerMethod(callback, serverMethod)) {
+						found[hookName] = true
 					}
 				}
 			},
 			'Program:exit'(node) {
-				if (!hasMsw) {
+				if (!usesMsw) {
 					return
 				}
 

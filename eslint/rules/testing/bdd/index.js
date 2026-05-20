@@ -1,10 +1,10 @@
 import { testFiles } from '../test-files.js'
-import bddGivenOnlySetup from './given-only-setup.js'
-import bddSplitOnAnd from './split-on-and.js'
-import bddUserStoryStructure from './user-story-structure.js'
-import bddUserStoryUsesUser from './user-story-uses-user.js'
-import bddWhenNoAssertions from './when-no-assertions.js'
-import bddWhenSingleCoherentAction from './when-single-coherent-action.js'
+import { bddGivenOnlySetupRule } from './given-only-setup.js'
+import { bddSplitOnAndRule } from './split-on-and.js'
+import { bddUserStoryStructureRule } from './user-story-structure.js'
+import { bddUserStoryUsesUserRule } from './user-story-uses-user.js'
+import { bddWhenNoAssertions } from './when-no-assertions.js'
+import { bddWhenSingleCoherentActionRule } from './when-single-coherent-action.js'
 
 const ERROR = 'error'
 
@@ -21,12 +21,12 @@ export const bddRules = {
 /** BDD describe / Given / When rules — opt in via spread alongside `@nerdfish/config/eslint/testing`. */
 export const plugin = {
 	rules: {
-		'bdd-user-story-structure': bddUserStoryStructure,
-		'bdd-given-only-setup': bddGivenOnlySetup,
-		'bdd-split-on-and': bddSplitOnAnd,
-		'bdd-user-story-uses-user': bddUserStoryUsesUser,
+		'bdd-user-story-structure': bddUserStoryStructureRule,
+		'bdd-given-only-setup': bddGivenOnlySetupRule,
+		'bdd-split-on-and': bddSplitOnAndRule,
+		'bdd-user-story-uses-user': bddUserStoryUsesUserRule,
 		'bdd-when-no-assertions': bddWhenNoAssertions,
-		'bdd-when-single-coherent-action': bddWhenSingleCoherentAction,
+		'bdd-when-single-coherent-action': bddWhenSingleCoherentActionRule,
 	},
 }
 

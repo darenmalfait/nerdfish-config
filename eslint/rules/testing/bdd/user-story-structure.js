@@ -1,38 +1,23 @@
 // Guideline registry id: bdd-user-story-structure
-import { getStringTitleArgument, isDescribeCall } from './util.js'
+import { resolveStaticStringArg } from '../../util.js'
+import { getParentDescribe, isDescribeCall } from './util.js'
 
-const meta = {
-	type: 'problem',
-	docs: {
-		description:
-			'Require a basic User Story -> Given/When BDD describe structure in tests.',
-		guidelineRuleId: 'bdd-user-story-structure',
+export const bddUserStoryStructureRule = {
+	meta: {
+		type: 'problem',
+		docs: {
+			description:
+				'Require a basic User Story -> Given/When BDD describe structure in tests.',
+			guidelineRuleId: 'bdd-user-story-structure',
+		},
+		schema: [],
+		messages: {
+			topLevelUserStory:
+				'Top-level describe blocks should start with "User Story:" to follow the BDD test structure.',
+			nestedGivenWhen:
+				'Nested describe blocks should start with "Given " or "When " to follow the BDD test structure.',
+		},
 	},
-	schema: [],
-	messages: {
-		topLevelUserStory:
-			'Top-level describe blocks should start with "User Story:" to follow the BDD test structure.',
-		nestedGivenWhen:
-			'Nested describe blocks should start with "Given " or "When " to follow the BDD test structure.',
-	},
-}
-
-function getParentDescribe(node) {
-	let current = node.parent
-
-	while (current) {
-		if (isDescribeCall(current)) {
-			return current
-		}
-
-		current = current.parent
-	}
-
-	return null
-}
-
-const rule = {
-	meta,
 	create(context) {
 		return {
 			CallExpression(node) {
@@ -40,7 +25,7 @@ const rule = {
 					return
 				}
 
-				const title = getStringTitleArgument(node)
+				const title = resolveStaticStringArg(node)
 				if (!title?.value) {
 					return
 				}
@@ -71,5 +56,3 @@ const rule = {
 		}
 	},
 }
-
-export default rule

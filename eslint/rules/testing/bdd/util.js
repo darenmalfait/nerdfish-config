@@ -1,6 +1,12 @@
-import { getCallName } from '../../util.js'
+import {
+	getCallName,
+	getFirstCallback,
+	getSecondCallback,
+	resolveStaticStringArg,
+	walkAst,
+} from '../../util.js'
 
-const SKIP_ASSERTION_SEARCH_IN_CALLBACKS = new Set([
+const NESTED_BDD_SCOPE_CALLS = new Set([
 	'describe',
 	'it',
 	'test',
@@ -8,14 +14,12 @@ const SKIP_ASSERTION_SEARCH_IN_CALLBACKS = new Set([
 	'When',
 ])
 
-/** `describe(...)` and `test.describe(...)` */
 export function isDescribeCall(node) {
 	return (
 		node?.type === 'CallExpression' && getCallName(node.callee) === 'describe'
 	)
 }
 
-/** `it(...)`, `test(...)`, and `test.only` / `test.skip` title callbacks */
 export function isTestCaseCall(node) {
 	if (node?.type !== 'CallExpression') {
 		return false
@@ -25,105 +29,164 @@ export function isTestCaseCall(node) {
 	return callName === 'it' || callName === 'test'
 }
 
-export function getStringTitleArgument(node) {
-	const [firstArg] = node?.arguments ?? []
+export function isNamedTestBlock(node) {
+	return isDescribeCall(node) || isTestCaseCall(node)
+}
 
-	if (!firstArg) {
-		return null
+export function isHelperCall(node, helperName) {
+	return (
+		node?.type === 'CallExpression' &&
+		node.callee?.type === 'Identifier' &&
+		node.callee.name === helperName
+	)
+}
+
+export function isDescribeTitled(node, titlePrefix) {
+	if (!isDescribeCall(node)) {
+		return false
 	}
 
-	if (firstArg.type === 'Literal' && typeof firstArg.value === 'string') {
-		return { value: firstArg.value, node: firstArg }
-	}
+	const title = resolveStaticStringArg(node)
+	return typeof title?.value === 'string' && title.value.startsWith(titlePrefix)
+}
 
-	if (
-		firstArg.type === 'TemplateLiteral' &&
-		firstArg.expressions.length === 0 &&
-		firstArg.quasis.length === 1
-	) {
-		return { value: firstArg.quasis[0].value.cooked ?? '', node: firstArg }
+export function isBddScopeBlock(node, { helperName, describeTitlePrefix }) {
+	return (
+		isHelperCall(node, helperName) ||
+		isDescribeTitled(node, describeTitlePrefix)
+	)
+}
+
+export function getParentDescribe(node) {
+	let current = node.parent
+
+	while (current) {
+		if (isDescribeCall(current)) {
+			return current
+		}
+
+		current = current.parent
 	}
 
 	return null
 }
 
-function isExpectCall(node) {
-	return (
-		node.type === 'CallExpression' &&
-		node.callee?.type === 'Identifier' &&
-		node.callee.name === 'expect'
-	)
-}
-
-function isSkippableCallbackArgument(skipFunctionArguments, argument) {
-	return (
-		skipFunctionArguments &&
-		(argument.type === 'FunctionExpression' ||
-			argument.type === 'ArrowFunctionExpression')
-	)
-}
-
-function pushCallExpressionChildren(node, stack, skipFunctionArguments) {
-	if (node.callee && typeof node.callee === 'object') {
-		stack.push(node.callee)
+function bodyHasMultipleActions(body) {
+	if (!body) {
+		return false
 	}
 
-	for (const argument of node.arguments ?? []) {
-		if (isSkippableCallbackArgument(skipFunctionArguments, argument)) {
-			continue
-		}
-		stack.push(argument)
-	}
-}
-
-function pushAstChildren(node, stack) {
-	for (const value of Object.values(node)) {
-		if (!value) {
-			continue
-		}
-		if (Array.isArray(value)) {
-			for (const item of value) {
-				if (item && typeof item === 'object') {
-					stack.push(item)
-				}
-			}
-			continue
-		}
-		if (typeof value === 'object' && typeof value.type === 'string') {
-			stack.push(value)
-		}
-	}
-}
-
-export function hasExpectCall(node) {
-	const stack = [node]
-	const seen = new Set()
-
-	while (stack.length > 0) {
-		const current = stack.pop()
-		if (!current || typeof current !== 'object') {
-			continue
-		}
-		if (seen.has(current)) {
-			continue
-		}
-		seen.add(current)
-
-		if (isExpectCall(current)) {
+	if (body.type === 'BlockStatement') {
+		if (body.body.length > 1) {
 			return true
 		}
 
-		if (current.type === 'CallExpression') {
-			const callName = getCallName(current.callee)
-			const skipFunctionArguments = callName
-				? SKIP_ASSERTION_SEARCH_IN_CALLBACKS.has(callName)
-				: false
-			pushCallExpressionChildren(current, stack, skipFunctionArguments)
+		if (body.body.length === 1) {
+			const statement = body.body[0]
+			return (
+				statement.type === 'ExpressionStatement' &&
+				statement.expression.type === 'SequenceExpression'
+			)
+		}
+
+		return false
+	}
+
+	return body.type === 'SequenceExpression'
+}
+
+export function callbackHasMultipleActions(callback) {
+	const body = callback.body
+
+	if (bodyHasMultipleActions(body)) {
+		return true
+	}
+
+	if (body?.type !== 'BlockStatement') {
+		return false
+	}
+
+	for (const statement of body.body) {
+		if (
+			statement.type !== 'ExpressionStatement' ||
+			statement.expression.type !== 'CallExpression'
+		) {
 			continue
 		}
 
-		pushAstChildren(current, stack)
+		if (getCallName(statement.expression.callee) !== 'beforeEach') {
+			continue
+		}
+
+		const beforeEachCallback = getFirstCallback(statement.expression)
+		if (beforeEachCallback && bodyHasMultipleActions(beforeEachCallback.body)) {
+			return true
+		}
 	}
 
 	return false
+}
+
+export function containsExpectAssertion(body) {
+	let found = false
+
+	walkAst(
+		body,
+		(node) => {
+			if (
+				node.type === 'CallExpression' &&
+				node.callee?.type === 'Identifier' &&
+				node.callee.name === 'expect'
+			) {
+				found = true
+				return true
+			}
+			return false
+		},
+		{ omitFunctionArgsForCalls: NESTED_BDD_SCOPE_CALLS },
+	)
+
+	return found
+}
+
+export function createNoAssertionsInBddBlockRule({
+	guidelineRuleId,
+	description,
+	messageId,
+	message,
+	helperName,
+	describeTitlePrefix,
+}) {
+	return {
+		meta: {
+			type: 'problem',
+			docs: { description, guidelineRuleId },
+			schema: [],
+			messages: { [messageId]: message },
+		},
+		create(context) {
+			return {
+				CallExpression(node) {
+					if (!isBddScopeBlock(node, { helperName, describeTitlePrefix })) {
+						return
+					}
+
+					const callback = getSecondCallback(node)
+					if (!callback?.body) {
+						return
+					}
+
+					if (!containsExpectAssertion(callback.body)) {
+						return
+					}
+
+					const title = resolveStaticStringArg(node)
+					context.report({
+						node: title?.node ?? node,
+						messageId,
+					})
+				},
+			}
+		},
+	}
 }
