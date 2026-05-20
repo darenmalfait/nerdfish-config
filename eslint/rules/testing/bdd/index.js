@@ -5,6 +5,7 @@ import { bddSplitOnAndRule } from './split-on-and.js'
 import { bddUserStoryStructureRule } from './user-story-structure.js'
 import { bddUserStoryUsesUserRule } from './user-story-uses-user.js'
 import { bddWhenNoAssertions } from './when-no-assertions.js'
+import { bddWhenRequiresBeforeEachRule } from './when-requires-before-each.js'
 import { bddWhenSingleCoherentActionRule } from './when-single-coherent-action.js'
 
 const ERROR = 'error'
@@ -17,6 +18,7 @@ export const bddRules = {
 	'@nerdfish/testing-bdd/bdd-split-on-and': ERROR,
 	'@nerdfish/testing-bdd/bdd-user-story-uses-user': ERROR,
 	'@nerdfish/testing-bdd/bdd-when-no-assertions': ERROR,
+	'@nerdfish/testing-bdd/bdd-when-requires-before-each': ERROR,
 	'@nerdfish/testing-bdd/bdd-when-single-coherent-action': ERROR,
 }
 
@@ -29,6 +31,7 @@ export const plugin = {
 		'bdd-split-on-and': bddSplitOnAndRule,
 		'bdd-user-story-uses-user': bddUserStoryUsesUserRule,
 		'bdd-when-no-assertions': bddWhenNoAssertions,
+		'bdd-when-requires-before-each': bddWhenRequiresBeforeEachRule,
 		'bdd-when-single-coherent-action': bddWhenSingleCoherentActionRule,
 	},
 }

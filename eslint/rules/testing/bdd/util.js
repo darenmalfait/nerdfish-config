@@ -148,6 +148,24 @@ function getExpressionStatementCallExpression(statement) {
 	return expression?.type === 'CallExpression' ? expression : null
 }
 
+export function isBeforeEachCallStatement(statement) {
+	const callExpression = getExpressionStatementCallExpression(statement)
+	if (!callExpression) {
+		return false
+	}
+
+	return getCallName(callExpression.callee) === 'beforeEach'
+}
+
+export function scopeBlockHasBeforeEach(callback) {
+	const body = callback?.body
+	if (body?.type !== 'BlockStatement') {
+		return false
+	}
+
+	return body.body.some(isBeforeEachCallStatement)
+}
+
 function isTestHarnessStatement(statement) {
 	const callExpression = getExpressionStatementCallExpression(statement)
 	if (!callExpression) {

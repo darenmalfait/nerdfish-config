@@ -5,10 +5,14 @@ Valid examples for `@nerdfish/config/eslint/testing` and
 longer pass.
 
 Supports Jest/Vitest (`describe` / `it` / `test`) and Playwright (`test` /
-`test.describe` / `test.beforeAll`).
+`test.describe` / `test.beforeEach` with `{ page }` fixtures).
 
-Fixtures import stubs from `__tests__/testing-runtime.ts` (no real test runner
-in this repo).
+| Fixture | Runtime stub |
+| --- | --- |
+| `__tests__/*.test.tsx` | `testing-runtime.ts` (RTL-style `render`, `screen`) |
+| `__tests__/e2e/*.test.ts` | `e2e/playwright-runtime.ts` (`page`, `expect().toBeVisible()`) |
+
+No real test runner in this repo — files exist so ESLint can parse valid patterns.
 
 ## Commands
 

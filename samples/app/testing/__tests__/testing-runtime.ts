@@ -23,6 +23,10 @@ export function expect(_actual: unknown) {
 	return createMatchers()
 }
 
+export function render(_ui: unknown) {
+	return { container: element() }
+}
+
 export const screen = {
 	getByRole: (_role: string, _options?: { name?: string }) => element(),
 	getByTestId: (_testId: string) => element(),
