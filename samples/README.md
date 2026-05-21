@@ -6,4 +6,4 @@ as expected.
 | Directory | Config export |
 | --- | --- |
 | `app/testing/` | `@nerdfish/config/eslint/testing`, `.../testing/bdd` |
-| `app/opinionated/` | `@nerdfish/config/eslint/opinionated` |
+| `app/conventions/` | `@nerdfish/config/eslint/conventions` |

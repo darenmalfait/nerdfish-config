@@ -141,6 +141,7 @@ packages.
 | ------------------------------------- | ----------------------------------------------------- |
 | `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
 | `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
+| `@nerdfish/config/eslint/conventions` | Team coding conventions (e.g. `.map()` transformer names) |
 
 Spread the flat configs you need:
 
@@ -148,28 +149,32 @@ Spread the flat configs you need:
 import { config as defaultConfig } from '@nerdfish/config/eslint'
 import { config as testingConfig } from '@nerdfish/config/eslint/testing'
 import { config as testingBddConfig } from '@nerdfish/config/eslint/testing/bdd'
+import { config as conventionsConfig } from '@nerdfish/config/eslint/conventions'
 
 /** @type {import("eslint").Linter.Config} */
 export default [
 	...defaultConfig,
 	...testingConfig,
 	// ...testingBddConfig, // optional
+	// ...conventionsConfig, // optional
 ]
 ```
 
 **ESLint plugin namespaces (not npm packages).** Custom rules still need a
-plugin name in flat config. Ours are `@nerdfish/testing` and
-`@nerdfish/testing-bdd` — they look like package names but only label rule IDs,
-e.g. `@nerdfish/testing/no-testid-queries` and
-`@nerdfish/testing-bdd/bdd-split-on-and`.
+plugin name in flat config. Ours are `@nerdfish/testing`,
+`@nerdfish/testing-bdd`, and `@nerdfish/conventions` — they look like package
+names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
+`@nerdfish/testing-bdd/bdd-split-on-and`, and
+`@nerdfish/conventions/map-transformer-name`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
 redefined plugin. BDD stays a separate subpath export; the namespace split is an
 implementation detail of that opt-in.
 
-To cherry-pick rules, import `plugin` (and `testingRules` / `bddRules`) from the
-matching subpath and wire them into your own config block.
+To cherry-pick rules, import `plugin` (and `testingRules` / `bddRules` /
+`conventionsRules`) from the matching subpath and wire them into your own config
+block.
 
 <details>
   <summary>Customizing ESLint</summary>

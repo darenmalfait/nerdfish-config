@@ -22,7 +22,7 @@
     "./eslint": "./eslint.js",
     "./eslint/testing": "./eslint/rules/testing/common/index.js",
     "./eslint/testing/bdd": "./eslint/rules/testing/bdd/index.js",
-    "./eslint/opinionated": "./eslint/rules/opinionated/index.js"
+    "./eslint/conventions": "./eslint/rules/conventions/index.js"
   },
   "main": "index.js",
   "scripts": {

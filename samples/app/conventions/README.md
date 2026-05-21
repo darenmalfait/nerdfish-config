@@ -1,6 +1,6 @@
-# Opinionated rule fixtures
+# Conventions rule fixtures
 
-Valid examples for `@nerdfish/config/eslint/opinionated`. CI fails if rules regress
+Valid examples for `@nerdfish/config/eslint/conventions`. CI fails if rules regress
 and these no longer pass.
 
 | Fixture | Rule |
