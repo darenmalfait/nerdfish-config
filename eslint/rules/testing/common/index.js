@@ -6,7 +6,7 @@ import { noTestingInternalsRule } from './no-testing-internals.js'
 import { noTranslationLiteralAssertionsRule } from './no-translation-literal-assertions.js'
 import { noWithinFindbyOnStaleScopeRule } from './no-within-findby-on-stale-scope.js'
 import { preferAccessibleQueriesRule } from './prefer-accessible-queries.js'
-import { specMswServerLifecycleRule } from './spec-msw-server-lifecycle.js'
+import { specHttpMockLifecycleRule } from './spec-http-mock-lifecycle.js'
 import { specPartialMocksUseJestRequireActualRule } from './spec-partial-mocks-use-jest-require-actual.js'
 
 const ERROR = 'error'
@@ -22,7 +22,7 @@ export const testingRules = {
 	'@nerdfish/testing/no-translation-literal-assertions': ERROR,
 	'@nerdfish/testing/no-within-findby-on-stale-scope': ERROR,
 	'@nerdfish/testing/prefer-accessible-queries': ERROR,
-	'@nerdfish/testing/spec-msw-server-lifecycle': ERROR,
+	'@nerdfish/testing/spec-http-mock-lifecycle': ERROR,
 	'@nerdfish/testing/spec-partial-mocks-use-jest-require-actual': ERROR,
 }
 
@@ -36,7 +36,7 @@ export const plugin = {
 		'no-translation-literal-assertions': noTranslationLiteralAssertionsRule,
 		'no-within-findby-on-stale-scope': noWithinFindbyOnStaleScopeRule,
 		'prefer-accessible-queries': preferAccessibleQueriesRule,
-		'spec-msw-server-lifecycle': specMswServerLifecycleRule,
+		'spec-http-mock-lifecycle': specHttpMockLifecycleRule,
 		'spec-partial-mocks-use-jest-require-actual':
 			specPartialMocksUseJestRequireActualRule,
 	},

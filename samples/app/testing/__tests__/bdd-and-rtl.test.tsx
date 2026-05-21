@@ -1,9 +1,16 @@
-import { beforeEach, describe, expect, it, screen } from './testing-runtime'
+import {
+	beforeEach,
+	describe,
+	expect,
+	it,
+	render,
+	screen,
+} from './testing-runtime'
 
 describe('User Story: user can submit the form', () => {
-	describe('Given the form is open', () => {
+	describe('Given the form is rendered', () => {
 		beforeEach(() => {
-			// setup only
+			render(<Form />)
 		})
 
 		describe('When the user submits valid input', () => {
@@ -21,3 +28,11 @@ describe('User Story: user can submit the form', () => {
 })
 
 function clickSubmit() {}
+
+function Form() {
+	return (
+		<form>
+			<button type="submit">form.submit</button>
+		</form>
+	)
+}

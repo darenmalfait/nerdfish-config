@@ -139,7 +139,7 @@ packages.
 
 | What you import                       | What it enables                                       |
 | ------------------------------------- | ----------------------------------------------------- |
-| `@nerdfish/config/eslint/testing`     | Testing Library queries, MSW lifecycle, partial mocks |
+| `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
 | `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
 
 Spread the flat configs you need:
