@@ -141,7 +141,7 @@ packages.
 | ------------------------------------- | ----------------------------------------------------- |
 | `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
 | `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
-| `@nerdfish/config/eslint/conventions` | Team coding conventions (e.g. `.map()` transformer names) |
+| `@nerdfish/config/eslint/conventions` | Team coding conventions (`.map()` transformer names, `handle*` event handlers) |
 
 Spread the flat configs you need:
 

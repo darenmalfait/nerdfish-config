@@ -9,16 +9,16 @@ export const MockToast = ({
 	type = 'info',
 	message,
 	duration = 3000,
-	onClose = () => {},
+	onClose: handleClose = () => {},
 }: MockToastProps) => {
 	return (
 		<div
 			className={`mock-toast mock-toast-${type}`}
 			data-duration={duration}
-			onClick={onClose}
+			onClick={handleClose}
 		>
 			<div className="mock-toast-message">{message}</div>
-			<button className="mock-toast-close" onClick={onClose}>
+			<button className="mock-toast-close" onClick={handleClose}>
 				×
 			</button>
 		</div>
