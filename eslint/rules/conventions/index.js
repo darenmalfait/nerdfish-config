@@ -1,5 +1,6 @@
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
+import { sortTransformerNameRule } from './sort-transformer-name.js'
 
 const WARN = 'warn'
 
@@ -7,6 +8,7 @@ const WARN = 'warn'
 export const conventionsRules = {
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
+	'@nerdfish/conventions/sort-transformer-name': WARN,
 }
 
 /** Nerdfish coding conventions — opt in via spread alongside `@nerdfish/config/eslint`. */
@@ -14,6 +16,7 @@ export const plugin = {
 	rules: {
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
+		'sort-transformer-name': sortTransformerNameRule,
 	},
 }
 
