@@ -21,7 +21,8 @@
     "./reset.d.ts": "./reset.d.ts",
     "./eslint": "./eslint.js",
     "./eslint/testing": "./eslint/rules/testing/common/index.js",
-    "./eslint/testing/bdd": "./eslint/rules/testing/bdd/index.js"
+    "./eslint/testing/bdd": "./eslint/rules/testing/bdd/index.js",
+    "./eslint/opinionated": "./eslint/rules/opinionated/index.js"
   },
   "main": "index.js",
   "scripts": {
