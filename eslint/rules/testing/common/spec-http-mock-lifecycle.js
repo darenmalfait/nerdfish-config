@@ -58,17 +58,17 @@ function hookCallbackInvokesMockServerMethod(
 	mockServerName,
 	methodName,
 ) {
-	let invokes = false
+	let isInvoking = false
 
 	walkAst(callback.body, (node) => {
 		if (isMockServerMethodCall(node, mockServerName, methodName)) {
-			invokes = true
+			isInvoking = true
 			return true
 		}
 		return false
 	})
 
-	return invokes
+	return isInvoking
 }
 
 export const specHttpMockLifecycleRule = {
@@ -108,19 +108,15 @@ export const specHttpMockLifecycleRule = {
 			afterEach: false,
 			afterAll: false,
 		}
-		let usesHttpMock = false
+		let isUsingHttpMock = false
 
 		return {
 			CallExpression(node) {
 				if (
 					isSetupHttpMockCall(node) ||
-					usesAnyMockServerMethod(
-						node,
-						mockServerName,
-						HTTP_MOCK_TOUCH_METHODS,
-					)
+					usesAnyMockServerMethod(node, mockServerName, HTTP_MOCK_TOUCH_METHODS)
 				) {
-					usesHttpMock = true
+					isUsingHttpMock = true
 				}
 
 				for (const [hookName, mockMethod] of Object.entries(LIFECYCLE_HOOKS)) {
@@ -145,7 +141,7 @@ export const specHttpMockLifecycleRule = {
 				}
 			},
 			'Program:exit'(node) {
-				if (!usesHttpMock) {
+				if (!isUsingHttpMock) {
 					return
 				}
 

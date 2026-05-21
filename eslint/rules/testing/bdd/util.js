@@ -249,7 +249,7 @@ export function callbackHasMultipleActions(
 }
 
 export function containsExpectAssertion(body) {
-	let found = false
+	let isFound = false
 
 	walkAst(
 		body,
@@ -259,7 +259,7 @@ export function containsExpectAssertion(body) {
 				node.callee?.type === 'Identifier' &&
 				node.callee.name === 'expect'
 			) {
-				found = true
+				isFound = true
 				return true
 			}
 			return false
@@ -267,7 +267,7 @@ export function containsExpectAssertion(body) {
 		{ omitFunctionArgsForCalls: NESTED_BDD_SCOPE_CALLS },
 	)
 
-	return found
+	return isFound
 }
 
 export function createNoAssertionsInBddBlockRule({

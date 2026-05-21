@@ -221,13 +221,13 @@ export function walkAst(
 }
 
 export function subtreeMatches(root, predicate, walkOptions = {}) {
-	let matched = false
+	let isMatched = false
 
 	walkAst(
 		root,
 		(node) => {
 			if (predicate(node)) {
-				matched = true
+				isMatched = true
 				return true
 			}
 			return false
@@ -235,5 +235,5 @@ export function subtreeMatches(root, predicate, walkOptions = {}) {
 		walkOptions,
 	)
 
-	return matched
+	return isMatched
 }
