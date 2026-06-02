@@ -17,13 +17,13 @@ export const MockButton = ({
 	loading = false,
 	className = '',
 	children,
-	onClick = () => {},
+	onClick: handleClick = () => {},
 }: MockButtonProps) => {
 	return (
 		<button
 			className={`mock-button mock-button-${variant} mock-button-${size} ${className}`}
 			disabled={disabled || loading}
-			onClick={onClick}
+			onClick={handleClick}
 			data-loading={loading}
 		>
 			{loading ? 'Loading...' : children}

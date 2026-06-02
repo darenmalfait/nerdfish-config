@@ -132,6 +132,53 @@ import { config as defaultConfig } from '@nerdfish/config/eslint'
 export default [...defaultConfig]
 ```
 
+#### Opinionated testing rules (optional)
+
+Everything below is part of **`@nerdfish/config`** — install once, no extra
+packages.
+
+| What you import                       | What it enables                                       |
+| ------------------------------------- | ----------------------------------------------------- |
+| `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
+| `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
+| `@nerdfish/config/eslint/conventions` | Team coding conventions (`to*`/`by*` transformers, `handle*` handlers, `is*`/`has*` booleans, `use*` hooks) |
+
+Spread the flat configs you need:
+
+```js
+import { config as defaultConfig } from '@nerdfish/config/eslint'
+import { config as testingConfig } from '@nerdfish/config/eslint/testing'
+import { config as testingBddConfig } from '@nerdfish/config/eslint/testing/bdd'
+import { config as conventionsConfig } from '@nerdfish/config/eslint/conventions'
+
+/** @type {import("eslint").Linter.Config} */
+export default [
+	...defaultConfig,
+	...testingConfig,
+	// ...testingBddConfig, // optional
+	// ...conventionsConfig, // optional
+]
+```
+
+**ESLint plugin namespaces (not npm packages).** Custom rules still need a
+plugin name in flat config. Ours are `@nerdfish/testing`,
+`@nerdfish/testing-bdd`, and `@nerdfish/conventions` — they look like package
+names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
+`@nerdfish/testing-bdd/bdd-split-on-and`, and
+`@nerdfish/conventions/map-transformer-name`, and
+`@nerdfish/conventions/sort-transformer-name`, and
+`@nerdfish/conventions/boolean-name`, and
+`@nerdfish/conventions/no-unnecessary-use-prefix`.
+
+We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
+`.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
+redefined plugin. BDD stays a separate subpath export; the namespace split is an
+implementation detail of that opt-in.
+
+To cherry-pick rules, import `plugin` (and `testingRules` / `bddRules` /
+`conventionsRules`) from the matching subpath and wire them into your own config
+block.
+
 <details>
   <summary>Customizing ESLint</summary>
 
@@ -185,12 +232,7 @@ Create a `tsconfig.json` file in your project root with the following content:
 ```json
 {
 	"extends": ["@nerdfish/config/typescript"],
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		"**/*.js",
-		"**/*.jsx"
-	],
+	"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
 	"compilerOptions": {
 		"paths": {
 			"#app/*": ["./app/*"],

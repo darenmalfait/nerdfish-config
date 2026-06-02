@@ -15,7 +15,7 @@ jobs:
       - name: ⎔ Setup node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         name: Install pnpm
@@ -41,7 +41,8 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    if: ${{ github.repository == 'darenmalfait/nerdfish-config' &&
+    if:
+      ${{ github.repository == 'darenmalfait/nerdfish-config' &&
       contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
@@ -51,7 +52,7 @@ jobs:
       - name: ⎔ Setup node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         name: Install pnpm

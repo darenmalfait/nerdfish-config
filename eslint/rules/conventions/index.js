@@ -1,0 +1,40 @@
+import { booleanNameRule } from './boolean-name.js'
+import { eventHandlerNameRule } from './event-handler-name.js'
+import { mapTransformerNameRule } from './map-transformer-name.js'
+import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
+import { sortTransformerNameRule } from './sort-transformer-name.js'
+
+const WARN = 'warn'
+
+/** @type {import('eslint').Linter.RulesRecord} */
+export const conventionsRules = {
+	'@nerdfish/conventions/boolean-name': WARN,
+	'@nerdfish/conventions/event-handler-name': WARN,
+	'@nerdfish/conventions/map-transformer-name': WARN,
+	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
+	'@nerdfish/conventions/sort-transformer-name': WARN,
+}
+
+/** Nerdfish coding conventions — opt in via spread alongside `@nerdfish/config/eslint`. */
+export const plugin = {
+	rules: {
+		'boolean-name': booleanNameRule,
+		'event-handler-name': eventHandlerNameRule,
+		'map-transformer-name': mapTransformerNameRule,
+		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
+		'sort-transformer-name': sortTransformerNameRule,
+	},
+}
+
+/** @type {import('eslint').Linter.Config[]} */
+export const config = [
+	{
+		files: ['**/*.ts?(x)', '**/*.js?(x)'],
+		plugins: {
+			'@nerdfish/conventions': plugin,
+		},
+		rules: conventionsRules,
+	},
+]
+
+export default config
