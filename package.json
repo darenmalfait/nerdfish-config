@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/darenmalfait/nerdfish-config.git"
+    "url": "git+https://github.com/darenmalfait/nerdfish-config.git"
   },
   "license": "MIT",
   "author": "Daren Malfait <daren@nerdfish.be> (https://nerdfish.be/)",
