@@ -7,11 +7,28 @@ export function LoginForm() {
 
 	function handleClick() {}
 
+	const handleMemoizedClick = React.useCallback(() => {}, [])
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<button type="button" onClick={handleClick}>
 				Submit
 			</button>
+			<button type="button" onClick={handleMemoizedClick}>
+				Memoized
+			</button>
 		</form>
+	)
+}
+
+type IconButtonProps = {
+	onClick: React.MouseEventHandler<HTMLButtonElement>
+}
+
+export function IconButton({ onClick }: IconButtonProps) {
+	return (
+		<button type="button" onClick={onClick}>
+			Icon
+		</button>
 	)
 }
