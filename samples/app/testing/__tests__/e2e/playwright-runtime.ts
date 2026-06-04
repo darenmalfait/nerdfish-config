@@ -2,6 +2,7 @@
 
 export interface Locator {
 	click(): Promise<void>
+	fill(value: string): Promise<void>
 }
 
 export interface Page {

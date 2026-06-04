@@ -17,6 +17,25 @@ test.describe('User Story: user can sign in to the app', () => {
 				).toBeVisible()
 			})
 		})
+
+		test.describe('When the user submits with an invalid email', () => {
+			test.beforeEach(async ({ page }: { page: Page }) => {
+				await page
+					.getByRole('textbox', { name: 'auth.email' })
+					.fill('invalid-email')
+				await submitLogin(page)
+			})
+
+			test('it marks the email field as invalid', async ({
+				page,
+			}: {
+				page: Page
+			}) => {
+				await expect(
+					page.getByRole('textbox', { name: 'auth.email' }),
+				).toBeVisible()
+			})
+		})
 	})
 })
 

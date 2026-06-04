@@ -1,6 +1,5 @@
 import {
 	getCallName,
-	getFirstCallback,
 	getSecondCallback,
 	isFunctionNode,
 	resolveStaticStringArg,
@@ -219,33 +218,7 @@ export function callbackHasMultipleActions(
 ) {
 	const body = callback.body
 
-	if (bodyHasMultipleActions(body, { excludeTestHarness })) {
-		return true
-	}
-
-	if (body?.type !== 'BlockStatement') {
-		return false
-	}
-
-	for (const statement of body.body) {
-		if (
-			statement.type !== 'ExpressionStatement' ||
-			statement.expression.type !== 'CallExpression'
-		) {
-			continue
-		}
-
-		if (getCallName(statement.expression.callee) !== 'beforeEach') {
-			continue
-		}
-
-		const beforeEachCallback = getFirstCallback(statement.expression)
-		if (beforeEachCallback && bodyHasMultipleActions(beforeEachCallback.body)) {
-			return true
-		}
-	}
-
-	return false
+	return bodyHasMultipleActions(body, { excludeTestHarness })
 }
 
 export function containsExpectAssertion(body) {

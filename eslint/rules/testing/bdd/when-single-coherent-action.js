@@ -8,7 +8,8 @@ export const bddWhenSingleCoherentActionRule = {
 	meta: {
 		type: 'problem',
 		docs: {
-			description: 'Require When blocks to represent a single coherent action.',
+			description:
+				'Require When blocks to represent a single coherent action (title or direct body). Multiple steps in beforeEach are allowed when they perform that one action.',
 			guidelineRuleId: 'testing.bdd.when-single-coherent-action',
 		},
 		schema: [],
