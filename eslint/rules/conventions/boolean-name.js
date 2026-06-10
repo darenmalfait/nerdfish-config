@@ -32,7 +32,7 @@ export const booleanNameRule = {
 	create(context) {
 		const options = context.options[0] || {}
 
-		const prefixes = options.prefixes || ['is', 'has']
+		const prefixes = options.prefixes || ['is', 'has', 'can', 'should']
 
 		/** Methods that conventionally return boolean (e.g. `str.includes()`, `set.has()`). */
 		const booleanMemberMethods = new Set([
@@ -81,14 +81,12 @@ export const booleanNameRule = {
 				case 'LogicalExpression':
 					if (node.operator === '&&') {
 						return (
-							isBooleanExpression(node.left) &&
-							isBooleanExpression(node.right)
+							isBooleanExpression(node.left) && isBooleanExpression(node.right)
 						)
 					}
 
 					return (
-						isBooleanExpression(node.left) ||
-						isBooleanExpression(node.right)
+						isBooleanExpression(node.left) || isBooleanExpression(node.right)
 					)
 
 				case 'CallExpression': {
