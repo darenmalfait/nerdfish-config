@@ -10,6 +10,7 @@ and these no longer pass.
 | `event-handler-name.tsx` | `event-handler-name` — named JSX `on*` handlers start with `handle` |
 | `boolean-name.ts` | `boolean-name` — boolean locals start with `is` or `has` |
 | `no-unnecessary-use-prefix.tsx` | `no-unnecessary-use-prefix` — `use*` functions must call another hook |
+| `no-use-effect.tsx` | `no-use-effect` — ban direct `useEffect`; allow inside `useMountEffect` |
 
 ```bash
 pnpm lint

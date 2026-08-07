@@ -141,7 +141,7 @@ packages.
 | ------------------------------------- | ----------------------------------------------------- |
 | `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
 | `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
-| `@nerdfish/config/eslint/conventions` | Team coding conventions (`to*`/`by*` transformers, `handle*` handlers, `is*`/`has*` booleans, `use*` hooks) |
+| `@nerdfish/config/eslint/conventions` | Team coding conventions (`to*`/`by*` transformers, `handle*` handlers, `is*`/`has*` booleans, `use*` hooks, no bare `useEffect`) |
 
 Spread the flat configs you need:
 
@@ -168,7 +168,8 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/map-transformer-name`, and
 `@nerdfish/conventions/sort-transformer-name`, and
 `@nerdfish/conventions/boolean-name`, and
-`@nerdfish/conventions/no-unnecessary-use-prefix`.
+`@nerdfish/conventions/no-unnecessary-use-prefix`, and
+`@nerdfish/conventions/no-use-effect`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
