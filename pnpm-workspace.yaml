@@ -1,3 +1,5 @@
 allowBuilds:
   '@biomejs/biome': true
   unrs-resolver: true
+patchedDependencies:
+  eslint-plugin-react@7.37.5: patches/eslint-plugin-react@7.37.5.patch
