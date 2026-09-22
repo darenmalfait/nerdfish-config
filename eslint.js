@@ -200,7 +200,10 @@ export const config = [
 			radix: ERROR,
 			'require-yield': ERROR,
 			'symbol-description': ERROR,
-			'unicorn/filename-case': [WARN, { case: 'kebabCase' }],
+			'unicorn/filename-case': [
+				WARN,
+				{ case: 'kebabCase', ignore: [String.raw`^__tests__$`] },
+			],
 			'use-isnan': ERROR,
 			'valid-typeof': ERROR,
 			'vars-on-top': ERROR,
