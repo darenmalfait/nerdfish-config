@@ -237,3 +237,25 @@ export function subtreeMatches(root, predicate, walkOptions = {}) {
 
 	return isMatched
 }
+
+const DEFAULT_MOCK_SERVER_NAME = 'server'
+
+/** Rule schema for the shared `mockServerName` option (HTTP mock server identifier). */
+export const mockServerNameSchema = [
+	{
+		type: 'object',
+		additionalProperties: false,
+		properties: {
+			mockServerName: {
+				type: 'string',
+				description:
+					'Identifier of the HTTP mock server instance (default: server).',
+			},
+		},
+	},
+]
+
+export function getMockServerName(context) {
+	const [options] = context.options
+	return options?.mockServerName ?? DEFAULT_MOCK_SERVER_NAME
+}

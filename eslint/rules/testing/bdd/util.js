@@ -1,5 +1,6 @@
 import {
 	getCallName,
+	getMemberPropertyName,
 	getSecondCallback,
 	isFunctionNode,
 	resolveStaticStringArg,
@@ -111,6 +112,54 @@ export function isBddScopeBlock(node, { helperName, describeTitlePrefix }) {
 		isHelperCall(node, helperName) ||
 		isDescribeTitled(node, describeTitlePrefix)
 	)
+}
+
+export function isGivenBlock(node) {
+	return isBddScopeBlock(node, {
+		helperName: 'Given',
+		describeTitlePrefix: 'Given ',
+	})
+}
+
+/** Calls that arrive at a UI state: render, page.goto / page-object goto, cy.visit, <mockServer>.use. */
+export function isArriveCall(node, mockServerName) {
+	if (node?.type !== 'CallExpression') {
+		return false
+	}
+
+	const callee = node.callee
+	if (callee?.type === 'Identifier') {
+		return callee.name === 'render' || /^render(?!Hook)[A-Z]/.test(callee.name)
+	}
+
+	const member = getMemberPropertyName(callee)
+	const objectName =
+		callee?.object?.type === 'Identifier' ? callee.object.name : null
+
+	return (
+		member === 'goto' ||
+		(objectName === 'cy' && member === 'visit') ||
+		(objectName === mockServerName && member === 'use')
+	)
+}
+
+/** Nearest enclosing describe / it / test / Given / When call, or null at top level. */
+export function getNearestTestBlock(node) {
+	let current = node.parent
+
+	while (current) {
+		if (
+			isNamedTestBlock(current) ||
+			isHelperCall(current, 'Given') ||
+			isHelperCall(current, 'When')
+		) {
+			return current
+		}
+
+		current = current.parent
+	}
+
+	return null
 }
 
 export function getParentDescribe(node) {

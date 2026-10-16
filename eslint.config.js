@@ -4,6 +4,7 @@ import testingRules from './eslint/rules/testing/common/index.js'
 import baseConfig from './eslint.js'
 
 export default [
+	{ ignores: ['.tmp/**'] },
 	...baseConfig,
 	...testingRules,
 	...bddRules,

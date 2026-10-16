@@ -18,5 +18,4 @@ No real test runner in this repo — files exist so ESLint can parse valid patte
 
 ```bash
 pnpm lint
-pnpm test:eslint-rules
 ```

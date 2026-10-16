@@ -1,5 +1,7 @@
 import { testFiles } from '../test-files.js'
+import { bddArriveInGivenRule } from './arrive-in-given.js'
 import { bddExpectOnlyInTestCaseRule } from './expect-only-in-test-case.js'
+import { bddGesturesInWhenRule } from './gestures-in-when.js'
 import { bddGivenOnlySetupRule } from './given-only-setup.js'
 import { bddSplitOnAndRule } from './split-on-and.js'
 import { bddUserStoryStructureRule } from './user-story-structure.js'
@@ -13,7 +15,9 @@ const ERROR = 'error'
 /** @type {import('eslint').Linter.RulesRecord} */
 export const bddRules = {
 	'@nerdfish/testing-bdd/bdd-user-story-structure': ERROR,
+	'@nerdfish/testing-bdd/bdd-arrive-in-given': ERROR,
 	'@nerdfish/testing-bdd/bdd-expect-only-in-test-case': ERROR,
+	'@nerdfish/testing-bdd/bdd-gestures-in-when': ERROR,
 	'@nerdfish/testing-bdd/bdd-given-only-setup': ERROR,
 	'@nerdfish/testing-bdd/bdd-split-on-and': ERROR,
 	'@nerdfish/testing-bdd/bdd-user-story-uses-user': ERROR,
@@ -26,7 +30,9 @@ export const bddRules = {
 export const plugin = {
 	rules: {
 		'bdd-user-story-structure': bddUserStoryStructureRule,
+		'bdd-arrive-in-given': bddArriveInGivenRule,
 		'bdd-expect-only-in-test-case': bddExpectOnlyInTestCaseRule,
+		'bdd-gestures-in-when': bddGesturesInWhenRule,
 		'bdd-given-only-setup': bddGivenOnlySetupRule,
 		'bdd-split-on-and': bddSplitOnAndRule,
 		'bdd-user-story-uses-user': bddUserStoryUsesUserRule,

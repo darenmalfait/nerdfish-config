@@ -5,7 +5,7 @@ jest.mock('./module', () => ({
 	onlyExport: 'mocked',
 }))
 
-describe('User Story: user can load a partially mocked module', () => {
+describe('partial module mocks', () => {
 	it('uses the mock', () => {
 		expect(true).toBe(true)
 	})

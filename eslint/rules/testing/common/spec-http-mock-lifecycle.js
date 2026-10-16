@@ -1,5 +1,11 @@
 // Guideline registry id: testing.spec.http-mock-lifecycle
-import { getCallName, getFirstCallback, walkAst } from '../../util.js'
+import {
+	getCallName,
+	getFirstCallback,
+	getMockServerName,
+	mockServerNameSchema,
+	walkAst,
+} from '../../util.js'
 
 const LIFECYCLE_HOOKS = {
 	beforeAll: 'listen',
@@ -10,12 +16,6 @@ const HTTP_MOCK_TOUCH_METHODS = new Set([
 	'use',
 	...Object.values(LIFECYCLE_HOOKS),
 ])
-const DEFAULT_MOCK_SERVER_NAME = 'server'
-
-function getMockServerName(context) {
-	const [options] = context.options
-	return options?.mockServerName ?? DEFAULT_MOCK_SERVER_NAME
-}
 
 function isLifecycleHookCall(node, hookName) {
 	return (
@@ -79,19 +79,7 @@ export const specHttpMockLifecycleRule = {
 				'Ensure HTTP mock servers are started, reset, and stopped with beforeAll, afterEach, and afterAll.',
 			guidelineRuleId: 'testing.spec.http-mock-lifecycle',
 		},
-		schema: [
-			{
-				type: 'object',
-				additionalProperties: false,
-				properties: {
-					mockServerName: {
-						type: 'string',
-						description:
-							'Identifier of the HTTP mock server instance (default: server).',
-					},
-				},
-			},
-		],
+		schema: mockServerNameSchema,
 		messages: {
 			missingBeforeAll:
 				'Add beforeAll/test.beforeAll(() => {{mockServer}}.listen()) to start the HTTP mock server.',
