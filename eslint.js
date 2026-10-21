@@ -194,6 +194,7 @@ export const config = [
 			'prefer-numeric-literals': ERROR,
 			'prefer-object-has-own': ERROR,
 			'prefer-object-spread': WARN,
+			'prefer-regex-literals': [ERROR, { disallowRedundantWrapping: true }],
 			'prefer-rest-params': ERROR,
 			'prefer-spread': ERROR,
 			'prefer-template': ERROR,

@@ -5,7 +5,9 @@ export function Head() {
 			<script src="https://example.com/analytics.js" async />
 			<script src="/entry.js" type="module" />
 			<script
-				dangerouslySetInnerHTML={{ __html: 'document.documentElement.dataset.theme = "dark"' }}
+				dangerouslySetInnerHTML={{
+					__html: 'document.documentElement.dataset.theme = "dark"',
+				}}
 			/>
 		</head>
 	)
