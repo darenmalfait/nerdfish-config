@@ -3,6 +3,8 @@ import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
+import { requirePassiveEventListenerRule } from './require-passive-event-listener.js'
+import { requireScriptLoadingStrategyRule } from './require-script-loading-strategy.js'
 import { sortTransformerNameRule } from './sort-transformer-name.js'
 
 const WARN = 'warn'
@@ -14,6 +16,8 @@ export const conventionsRules = {
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/no-static-render-prop': WARN,
 	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
+	'@nerdfish/conventions/require-passive-event-listener': WARN,
+	'@nerdfish/conventions/require-script-loading-strategy': WARN,
 	'@nerdfish/conventions/sort-transformer-name': WARN,
 }
 
@@ -25,6 +29,8 @@ export const plugin = {
 		'map-transformer-name': mapTransformerNameRule,
 		'no-static-render-prop': noStaticRenderPropRule,
 		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
+		'require-passive-event-listener': requirePassiveEventListenerRule,
+		'require-script-loading-strategy': requireScriptLoadingStrategyRule,
 		'sort-transformer-name': sortTransformerNameRule,
 	},
 }

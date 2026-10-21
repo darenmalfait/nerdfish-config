@@ -1,5 +1,8 @@
 import * as React from 'react'
 
+const NOOP = () => {}
+const EMPTY_ARRAY: never[] = []
+
 interface MockTab {
 	id: string
 	label: string
@@ -14,10 +17,10 @@ interface MockTabsProps {
 }
 
 export const MockTabs = ({
-	tabs = [],
+	tabs = EMPTY_ARRAY,
 	activeTab,
 	className = '',
-	onTabChange = () => {},
+	onTabChange = NOOP,
 }: MockTabsProps) => {
 	const currentTab = activeTab ?? tabs[0]?.id
 

@@ -204,6 +204,10 @@ export const config = [
 				WARN,
 				{ case: 'kebabCase', ignore: [String.raw`^__tests__$`] },
 			],
+			'unicorn/no-array-reverse': ERROR,
+			'unicorn/no-array-sort': ERROR,
+			'unicorn/no-array-sort-for-min-max': ERROR,
+			'unicorn/prefer-set-has': ERROR,
 			'use-isnan': ERROR,
 			'valid-typeof': ERROR,
 			'vars-on-top': ERROR,
@@ -359,6 +363,15 @@ export const config = [
 					'react-x/no-context-provider': ERROR,
 					'react-x/no-forward-ref': ERROR,
 					'react-x/no-use-context': ERROR,
+					'react-x/no-unstable-default-props': ERROR,
+					'react-x/use-state': [
+						ERROR,
+						{
+							enforceAssignment: false,
+							enforceLazyInitialization: true,
+							enforceSetterName: false,
+						},
+					],
 				},
 			}
 		: null,

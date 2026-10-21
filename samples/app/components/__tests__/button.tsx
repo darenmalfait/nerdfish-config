@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const NOOP = () => {}
+
 interface MockButtonProps {
 	variant?: 'primary' | 'secondary' | 'ghost' | 'destructive'
 	size?: 'sm' | 'md' | 'lg'
@@ -17,7 +19,7 @@ export const MockButton = ({
 	loading = false,
 	className = '',
 	children,
-	onClick: handleClick = () => {},
+	onClick: handleClick = NOOP,
 }: MockButtonProps) => {
 	return (
 		<button

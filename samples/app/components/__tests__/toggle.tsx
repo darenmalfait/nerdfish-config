@@ -1,3 +1,5 @@
+const NOOP = () => {}
+
 interface MockToggleProps {
 	checked?: boolean
 	disabled?: boolean
@@ -13,7 +15,7 @@ export const MockToggle = ({
 	size = 'md',
 	label,
 	className = '',
-	onChange = () => {},
+	onChange = NOOP,
 }: MockToggleProps) => {
 	return (
 		<label className={`mock-toggle-wrapper ${className}`}>

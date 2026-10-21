@@ -1,3 +1,5 @@
+const NOOP = () => {}
+
 interface MockToastProps {
 	type?: 'success' | 'error' | 'warning' | 'info'
 	message: string
@@ -9,7 +11,7 @@ export const MockToast = ({
 	type = 'info',
 	message,
 	duration = 3000,
-	onClose: handleClose = () => {},
+	onClose: handleClose = NOOP,
 }: MockToastProps) => {
 	return (
 		<div

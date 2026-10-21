@@ -1,3 +1,6 @@
+const NOOP = () => {}
+const EMPTY_ARRAY: never[] = []
+
 interface MockSelectOption {
 	value: string
 	label: string
@@ -13,12 +16,12 @@ interface MockSelectProps {
 }
 
 export const MockSelect = ({
-	options = [],
+	options = EMPTY_ARRAY,
 	value = '',
 	placeholder = 'Select an option',
 	disabled = false,
 	className = '',
-	onChange = () => {},
+	onChange = NOOP,
 }: MockSelectProps) => {
 	return (
 		<div className={`mock-select ${className}`}>

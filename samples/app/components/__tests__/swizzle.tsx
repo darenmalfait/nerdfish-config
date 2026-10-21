@@ -1,3 +1,6 @@
+const NOOP = () => {}
+const EMPTY_ARRAY: never[] = []
+
 interface MockSwizzleProps {
 	components?: string[]
 	onSwizzle?: (component: string) => void
@@ -5,8 +8,8 @@ interface MockSwizzleProps {
 }
 
 export const MockSwizzle = ({
-	components = [],
-	onSwizzle = () => {},
+	components = EMPTY_ARRAY,
+	onSwizzle = NOOP,
 	className = '',
 }: MockSwizzleProps) => {
 	return (

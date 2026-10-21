@@ -1,3 +1,5 @@
+const NOOP = () => {}
+
 interface MockInputProps {
 	type?: 'text' | 'password' | 'email' | 'number'
 	placeholder?: string
@@ -15,7 +17,7 @@ export const MockInput = ({
 	error,
 	disabled = false,
 	className = '',
-	onChange = () => {},
+	onChange = NOOP,
 }: MockInputProps) => {
 	return (
 		<div className="mock-input-wrapper">

@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const NOOP = () => {}
+
 interface MockDialogProps {
 	open?: boolean
 	title?: string
@@ -12,7 +14,7 @@ export const MockDialog = ({
 	open = false,
 	title,
 	children,
-	onClose: handleClose = () => {},
+	onClose: handleClose = NOOP,
 	className = '',
 }: MockDialogProps) => {
 	if (!open) return null

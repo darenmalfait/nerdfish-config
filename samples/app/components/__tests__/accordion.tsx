@@ -1,5 +1,7 @@
 import { type ReactNode } from 'react'
 
+const EMPTY_ARRAY: never[] = []
+
 interface MockAccordionProps {
 	items?: Array<{
 		title: string
@@ -10,7 +12,7 @@ interface MockAccordionProps {
 }
 
 export const MockAccordion = ({
-	items = [],
+	items = EMPTY_ARRAY,
 	defaultOpen = false,
 	className = '',
 }: MockAccordionProps) => {
