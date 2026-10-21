@@ -4,7 +4,7 @@
 		"isolatedModules": true,
 		"jsx": "react-jsx",
 		"module": "preserve",
-		"target": "ES2022",
+		"target": "ES2023",
 		"strict": true,
 		"strictNullChecks": true,
 		"skipLibCheck": true,
