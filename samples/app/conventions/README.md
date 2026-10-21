@@ -13,6 +13,12 @@ and these no longer pass.
 | `narrow-effect-deps.tsx` | `narrow-effect-deps` — effect deps list the properties read, not the whole object |
 | `no-callback-only-subscription.tsx` | `no-callback-only-subscription` — no `useSearchParams()` (configurable) read only in event handlers |
 | `prefer-use-transition.tsx` | `prefer-use-transition` — `useTransition` instead of `setLoading(true)` … `await` … `setLoading(false)` |
+| `no-paste-blocking.tsx` | `no-paste-blocking` — `onPaste` handlers don't call `preventDefault()` |
+| `no-transition-all.tsx` | `no-transition-all` — no `transition-all` / `transition: all` |
+| `prefer-ellipsis-character.tsx` | `prefer-ellipsis-character` — `…` instead of `...` in rendered text |
+| `require-focus-visible-replacement.tsx` | `require-focus-visible-replacement` — `outline-none` / `outline-hidden` need a `focus-visible:` style |
+| `require-img-dimensions.tsx` | `require-img-dimensions` — `<img>` has `width` and `height` |
+| `require-input-autocomplete.tsx` | `require-input-autocomplete` — email/password/tel inputs have `autoComplete` |
 | `no-dynamic-import-path.ts` | `no-dynamic-import-path` — `import()` takes a static string path |
 | `no-trivial-use-memo.tsx` | `no-trivial-use-memo` — no `useMemo` around call-free, allocation-free expressions |
 | `prefer-flat-map-over-map-filter.ts` | `prefer-flat-map-over-map-filter` — `.flatMap()` instead of `.map(…).filter(Boolean)` |

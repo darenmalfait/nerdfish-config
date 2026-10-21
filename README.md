@@ -178,7 +178,13 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/prefer-functional-set-state`, and
 `@nerdfish/conventions/narrow-effect-deps`, and
 `@nerdfish/conventions/no-callback-only-subscription`, and
-`@nerdfish/conventions/prefer-use-transition`.
+`@nerdfish/conventions/prefer-use-transition`, and
+`@nerdfish/conventions/no-paste-blocking`, and
+`@nerdfish/conventions/no-transition-all`, and
+`@nerdfish/conventions/prefer-ellipsis-character`, and
+`@nerdfish/conventions/require-focus-visible-replacement`, and
+`@nerdfish/conventions/require-img-dimensions`, and
+`@nerdfish/conventions/require-input-autocomplete`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
