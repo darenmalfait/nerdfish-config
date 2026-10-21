@@ -6,6 +6,12 @@ export function useDocumentTitle(title: string) {
 	return { documentTitle, setDocumentTitle }
 }
 
+const TitleContext = React.createContext('')
+
+export function useTitle() {
+	return React.use(TitleContext)
+}
+
 export function justAUseLessFunction(title: string) {
 	return title
 }

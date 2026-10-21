@@ -10,7 +10,8 @@ function isUsePrefixedName(name) {
 }
 
 function isHookCallName(name) {
-	return name != null && USE_PREFIX_PATTERN.test(name)
+	// React's `use()` only runs in components and hooks, so it counts.
+	return name === 'use' || (name != null && USE_PREFIX_PATTERN.test(name))
 }
 
 function isFunctionEmpty(node) {
