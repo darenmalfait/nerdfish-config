@@ -344,6 +344,7 @@ export const config = [
 					'react-you-might-not-need-an-effect': (
 						await import('eslint-plugin-react-you-might-not-need-an-effect')
 					).default,
+					'react-x': (await import('eslint-plugin-react-x')).default,
 				},
 				rules: {
 					...fixupPluginRules(await import('eslint-plugin-react-hooks')).configs
@@ -354,6 +355,10 @@ export const config = [
 					// which would leak into Node files.
 					...(await import('eslint-plugin-react-you-might-not-need-an-effect'))
 						.default.configs.strict.rules,
+					// React 19 APIs; these only report when the detected React is >= 19
+					'react-x/no-context-provider': ERROR,
+					'react-x/no-forward-ref': ERROR,
+					'react-x/no-use-context': ERROR,
 				},
 			}
 		: null,
