@@ -493,7 +493,17 @@ export const config = [
 					'@typescript-eslint/prefer-string-starts-ends-with': ERROR,
 					'@typescript-eslint/prefer-ts-expect-error': ERROR,
 					'@typescript-eslint/restrict-plus-operands': ERROR,
-					'@typescript-eslint/switch-exhaustiveness-check': ERROR,
+					// Replaces core default-case for TS: an exhaustive switch over a union
+					// needs no default (adding a variant then errors at every switch), only
+					// non-union switches need one.
+					'default-case': OFF,
+					'@typescript-eslint/switch-exhaustiveness-check': [
+						ERROR,
+						{
+							allowDefaultCaseForExhaustiveSwitch: false,
+							requireDefaultForNonUnion: true,
+						},
+					],
 					'@typescript-eslint/triple-slash-reference': ERROR,
 					'@typescript-eslint/unbound-method': ERROR,
 					'@typescript-eslint/unified-signatures': WARN,
