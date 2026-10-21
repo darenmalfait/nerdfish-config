@@ -37,7 +37,9 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "prepare": "husky",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p samples/app/testing/__tests__"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p samples/app/testing/__tests__",
+    "skills:install": "DISABLE_TELEMETRY=1 npx --yes skills experimental_install",
+    "skills:update": "DISABLE_TELEMETRY=1 npx --yes skills update -p -y"
   },
   "dependencies": {
     "@eslint/compat": "^2.1.1",

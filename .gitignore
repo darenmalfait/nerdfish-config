@@ -1,2 +1,6 @@
 node_modules
 .tmp
+# local skills restored from skills-lock.json
+.agents/skills/*
+!.agents/skills/.gitkeep
+.env.schema
