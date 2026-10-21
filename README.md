@@ -175,7 +175,10 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/no-dynamic-import-path`, and
 `@nerdfish/conventions/no-trivial-use-memo`, and
 `@nerdfish/conventions/prefer-flat-map-over-map-filter`, and
-`@nerdfish/conventions/prefer-functional-set-state`.
+`@nerdfish/conventions/prefer-functional-set-state`, and
+`@nerdfish/conventions/narrow-effect-deps`, and
+`@nerdfish/conventions/no-callback-only-subscription`, and
+`@nerdfish/conventions/prefer-use-transition`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a

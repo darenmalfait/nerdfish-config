@@ -10,6 +10,9 @@ and these no longer pass.
 | `event-handler-name.tsx` | `event-handler-name` — named JSX `on*` handlers start with `handle` |
 | `boolean-name.ts` | `boolean-name` — boolean locals start with `is` or `has` |
 | `no-static-render-prop.tsx` | `no-static-render-prop` — `render*` props must take arguments; static structure goes in children |
+| `narrow-effect-deps.tsx` | `narrow-effect-deps` — effect deps list the properties read, not the whole object |
+| `no-callback-only-subscription.tsx` | `no-callback-only-subscription` — no `useSearchParams()` (configurable) read only in event handlers |
+| `prefer-use-transition.tsx` | `prefer-use-transition` — `useTransition` instead of `setLoading(true)` … `await` … `setLoading(false)` |
 | `no-dynamic-import-path.ts` | `no-dynamic-import-path` — `import()` takes a static string path |
 | `no-trivial-use-memo.tsx` | `no-trivial-use-memo` — no `useMemo` around call-free, allocation-free expressions |
 | `prefer-flat-map-over-map-filter.ts` | `prefer-flat-map-over-map-filter` — `.flatMap()` instead of `.map(…).filter(Boolean)` |
