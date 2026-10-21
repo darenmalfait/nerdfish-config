@@ -341,12 +341,19 @@ export const config = [
 					'react-hooks': fixupPluginRules(
 						await import('eslint-plugin-react-hooks'),
 					),
+					'react-you-might-not-need-an-effect': (
+						await import('eslint-plugin-react-you-might-not-need-an-effect')
+					).default,
 				},
 				rules: {
 					...fixupPluginRules(await import('eslint-plugin-react-hooks')).configs
 						.recommended.rules,
 					'react-hooks/rules-of-hooks': ERROR,
 					'react-hooks/exhaustive-deps': WARN,
+					// Only the rules: the plugin's preset also injects browser globals,
+					// which would leak into Node files.
+					...(await import('eslint-plugin-react-you-might-not-need-an-effect'))
+						.default.configs.strict.rules,
 				},
 			}
 		: null,

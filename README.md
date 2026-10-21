@@ -168,8 +168,7 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/map-transformer-name`, and
 `@nerdfish/conventions/sort-transformer-name`, and
 `@nerdfish/conventions/boolean-name`, and
-`@nerdfish/conventions/no-unnecessary-use-prefix`, and
-`@nerdfish/conventions/no-use-effect`.
+`@nerdfish/conventions/no-unnecessary-use-prefix`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a

@@ -2,7 +2,6 @@ import { booleanNameRule } from './boolean-name.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
-import { noUseEffectRule } from './no-use-effect.js'
 import { sortTransformerNameRule } from './sort-transformer-name.js'
 
 const WARN = 'warn'
@@ -13,7 +12,6 @@ export const conventionsRules = {
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
-	'@nerdfish/conventions/no-use-effect': WARN,
 	'@nerdfish/conventions/sort-transformer-name': WARN,
 }
 
@@ -24,7 +22,6 @@ export const plugin = {
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
 		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
-		'no-use-effect': noUseEffectRule,
 		'sort-transformer-name': sortTransformerNameRule,
 	},
 }
