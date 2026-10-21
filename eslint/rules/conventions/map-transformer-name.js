@@ -1,9 +1,44 @@
+const MAP_METHODS = new Set(['flatMap', 'map'])
+
+/**
+ * Mapping callback and the call it is passed to, or null:
+ * arr.map(fn) / arr.flatMap(fn) → fn
+ * Array.from(source, fn) → fn
+ */
+function getMapCallback(node) {
+	const { callee } = node
+
+	if (
+		callee.type !== 'MemberExpression' ||
+		callee.property.type !== 'Identifier'
+	) {
+		return null
+	}
+
+	const methodName = callee.property.name
+
+	if (MAP_METHODS.has(methodName)) {
+		return { callback: node.arguments[0], call: `.${methodName}()` }
+	}
+
+	if (
+		methodName === 'from' &&
+		callee.object.type === 'Identifier' &&
+		callee.object.name === 'Array'
+	) {
+		return { callback: node.arguments[1], call: 'Array.from()' }
+	}
+
+	return null
+}
+
 export const mapTransformerNameRule = {
 	meta: {
 		type: 'suggestion',
 
 		docs: {
-			description: "Require functions passed to .map() to start with 'to'",
+			description:
+				"Require functions passed to .map(), .flatMap() or Array.from() to start with 'to'",
 		},
 
 		schema: [
@@ -19,7 +54,8 @@ export const mapTransformerNameRule = {
 		],
 
 		messages: {
-			invalidName: "Functions passed to .map() should start with '{{prefix}}'.",
+			invalidName:
+				"Functions passed to {{call}} should start with '{{prefix}}'.",
 		},
 	},
 
@@ -29,31 +65,21 @@ export const mapTransformerNameRule = {
 
 		return {
 			CallExpression(node) {
-				// Ensure this is: something.map(...)
-				if (
-					node.callee.type !== 'MemberExpression' ||
-					node.callee.property.type !== 'Identifier' ||
-					node.callee.property.name !== 'map'
-				) {
-					return
-				}
-
-				const firstArg = node.arguments[0]
+				const match = getMapCallback(node)
 
 				// Ignore inline callbacks:
 				// arr.map(x => x.id)
 				// arr.map(function(x) {})
-				if (!firstArg || firstArg.type !== 'Identifier') {
+				if (match?.callback?.type !== 'Identifier') {
 					return
 				}
 
-				const functionName = firstArg.name
-
-				if (!functionName.startsWith(prefix)) {
+				if (!match.callback.name.startsWith(prefix)) {
 					context.report({
-						node: firstArg,
+						node: match.callback,
 						messageId: 'invalidName',
 						data: {
+							call: match.call,
 							prefix,
 						},
 					})

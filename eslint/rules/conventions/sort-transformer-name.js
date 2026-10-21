@@ -1,10 +1,12 @@
+const SORT_METHODS = new Set(['sort', 'toSorted'])
+
 export const sortTransformerNameRule = {
 	meta: {
 		type: 'suggestion',
 
 		docs: {
 			description:
-				'Require comparator functions passed to .sort() to start with by.',
+				'Require comparator functions passed to .sort() / .toSorted() to start with by.',
 			guidelineRuleId: 'sort-comparator-prefix',
 		},
 
@@ -22,7 +24,7 @@ export const sortTransformerNameRule = {
 
 		messages: {
 			comparatorPrefix:
-				"Comparator functions passed to .sort() should start with '{{prefix}}'.",
+				"Comparator functions passed to .{{method}}() should start with '{{prefix}}'.",
 		},
 	},
 
@@ -35,11 +37,12 @@ export const sortTransformerNameRule = {
 				/**
 				 * Match:
 				 * array.sort(...)
+				 * array.toSorted(...)
 				 */
 				if (
 					node.callee.type !== 'MemberExpression' ||
 					node.callee.property.type !== 'Identifier' ||
-					node.callee.property.name !== 'sort'
+					!SORT_METHODS.has(node.callee.property.name)
 				) {
 					return
 				}
@@ -75,6 +78,7 @@ export const sortTransformerNameRule = {
 						node: firstArg,
 						messageId: 'comparatorPrefix',
 						data: {
+							method: node.callee.property.name,
 							prefix,
 						},
 					})
