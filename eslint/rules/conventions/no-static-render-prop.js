@@ -1,6 +1,7 @@
 import {
 	getJsxElementName,
 	isFunctionNode,
+	isThirdPartyJsxElement,
 	isJsxExpression,
 	toCompoundPartName,
 } from '../util.js'
@@ -161,6 +162,7 @@ export const noStaticRenderPropRule = {
 		 * <Composer header={<Header />} /> ❌ (same thing, without the callback)
 		 * <Composer header={headerElement} /> ❌ (JSX hoisted into a const)
 		 * <Composer header={CustomHeader} /> ❌ (component passed instead of rendered)
+		 * <Route element={<Login />} /> ✅ (imported from a package, not ours to change)
 		 */
 		return {
 			JSXAttribute(node) {
@@ -170,7 +172,10 @@ export const noStaticRenderPropRule = {
 
 				const attributeName = node.name.name
 
-				if (allowedProps.has(attributeName)) {
+				if (
+					allowedProps.has(attributeName) ||
+					isThirdPartyJsxElement(sourceCode, node.parent.name)
+				) {
 					return
 				}
 

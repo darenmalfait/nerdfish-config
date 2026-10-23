@@ -1,4 +1,8 @@
-import { getJsxElementName, toCompoundPartName } from '../util.js'
+import {
+	getJsxElementName,
+	isThirdPartyJsxElement,
+	toCompoundPartName,
+} from '../util.js'
 
 const COMPONENT_NAME = /^[A-Z]/
 
@@ -56,13 +60,18 @@ export const preferExplicitVariantsRule = {
 		 * Checks:
 		 * <ThreadComposer channelId="abc" /> ✅
 		 * <Input required disabled /> ✅ (two flags)
+		 * <Dialog modal open keepMounted /> ✅ (imported from a package, not ours to change)
 		 * <Composer isThread isEditing={false} showAttachments /> ❌
 		 */
 		return {
 			JSXOpeningElement(node) {
 				const elementName = getJsxElementName(node.name)
 
-				if (!elementName || !COMPONENT_NAME.test(elementName)) {
+				if (
+					!elementName ||
+					!COMPONENT_NAME.test(elementName) ||
+					isThirdPartyJsxElement(context.sourceCode, node.name)
+				) {
 					return
 				}
 

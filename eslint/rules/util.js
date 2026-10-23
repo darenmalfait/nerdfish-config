@@ -71,6 +71,35 @@ export function getJsxElementName(name) {
 	return null
 }
 
+/** Import paths that point at the project's own code: relative, or a `@/`, `~/` or `#` alias. */
+const LOCAL_IMPORT_SOURCE = /^(\.|@\/|~\/|#)/
+
+/** `<Route>` imported from `react-router`: its prop API is not ours to change. */
+export function isThirdPartyJsxElement(sourceCode, name) {
+	let root = name
+
+	while (root.type === 'JSXMemberExpression') {
+		root = root.object
+	}
+
+	if (root.type !== 'JSXIdentifier') {
+		return false
+	}
+
+	for (let scope = sourceCode.getScope(name); scope; scope = scope.upper) {
+		const definition = scope.set.get(root.name)?.defs[0]
+
+		if (definition) {
+			return (
+				definition.type === 'ImportBinding' &&
+				!LOCAL_IMPORT_SOURCE.test(definition.parent.source.value)
+			)
+		}
+	}
+
+	return false
+}
+
 /** Name a compound part after the prop it replaces: `renderHeader` / `headerComponent` → `Header`, `isThread` → `Thread`. */
 export function toCompoundPartName(propName) {
 	const base =
