@@ -58,6 +58,44 @@ export function isFunctionNode(node) {
 	)
 }
 
+/** `<Composer>` → `Composer`, `<Composer.Frame>` → `Composer.Frame`. */
+export function getJsxElementName(name) {
+	if (name.type === 'JSXIdentifier') {
+		return name.name
+	}
+
+	if (name.type === 'JSXMemberExpression') {
+		return `${getJsxElementName(name.object)}.${name.property.name}`
+	}
+
+	return null
+}
+
+/** Name a compound part after the prop it replaces: `renderHeader` / `headerComponent` → `Header`, `isThread` → `Thread`. */
+export function toCompoundPartName(propName) {
+	const base =
+		propName
+			.replace(/^(render|show|hide|has|is|with|enable)(?=[A-Z])/, '')
+			.replace(/(Component|Element|Slot|Node|Content)$/, '') || propName
+
+	return base[0].toUpperCase() + base.slice(1)
+}
+
+/** JSX, or a ternary / `&&` that can produce JSX. */
+export function isJsxExpression(node) {
+	switch (node?.type) {
+		case 'JSXElement':
+		case 'JSXFragment':
+			return true
+		case 'ConditionalExpression':
+			return isJsxExpression(node.consequent) || isJsxExpression(node.alternate)
+		case 'LogicalExpression':
+			return isJsxExpression(node.right)
+		default:
+			return false
+	}
+}
+
 /** Static string from a literal or expression-less template node. */
 export function resolveStaticStringValue(node, { trim = false } = {}) {
 	if (node?.type === 'Literal' && typeof node.value === 'string') {

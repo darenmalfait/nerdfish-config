@@ -1,15 +1,20 @@
 import { booleanNameRule } from './boolean-name.js'
+import { contextValueInterfaceRule } from './context-value-interface.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
+import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
+import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
 import { noPasteBlockingRule } from './no-paste-blocking.js'
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noTransitionAllRule } from './no-transition-all.js'
 import { noTrivialUseMemoRule } from './no-trivial-use-memo.js'
 import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
+import { preferEarlyReturnStatesRule } from './prefer-early-return-states.js'
 import { preferEllipsisCharacterRule } from './prefer-ellipsis-character.js'
+import { preferExplicitVariantsRule } from './prefer-explicit-variants.js'
 import { preferFlatMapOverMapFilterRule } from './prefer-flat-map-over-map-filter.js'
 import { preferFunctionalSetStateRule } from './prefer-functional-set-state.js'
 import { preferUseTransitionRule } from './prefer-use-transition.js'
@@ -25,17 +30,22 @@ const WARN = 'warn'
 /** @type {import('eslint').Linter.RulesRecord} */
 export const conventionsRules = {
 	'@nerdfish/conventions/boolean-name': WARN,
+	'@nerdfish/conventions/context-value-interface': WARN,
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/narrow-effect-deps': WARN,
+	'@nerdfish/conventions/no-boolean-mode-props': WARN,
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
+	'@nerdfish/conventions/no-compound-component-object': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
 	'@nerdfish/conventions/no-paste-blocking': WARN,
 	'@nerdfish/conventions/no-static-render-prop': WARN,
 	'@nerdfish/conventions/no-transition-all': WARN,
 	'@nerdfish/conventions/no-trivial-use-memo': WARN,
 	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
+	'@nerdfish/conventions/prefer-early-return-states': WARN,
 	'@nerdfish/conventions/prefer-ellipsis-character': WARN,
+	'@nerdfish/conventions/prefer-explicit-variants': WARN,
 	'@nerdfish/conventions/prefer-flat-map-over-map-filter': WARN,
 	'@nerdfish/conventions/prefer-functional-set-state': WARN,
 	'@nerdfish/conventions/prefer-use-transition': WARN,
@@ -51,17 +61,22 @@ export const conventionsRules = {
 export const plugin = {
 	rules: {
 		'boolean-name': booleanNameRule,
+		'context-value-interface': contextValueInterfaceRule,
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
 		'narrow-effect-deps': narrowEffectDepsRule,
+		'no-boolean-mode-props': noBooleanModePropsRule,
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
+		'no-compound-component-object': noCompoundComponentObjectRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
 		'no-paste-blocking': noPasteBlockingRule,
 		'no-static-render-prop': noStaticRenderPropRule,
 		'no-transition-all': noTransitionAllRule,
 		'no-trivial-use-memo': noTrivialUseMemoRule,
 		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
+		'prefer-early-return-states': preferEarlyReturnStatesRule,
 		'prefer-ellipsis-character': preferEllipsisCharacterRule,
+		'prefer-explicit-variants': preferExplicitVariantsRule,
 		'prefer-flat-map-over-map-filter': preferFlatMapOverMapFilterRule,
 		'prefer-functional-set-state': preferFunctionalSetStateRule,
 		'prefer-use-transition': preferUseTransitionRule,

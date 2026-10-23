@@ -137,10 +137,10 @@ export default [...defaultConfig]
 Everything below is part of **`@nerdfish/config`** — install once, no extra
 packages.
 
-| What you import                       | What it enables                                       |
-| ------------------------------------- | ----------------------------------------------------- |
-| `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks |
-| `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on) |
+| What you import                       | What it enables                                                                                                                  |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `@nerdfish/config/eslint/testing`     | Testing Library queries, HTTP mock lifecycle, partial mocks                                                                      |
+| `@nerdfish/config/eslint/testing/bdd` | User Story / Given / When structure (optional add-on)                                                                            |
 | `@nerdfish/config/eslint/conventions` | Team coding conventions (`to*`/`by*` transformers, `handle*` handlers, `is*`/`has*` booleans, `use*` hooks, no bare `useEffect`) |
 
 Spread the flat configs you need:
@@ -170,6 +170,11 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/boolean-name`, and
 `@nerdfish/conventions/no-unnecessary-use-prefix`, and
 `@nerdfish/conventions/no-static-render-prop`, and
+`@nerdfish/conventions/no-boolean-mode-props`, and
+`@nerdfish/conventions/prefer-explicit-variants`, and
+`@nerdfish/conventions/context-value-interface`, and
+`@nerdfish/conventions/prefer-early-return-states`, and
+`@nerdfish/conventions/no-compound-component-object`, and
 `@nerdfish/conventions/require-passive-event-listener`, and
 `@nerdfish/conventions/require-script-loading-strategy`, and
 `@nerdfish/conventions/no-dynamic-import-path`, and
