@@ -5,12 +5,13 @@ import {
 	toCompoundPartName,
 } from '../util.js'
 
-/** Props where passing an element is the established API (e.g. `<Suspense fallback>`, polymorphic `as`). */
+/** Props where passing an element is the established API (e.g. `<Suspense fallback>`, polymorphic `as`, Base UI `render`). */
 const DEFAULT_ALLOWED_PROPS = [
 	'as',
 	'children',
 	'fallback',
 	'icon',
+	'render',
 	'startIcon',
 	'endIcon',
 ]
