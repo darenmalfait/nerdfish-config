@@ -10,7 +10,7 @@ interface MockInputProps {
 	onChange?: (value: string) => void
 }
 
-export const MockInput = ({
+export function MockInput({
 	type = 'text',
 	placeholder = '',
 	value = '',
@@ -18,7 +18,7 @@ export const MockInput = ({
 	disabled = false,
 	className = '',
 	onChange = NOOP,
-}: MockInputProps) => {
+}: MockInputProps) {
 	return (
 		<div className="mock-input-wrapper">
 			<input

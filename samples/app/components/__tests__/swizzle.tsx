@@ -7,15 +7,16 @@ interface MockSwizzleProps {
 	className?: string
 }
 
-export const MockSwizzle = ({
+export function MockSwizzle({
 	components = EMPTY_ARRAY,
 	onSwizzle = NOOP,
 	className = '',
-}: MockSwizzleProps) => {
+}: MockSwizzleProps) {
 	return (
 		<div className={`mock-swizzle ${className}`}>
 			{components.map((component) => (
 				<button
+					type="button"
 					key={component}
 					className="mock-swizzle-button"
 					onClick={() => onSwizzle(component)}

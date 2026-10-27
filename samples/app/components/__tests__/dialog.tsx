@@ -10,13 +10,13 @@ interface MockDialogProps {
 	className?: string
 }
 
-export const MockDialog = ({
+export function MockDialog({
 	open = false,
 	title,
 	children,
 	onClose: handleClose = NOOP,
 	className = '',
-}: MockDialogProps) => {
+}: MockDialogProps) {
 	if (!open) return null
 
 	return (
@@ -27,7 +27,11 @@ export const MockDialog = ({
 			>
 				{title ? <div className="mock-dialog-header">{title}</div> : null}
 				<div className="mock-dialog-content">{children}</div>
-				<button className="mock-dialog-close" onClick={handleClose}>
+				<button
+					type="button"
+					className="mock-dialog-close"
+					onClick={handleClose}
+				>
 					×
 				</button>
 			</div>

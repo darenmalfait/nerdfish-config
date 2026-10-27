@@ -9,17 +9,18 @@ interface MockToggleProps {
 	onChange?: (checked: boolean) => void
 }
 
-export const MockToggle = ({
+export function MockToggle({
 	checked = false,
 	disabled = false,
 	size = 'md',
 	label,
 	className = '',
 	onChange = NOOP,
-}: MockToggleProps) => {
+}: MockToggleProps) {
 	return (
 		<label className={`mock-toggle-wrapper ${className}`}>
 			<button
+				type="button"
 				role="switch"
 				aria-checked={checked}
 				className={`mock-toggle mock-toggle-${size} ${checked ? 'mock-toggle-on' : ''}`}

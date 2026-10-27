@@ -9,14 +9,14 @@ interface MockCheckboxProps {
 	onChange?: (checked: boolean) => void
 }
 
-export const MockCheckbox = ({
+export function MockCheckbox({
 	checked = false,
 	label,
 	disabled = false,
 	error,
 	className = '',
 	onChange = NOOP,
-}: MockCheckboxProps) => {
+}: MockCheckboxProps) {
 	return (
 		<div className={`mock-checkbox-wrapper ${className}`}>
 			<label className={disabled ? 'mock-checkbox-disabled' : ''}>

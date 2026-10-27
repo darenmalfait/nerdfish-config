@@ -15,14 +15,14 @@ interface MockSelectProps {
 	onChange?: (value: string) => void
 }
 
-export const MockSelect = ({
+export function MockSelect({
 	options = EMPTY_ARRAY,
 	value = '',
 	placeholder = 'Select an option',
 	disabled = false,
 	className = '',
 	onChange = NOOP,
-}: MockSelectProps) => {
+}: MockSelectProps) {
 	return (
 		<div className={`mock-select ${className}`}>
 			<select

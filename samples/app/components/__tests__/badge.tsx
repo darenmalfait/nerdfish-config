@@ -7,12 +7,12 @@ interface MockBadgeProps {
 	className?: string
 }
 
-export const MockBadge = ({
+export function MockBadge({
 	variant = 'default',
 	size = 'md',
 	children,
 	className = '',
-}: MockBadgeProps) => {
+}: MockBadgeProps) {
 	return (
 		<span
 			className={`mock-badge mock-badge-${variant} mock-badge-${size} ${className}`}

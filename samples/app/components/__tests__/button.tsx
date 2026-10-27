@@ -12,7 +12,7 @@ interface MockButtonProps {
 	onClick?: () => void
 }
 
-export const MockButton = ({
+export function MockButton({
 	variant = 'primary',
 	size = 'md',
 	disabled = false,
@@ -20,9 +20,10 @@ export const MockButton = ({
 	className = '',
 	children,
 	onClick: handleClick = NOOP,
-}: MockButtonProps) => {
+}: MockButtonProps) {
 	return (
 		<button
+			type="button"
 			className={`mock-button mock-button-${variant} mock-button-${size} ${className}`}
 			disabled={disabled || loading}
 			onClick={handleClick}

@@ -7,12 +7,12 @@ interface MockCardProps {
 	children?: React.ReactNode
 }
 
-export const MockCard = ({
+export function MockCard({
 	title,
 	footer,
 	className = '',
 	children,
-}: MockCardProps) => {
+}: MockCardProps) {
 	return (
 		<div className={`mock-card ${className}`}>
 			{title ? <div className="mock-card-header">{title}</div> : null}

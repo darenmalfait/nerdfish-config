@@ -16,12 +16,12 @@ interface MockTabsProps {
 	onTabChange?: (tabId: string) => void
 }
 
-export const MockTabs = ({
+export function MockTabs({
 	tabs = EMPTY_ARRAY,
 	activeTab,
 	className = '',
 	onTabChange = NOOP,
-}: MockTabsProps) => {
+}: MockTabsProps) {
 	const currentTab = activeTab ?? tabs[0]?.id
 
 	return (
@@ -29,6 +29,7 @@ export const MockTabs = ({
 			<div className="mock-tabs-list">
 				{tabs.map((tab) => (
 					<button
+						type="button"
 						key={tab.id}
 						className={`mock-tab ${currentTab === tab.id ? 'mock-tab-active' : ''}`}
 						onClick={() => onTabChange(tab.id)}

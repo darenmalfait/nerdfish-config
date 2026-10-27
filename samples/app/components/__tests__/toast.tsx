@@ -7,12 +7,12 @@ interface MockToastProps {
 	onClose?: () => void
 }
 
-export const MockToast = ({
+export function MockToast({
 	type = 'info',
 	message,
 	duration = 3000,
 	onClose: handleClose = NOOP,
-}: MockToastProps) => {
+}: MockToastProps) {
 	return (
 		<div
 			className={`mock-toast mock-toast-${type}`}
@@ -20,7 +20,7 @@ export const MockToast = ({
 			onClick={handleClose}
 		>
 			<div className="mock-toast-message">{message}</div>
-			<button className="mock-toast-close" onClick={handleClose}>
+			<button type="button" className="mock-toast-close" onClick={handleClose}>
 				×
 			</button>
 		</div>

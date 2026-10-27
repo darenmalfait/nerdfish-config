@@ -274,7 +274,17 @@ export const config = [
 						'jsx-runtime'
 					].rules,
 					'react/jsx-key': WARN,
+					'react/button-has-type': ERROR,
+					'react/checked-requires-onchange-or-readonly': ERROR,
 					'react/display-name': [ERROR, { ignoreTranspilerName: false }],
+					'react/function-component-definition': [
+						ERROR,
+						{
+							namedComponents: 'function-declaration',
+							unnamedComponents: 'arrow-function',
+						},
+					],
+					'react/jsx-boolean-value': [ERROR, 'never'],
 					'react/iframe-missing-sandbox': WARN,
 					'react/jsx-closing-tag-location': ERROR,
 					'react/jsx-curly-brace-presence': [
@@ -296,9 +306,11 @@ export const config = [
 					'react/jsx-no-undef': ERROR,
 					'react/jsx-no-useless-fragment': WARN,
 					'react/jsx-pascal-case': ERROR,
+					'react/jsx-props-no-spread-multi': ERROR,
 					'react/jsx-uses-react': ERROR,
 					'react/jsx-uses-vars': ERROR,
 					'react/no-access-state-in-setstate': ERROR,
+					'react/no-children-prop': ERROR,
 					'react/no-arrow-function-lifecycle': ERROR,
 					'react/no-danger-with-children': ERROR,
 					'react/no-deprecated': ERROR,
@@ -360,6 +372,8 @@ export const config = [
 					// which would leak into Node files.
 					...(await import('eslint-plugin-react-you-might-not-need-an-effect'))
 						.default.configs.strict.rules,
+					'react-x/no-array-index-key': ERROR,
+					'react-x/no-unstable-context-value': ERROR,
 					// React 19 APIs; these only report when the detected React is >= 19
 					'react-x/no-context-provider': ERROR,
 					'react-x/no-forward-ref': ERROR,

@@ -11,15 +11,15 @@ interface MockAccordionProps {
 	className?: string
 }
 
-export const MockAccordion = ({
+export function MockAccordion({
 	items = EMPTY_ARRAY,
 	defaultOpen = false,
 	className = '',
-}: MockAccordionProps) => {
+}: MockAccordionProps) {
 	return (
 		<div className={`mock-accordion ${className}`}>
-			{items.map((item, index) => (
-				<div key={index} className="mock-accordion-item">
+			{items.map((item) => (
+				<div key={item.title} className="mock-accordion-item">
 					<div className="mock-accordion-header">{item.title}</div>
 					{defaultOpen ? (
 						<div className="mock-accordion-content">{item.content}</div>

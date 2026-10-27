@@ -7,14 +7,14 @@ interface MockAvatarProps {
 	loading?: boolean
 }
 
-export const MockAvatar = ({
+export function MockAvatar({
 	src = '',
 	alt = '',
 	size = 'md',
 	name = '',
 	className = '',
 	loading = false,
-}: MockAvatarProps) => {
+}: MockAvatarProps) {
 	const getInitials = (displayName: string) => {
 		return displayName
 			.split(' ')
