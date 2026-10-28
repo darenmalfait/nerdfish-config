@@ -20,9 +20,9 @@ const hasReact = has('react')
 const hasTestingLibrary = has('@testing-library/dom')
 const hasJestDom = has('@testing-library/jest-dom')
 const hasVitest = has('vitest')
-const vitestFiles = ['**/__tests__/**/*', '**/*.test.*']
-const testFiles = ['**/tests/**', '**/#tests/**', ...vitestFiles]
-const playwrightFiles = ['**/e2e/**']
+const VITEST_FILES = ['**/__tests__/**/*', '**/*.test.*']
+const TEST_FILES = ['**/tests/**', '**/#tests/**', ...VITEST_FILES]
+const PLAYWRIGHT_FILES = ['**/e2e/**']
 
 export const config = [
 	{
@@ -566,14 +566,14 @@ export const config = [
 	// will not be allowed to import test files.
 	{
 		files: ['**/*.ts?(x)', '**/*.js?(x)'],
-		ignores: testFiles,
+		ignores: TEST_FILES,
 		rules: {
 			'no-restricted-imports': [
 				ERROR,
 				{
 					patterns: [
 						{
-							group: testFiles,
+							group: TEST_FILES,
 							message: 'Do not import test files in source files',
 						},
 					],
@@ -584,8 +584,8 @@ export const config = [
 
 	hasTestingLibrary
 		? {
-				files: testFiles,
-				ignores: [...playwrightFiles],
+				files: TEST_FILES,
+				ignores: [...PLAYWRIGHT_FILES],
 				plugins: {
 					'testing-library': (await import('eslint-plugin-testing-library'))
 						.default,
@@ -600,8 +600,8 @@ export const config = [
 
 	hasJestDom
 		? {
-				files: testFiles,
-				ignores: [...playwrightFiles],
+				files: TEST_FILES,
+				ignores: [...PLAYWRIGHT_FILES],
 				plugins: {
 					'jest-dom': (await import('eslint-plugin-jest-dom')).default,
 				},
@@ -616,8 +616,8 @@ export const config = [
 
 	hasVitest
 		? {
-				files: testFiles,
-				ignores: [...playwrightFiles],
+				files: TEST_FILES,
+				ignores: [...PLAYWRIGHT_FILES],
 				plugins: {
 					vitest: (await import('eslint-plugin-vitest')).default,
 				},

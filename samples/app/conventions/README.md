@@ -33,6 +33,7 @@ and these no longer pass.
 | `prefer-hook-return-object.ts` | `prefer-hook-return-object` — hooks returning more than 2 values return an object |
 | `prefer-early-return.ts` | `prefer-early-return` — guard clause instead of a trailing `if` wrapping the rest of the function |
 | `no-negated-variables.ts` | `no-negated-variables` — no `isNot*` / `cannot*` / `dont*` names |
+| `module-constant-name.ts` | `module-constant-name` — non-exported module constants with a static value use `SCREAMING_SNAKE_CASE` |
 
 ```bash
 pnpm lint

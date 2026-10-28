@@ -71,7 +71,7 @@ export const noUnstableHookDefaultsRule = {
 
 		messages: {
 			unstableDefault:
-				'This default {{kind}} is recreated on every render, so anything that depends on it (effects, memos, memoized children) re-runs too. Hoist it to a module-level constant.',
+				'This default {{kind}} is recreated on every render, so anything that depends on it (effects, memos, memoized children) re-runs too. Hoist it to a module-level constant such as `EMPTY_ITEMS`.',
 		},
 	},
 

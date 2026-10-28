@@ -2,6 +2,7 @@ import { booleanNameRule } from './boolean-name.js'
 import { contextValueInterfaceRule } from './context-value-interface.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
+import { moduleConstantNameRule } from './module-constant-name.js'
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
 import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
@@ -40,6 +41,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/context-value-interface': WARN,
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
+	'@nerdfish/conventions/module-constant-name': WARN,
 	'@nerdfish/conventions/narrow-effect-deps': WARN,
 	'@nerdfish/conventions/no-boolean-mode-props': WARN,
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
@@ -78,6 +80,7 @@ export const plugin = {
 		'context-value-interface': contextValueInterfaceRule,
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
+		'module-constant-name': moduleConstantNameRule,
 		'narrow-effect-deps': narrowEffectDepsRule,
 		'no-boolean-mode-props': noBooleanModePropsRule,
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,

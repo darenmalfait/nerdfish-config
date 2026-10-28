@@ -196,7 +196,8 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/require-reduced-motion`, and
 `@nerdfish/conventions/prefer-hook-return-object`, and
 `@nerdfish/conventions/prefer-early-return`, and
-`@nerdfish/conventions/no-negated-variables`.
+`@nerdfish/conventions/no-negated-variables`, and
+`@nerdfish/conventions/module-constant-name`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
