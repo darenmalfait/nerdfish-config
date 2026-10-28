@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 type User = { id: string; name: string }
 
@@ -9,5 +9,7 @@ export function Profile({ user }: { user: User }) {
 		trackView(user.id)
 	}, [user.id])
 
-	return <h1>{user.name}</h1>
+	const greeting = useMemo(() => `Hello ${user.name}`.trim(), [user.name])
+
+	return <h1>{greeting}</h1>
 }

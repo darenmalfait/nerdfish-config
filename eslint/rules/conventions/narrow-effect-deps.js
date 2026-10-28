@@ -1,9 +1,11 @@
 import { getCallName, isFunctionNode } from '../util.js'
 
-const EFFECT_HOOKS = new Set([
+const DEPENDENCY_HOOKS = new Set([
+	'useCallback',
 	'useEffect',
 	'useInsertionEffect',
 	'useLayoutEffect',
+	'useMemo',
 ])
 
 function isWithin(node, container) {
@@ -70,7 +72,7 @@ export const narrowEffectDepsRule = {
 
 		docs: {
 			description:
-				'Prefer the properties an effect reads over the whole object as a dependency.',
+				'Prefer the properties a hook callback reads over the whole object as a dependency.',
 			guidelineRuleId: 'rerender-dependencies',
 		},
 
@@ -78,7 +80,7 @@ export const narrowEffectDepsRule = {
 
 		messages: {
 			narrowDependency:
-				'The effect only reads {{properties}} from `{{name}}`, but re-runs whenever `{{name}}` changes identity. Depend on {{properties}} instead.',
+				'`{{hook}}` only reads {{properties}} from `{{name}}`, but re-runs whenever `{{name}}` changes identity. Depend on {{properties}} instead.',
 			useProperties: 'Replace `{{name}}` with {{properties}}.',
 		},
 	},
@@ -92,10 +94,13 @@ export const narrowEffectDepsRule = {
 		 * useEffect(() => save(user), [user]) ✅ (uses the object itself)
 		 * useEffect(() => user.save(), [user]) ✅ (method call needs `this`)
 		 * useEffect(() => log(user.id), [user]) ❌
+		 * useMemo(() => format(user.name), [user]) ❌
 		 */
 		return {
 			CallExpression(node) {
-				if (!EFFECT_HOOKS.has(getCallName(node.callee))) {
+				const hook = getCallName(node.callee)
+
+				if (!DEPENDENCY_HOOKS.has(hook)) {
 					return
 				}
 
@@ -143,7 +148,7 @@ export const narrowEffectDepsRule = {
 					context.report({
 						node: dep,
 						messageId: 'narrowDependency',
-						data: { name: dep.name, properties: formatted },
+						data: { hook, name: dep.name, properties: formatted },
 						suggest: [
 							{
 								messageId: 'useProperties',

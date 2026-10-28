@@ -379,6 +379,14 @@ export const config = [
 					'react-x/no-forward-ref': ERROR,
 					'react-x/no-use-context': ERROR,
 					'react-x/no-unstable-default-props': ERROR,
+					// Children/cloneElement tricks: compose with props or context instead
+					'react-x/no-children-count': ERROR,
+					'react-x/no-children-for-each': ERROR,
+					'react-x/no-children-map': ERROR,
+					'react-x/no-children-only': ERROR,
+					'react-x/no-children-to-array': ERROR,
+					'react-x/no-clone-element': ERROR,
+					'react-x/no-nested-lazy-component-declarations': ERROR,
 					'react-x/use-state': [
 						ERROR,
 						{
@@ -535,6 +543,20 @@ export const config = [
 					'@typescript-eslint/triple-slash-reference': ERROR,
 					'@typescript-eslint/unbound-method': ERROR,
 					'@typescript-eslint/unified-signatures': WARN,
+				},
+			}
+		: null,
+
+	// react-x rules that need type information
+	hasReact && hasTypeScript
+		? {
+				files: ['**/*.tsx'],
+				plugins: {
+					'react-x': (await import('eslint-plugin-react-x')).default,
+				},
+				rules: {
+					'react-x/no-implicit-key': ERROR,
+					'react-x/no-unused-props': WARN,
 				},
 			}
 		: null,

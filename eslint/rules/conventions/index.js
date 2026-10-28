@@ -7,22 +7,29 @@ import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
+import { noNegatedVariablesRule } from './no-negated-variables.js'
 import { noPasteBlockingRule } from './no-paste-blocking.js'
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noTransitionAllRule } from './no-transition-all.js'
 import { noTrivialUseMemoRule } from './no-trivial-use-memo.js'
+import { noUnmergedClassnameRule } from './no-unmerged-classname.js'
 import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
+import { noUnstableHookDefaultsRule } from './no-unstable-hook-defaults.js'
 import { preferEarlyReturnStatesRule } from './prefer-early-return-states.js'
+import { preferEarlyReturnRule } from './prefer-early-return.js'
 import { preferEllipsisCharacterRule } from './prefer-ellipsis-character.js'
 import { preferExplicitVariantsRule } from './prefer-explicit-variants.js'
 import { preferFlatMapOverMapFilterRule } from './prefer-flat-map-over-map-filter.js'
 import { preferFunctionalSetStateRule } from './prefer-functional-set-state.js'
+import { preferHookReturnObjectRule } from './prefer-hook-return-object.js'
 import { preferUseTransitionRule } from './prefer-use-transition.js'
 import { requireFocusVisibleReplacementRule } from './require-focus-visible-replacement.js'
 import { requireImgDimensionsRule } from './require-img-dimensions.js'
 import { requireInputAutocompleteRule } from './require-input-autocomplete.js'
 import { requirePassiveEventListenerRule } from './require-passive-event-listener.js'
+import { requireReducedMotionRule } from './require-reduced-motion.js'
 import { requireScriptLoadingStrategyRule } from './require-script-loading-strategy.js'
+import { requireTimerCleanupRule } from './require-timer-cleanup.js'
 import { sortTransformerNameRule } from './sort-transformer-name.js'
 
 const WARN = 'warn'
@@ -38,22 +45,29 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
 	'@nerdfish/conventions/no-compound-component-object': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
+	'@nerdfish/conventions/no-negated-variables': WARN,
 	'@nerdfish/conventions/no-paste-blocking': WARN,
 	'@nerdfish/conventions/no-static-render-prop': WARN,
 	'@nerdfish/conventions/no-transition-all': WARN,
 	'@nerdfish/conventions/no-trivial-use-memo': WARN,
+	'@nerdfish/conventions/no-unmerged-classname': WARN,
 	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
+	'@nerdfish/conventions/no-unstable-hook-defaults': WARN,
+	'@nerdfish/conventions/prefer-early-return': WARN,
 	'@nerdfish/conventions/prefer-early-return-states': WARN,
 	'@nerdfish/conventions/prefer-ellipsis-character': WARN,
 	'@nerdfish/conventions/prefer-explicit-variants': WARN,
 	'@nerdfish/conventions/prefer-flat-map-over-map-filter': WARN,
 	'@nerdfish/conventions/prefer-functional-set-state': WARN,
+	'@nerdfish/conventions/prefer-hook-return-object': WARN,
 	'@nerdfish/conventions/prefer-use-transition': WARN,
 	'@nerdfish/conventions/require-focus-visible-replacement': WARN,
 	'@nerdfish/conventions/require-img-dimensions': WARN,
 	'@nerdfish/conventions/require-input-autocomplete': WARN,
 	'@nerdfish/conventions/require-passive-event-listener': WARN,
+	'@nerdfish/conventions/require-reduced-motion': WARN,
 	'@nerdfish/conventions/require-script-loading-strategy': WARN,
+	'@nerdfish/conventions/require-timer-cleanup': WARN,
 	'@nerdfish/conventions/sort-transformer-name': WARN,
 }
 
@@ -69,22 +83,29 @@ export const plugin = {
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
 		'no-compound-component-object': noCompoundComponentObjectRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
+		'no-negated-variables': noNegatedVariablesRule,
 		'no-paste-blocking': noPasteBlockingRule,
 		'no-static-render-prop': noStaticRenderPropRule,
 		'no-transition-all': noTransitionAllRule,
 		'no-trivial-use-memo': noTrivialUseMemoRule,
+		'no-unmerged-classname': noUnmergedClassnameRule,
 		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
+		'no-unstable-hook-defaults': noUnstableHookDefaultsRule,
+		'prefer-early-return': preferEarlyReturnRule,
 		'prefer-early-return-states': preferEarlyReturnStatesRule,
 		'prefer-ellipsis-character': preferEllipsisCharacterRule,
 		'prefer-explicit-variants': preferExplicitVariantsRule,
 		'prefer-flat-map-over-map-filter': preferFlatMapOverMapFilterRule,
 		'prefer-functional-set-state': preferFunctionalSetStateRule,
+		'prefer-hook-return-object': preferHookReturnObjectRule,
 		'prefer-use-transition': preferUseTransitionRule,
 		'require-focus-visible-replacement': requireFocusVisibleReplacementRule,
 		'require-img-dimensions': requireImgDimensionsRule,
 		'require-input-autocomplete': requireInputAutocompleteRule,
 		'require-passive-event-listener': requirePassiveEventListenerRule,
+		'require-reduced-motion': requireReducedMotionRule,
 		'require-script-loading-strategy': requireScriptLoadingStrategyRule,
+		'require-timer-cleanup': requireTimerCleanupRule,
 		'sort-transformer-name': sortTransformerNameRule,
 	},
 }
