@@ -366,6 +366,20 @@ export function getRenameFixes(fixer, id, variable, name) {
 	return [declarationFix, ...referenceFixes]
 }
 
+/** True when the declaration is exported in place or through `export { … }` / `export default`, so renaming breaks importers. */
+export function isExported(variable, declaration) {
+	return (
+		declaration.parent?.type === 'ExportNamedDeclaration' ||
+		declaration.parent?.parent?.type === 'ExportNamedDeclaration' ||
+		declaration.parent?.type === 'ExportDefaultDeclaration' ||
+		variable.references.some(
+			(reference) =>
+				reference.identifier.parent.type === 'ExportSpecifier' ||
+				reference.identifier.parent.type === 'ExportDefaultDeclaration',
+		)
+	)
+}
+
 /** True when `name` is free everywhere `variable` is used, so renaming cannot capture another binding. */
 export function canRename(variable, name) {
 	return (

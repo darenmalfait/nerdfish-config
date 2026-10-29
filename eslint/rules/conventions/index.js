@@ -1,6 +1,8 @@
 import reactX from 'eslint-plugin-react-x'
 import unicorn from 'eslint-plugin-unicorn'
+import { componentPropsNamingRule } from './component-props-naming.js'
 import { contextValueInterfaceRule } from './context-value-interface.js'
+import { effectComponentsRule } from './effect-components.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { moduleConstantNameRule } from './module-constant-name.js'
@@ -13,6 +15,8 @@ import { noCompoundComponentObjectRule } from './no-compound-component-object.js
 import { noContextMenuRule } from './no-context-menu.js'
 import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
+import { noMiscasedAcronymRule } from './no-miscased-acronym.js'
+import { noNavigatePreferLinkRule } from './no-navigate-prefer-link.js'
 import { noNegatedVariablesRule } from './no-negated-variables.js'
 import { noObjectKeysIncludesRule } from './no-object-keys-includes.js'
 import { noPasteBlockingRule } from './no-paste-blocking.js'
@@ -41,7 +45,9 @@ const WARN = 'warn'
 
 /** @type {import('eslint').Linter.RulesRecord} */
 export const conventionsRules = {
+	'@nerdfish/conventions/component-props-naming': WARN,
 	'@nerdfish/conventions/context-value-interface': WARN,
+	'@nerdfish/conventions/effect-components': WARN,
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/module-constant-name': WARN,
@@ -54,6 +60,8 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-context-menu': WARN,
 	'@nerdfish/conventions/no-deep-equal-in-memo': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
+	'@nerdfish/conventions/no-miscased-acronym': WARN,
+	'@nerdfish/conventions/no-navigate-prefer-link': WARN,
 	'@nerdfish/conventions/no-negated-variables': WARN,
 	'@nerdfish/conventions/no-object-keys-includes': WARN,
 	'@nerdfish/conventions/no-paste-blocking': WARN,
@@ -92,7 +100,9 @@ export const conventionsRules = {
 /** Nerdfish coding conventions — opt in via spread alongside `@nerdfish/config/eslint`. */
 export const plugin = {
 	rules: {
+		'component-props-naming': componentPropsNamingRule,
 		'context-value-interface': contextValueInterfaceRule,
+		'effect-components': effectComponentsRule,
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
 		'module-constant-name': moduleConstantNameRule,
@@ -105,6 +115,8 @@ export const plugin = {
 		'no-context-menu': noContextMenuRule,
 		'no-deep-equal-in-memo': noDeepEqualInMemoRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
+		'no-miscased-acronym': noMiscasedAcronymRule,
+		'no-navigate-prefer-link': noNavigatePreferLinkRule,
 		'no-negated-variables': noNegatedVariablesRule,
 		'no-object-keys-includes': noObjectKeysIncludesRule,
 		'no-paste-blocking': noPasteBlockingRule,

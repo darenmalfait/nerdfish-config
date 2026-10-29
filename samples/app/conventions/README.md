@@ -39,6 +39,10 @@ and these no longer pass.
 | `no-deep-equal-in-memo.tsx` | `no-deep-equal-in-memo` — `memo` comparators compare specific props, not `isEqual` / `JSON.stringify` |
 | `no-browser-globals-in-render.tsx` | `no-browser-globals-in-render` — `window` / `document` / `localStorage` only in effects and handlers; module scope only behind a `typeof` guard in SSR apps |
 | `no-context-menu.tsx` | `no-context-menu` — `contextmenu` handlers don't call `preventDefault()` |
+| `effect-components.tsx` | `effect-components` — components that only run hooks and render nothing end in `Effect`, and only they do |
+| `component-props-naming.tsx` | `component-props-naming` — a component's own props type is named `${Component}Props` |
+| `no-navigate-prefer-link.tsx` | `no-navigate-prefer-link` — `onClick` handlers that only navigate become links |
+| `no-miscased-acronym.ts` | `no-miscased-acronym` — acronyms in declared names and file names are PascalCase (`apiUrl`, `userId`) |
 
 ```bash
 pnpm lint

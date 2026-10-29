@@ -199,7 +199,11 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/no-object-keys-includes`, and
 `@nerdfish/conventions/no-deep-equal-in-memo`, and
 `@nerdfish/conventions/no-browser-globals-in-render`, and
-`@nerdfish/conventions/no-context-menu`. The conventions config also enables
+`@nerdfish/conventions/no-context-menu`, and
+`@nerdfish/conventions/effect-components`, and
+`@nerdfish/conventions/component-props-naming`, and
+`@nerdfish/conventions/no-navigate-prefer-link`, and
+`@nerdfish/conventions/no-miscased-acronym`. The conventions config also enables
 `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
 `unicorn/no-declarations-before-early-exit`, `unicorn/prefer-at` and
 `unicorn/prefer-early-return`.
@@ -208,6 +212,13 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 render. Its module-scope check turns on automatically when an SSR framework
 (Next.js, Remix, React Router, Astro, …) is installed; set
 `{ moduleScope: true | false }` to override.
+
+`no-navigate-prefer-link` matches `navigate()` and `router.push()` calls; pass
+`{ functions: ['navigate', 'router.push', …] }` to match other navigation calls.
+
+`no-miscased-acronym` enforces `API`, `ID`, `OIDC`, `SAML`, `SSO` and `URL` as
+`Api`, `Id`, … inside names; pass `{ acronyms: ['API', 'URL', …] }` to change
+the list.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
