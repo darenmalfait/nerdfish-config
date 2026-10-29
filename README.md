@@ -167,8 +167,6 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/testing-bdd/bdd-split-on-and`, and
 `@nerdfish/conventions/map-transformer-name`, and
 `@nerdfish/conventions/sort-transformer-name`, and
-`@nerdfish/conventions/boolean-name`, and
-`@nerdfish/conventions/no-unnecessary-use-prefix`, and
 `@nerdfish/conventions/no-static-render-prop`, and
 `@nerdfish/conventions/no-boolean-mode-props`, and
 `@nerdfish/conventions/prefer-explicit-variants`, and
@@ -195,9 +193,10 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/no-unmerged-classname`, and
 `@nerdfish/conventions/require-reduced-motion`, and
 `@nerdfish/conventions/prefer-hook-return-object`, and
-`@nerdfish/conventions/prefer-early-return`, and
 `@nerdfish/conventions/no-negated-variables`, and
-`@nerdfish/conventions/module-constant-name`.
+`@nerdfish/conventions/module-constant-name`. The conventions config also
+enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`
+and `unicorn/prefer-early-return`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a

@@ -4,7 +4,6 @@ import {
 	getSecondCallback,
 	isFunctionNode,
 	resolveStaticStringArg,
-	walkAst,
 } from '../../util.js'
 
 const NON_TEST_CASE_IT_TEST_MEMBERS = new Set([
@@ -16,14 +15,6 @@ const NON_TEST_CASE_IT_TEST_MEMBERS = new Set([
 	'extend',
 	'step',
 	'use',
-])
-
-const NESTED_BDD_SCOPE_CALLS = new Set([
-	'describe',
-	'it',
-	'test',
-	'Given',
-	'When',
 ])
 
 export function isDescribeCall(node) {
@@ -268,68 +259,4 @@ export function callbackHasMultipleActions(
 	const body = callback.body
 
 	return bodyHasMultipleActions(body, { excludeTestHarness })
-}
-
-export function containsExpectAssertion(body) {
-	let isFound = false
-
-	walkAst(
-		body,
-		(node) => {
-			if (
-				node.type === 'CallExpression' &&
-				node.callee?.type === 'Identifier' &&
-				node.callee.name === 'expect'
-			) {
-				isFound = true
-				return true
-			}
-			return false
-		},
-		{ omitFunctionArgsForCalls: NESTED_BDD_SCOPE_CALLS },
-	)
-
-	return isFound
-}
-
-export function createNoAssertionsInBddBlockRule({
-	guidelineRuleId,
-	description,
-	messageId,
-	message,
-	helperName,
-	describeTitlePrefix,
-}) {
-	return {
-		meta: {
-			type: 'problem',
-			docs: { description, guidelineRuleId },
-			schema: [],
-			messages: { [messageId]: message },
-		},
-		create(context) {
-			return {
-				CallExpression(node) {
-					if (!isBddScopeBlock(node, { helperName, describeTitlePrefix })) {
-						return
-					}
-
-					const callback = getSecondCallback(node)
-					if (!callback?.body) {
-						return
-					}
-
-					if (!containsExpectAssertion(callback.body)) {
-						return
-					}
-
-					const title = resolveStaticStringArg(node)
-					context.report({
-						node: title?.node ?? node,
-						messageId,
-					})
-				},
-			}
-		},
-	}
 }

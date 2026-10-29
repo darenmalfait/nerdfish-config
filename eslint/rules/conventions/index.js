@@ -1,4 +1,5 @@
-import { booleanNameRule } from './boolean-name.js'
+import reactX from 'eslint-plugin-react-x'
+import unicorn from 'eslint-plugin-unicorn'
 import { contextValueInterfaceRule } from './context-value-interface.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
@@ -14,10 +15,8 @@ import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noTransitionAllRule } from './no-transition-all.js'
 import { noTrivialUseMemoRule } from './no-trivial-use-memo.js'
 import { noUnmergedClassnameRule } from './no-unmerged-classname.js'
-import { noUnnecessaryUsePrefixRule } from './no-unnecessary-use-prefix.js'
 import { noUnstableHookDefaultsRule } from './no-unstable-hook-defaults.js'
 import { preferEarlyReturnStatesRule } from './prefer-early-return-states.js'
-import { preferEarlyReturnRule } from './prefer-early-return.js'
 import { preferEllipsisCharacterRule } from './prefer-ellipsis-character.js'
 import { preferExplicitVariantsRule } from './prefer-explicit-variants.js'
 import { preferFlatMapOverMapFilterRule } from './prefer-flat-map-over-map-filter.js'
@@ -37,7 +36,6 @@ const WARN = 'warn'
 
 /** @type {import('eslint').Linter.RulesRecord} */
 export const conventionsRules = {
-	'@nerdfish/conventions/boolean-name': WARN,
 	'@nerdfish/conventions/context-value-interface': WARN,
 	'@nerdfish/conventions/event-handler-name': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
@@ -53,9 +51,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-transition-all': WARN,
 	'@nerdfish/conventions/no-trivial-use-memo': WARN,
 	'@nerdfish/conventions/no-unmerged-classname': WARN,
-	'@nerdfish/conventions/no-unnecessary-use-prefix': WARN,
 	'@nerdfish/conventions/no-unstable-hook-defaults': WARN,
-	'@nerdfish/conventions/prefer-early-return': WARN,
 	'@nerdfish/conventions/prefer-early-return-states': WARN,
 	'@nerdfish/conventions/prefer-ellipsis-character': WARN,
 	'@nerdfish/conventions/prefer-explicit-variants': WARN,
@@ -71,12 +67,19 @@ export const conventionsRules = {
 	'@nerdfish/conventions/require-script-loading-strategy': WARN,
 	'@nerdfish/conventions/require-timer-cleanup': WARN,
 	'@nerdfish/conventions/sort-transformer-name': WARN,
+	// Upstream rules that cover conventions we used to implement ourselves
+	'react-x/no-unnecessary-use-prefix': WARN,
+	'unicorn/consistent-boolean-name': [
+		WARN,
+		// Variables only: checking parameters would flag every `({ open, disabled })` prop
+		{ checkArguments: 'never', checkFunctions: 'never' },
+	],
+	'unicorn/prefer-early-return': WARN,
 }
 
 /** Nerdfish coding conventions — opt in via spread alongside `@nerdfish/config/eslint`. */
 export const plugin = {
 	rules: {
-		'boolean-name': booleanNameRule,
 		'context-value-interface': contextValueInterfaceRule,
 		'event-handler-name': eventHandlerNameRule,
 		'map-transformer-name': mapTransformerNameRule,
@@ -92,9 +95,7 @@ export const plugin = {
 		'no-transition-all': noTransitionAllRule,
 		'no-trivial-use-memo': noTrivialUseMemoRule,
 		'no-unmerged-classname': noUnmergedClassnameRule,
-		'no-unnecessary-use-prefix': noUnnecessaryUsePrefixRule,
 		'no-unstable-hook-defaults': noUnstableHookDefaultsRule,
-		'prefer-early-return': preferEarlyReturnRule,
 		'prefer-early-return-states': preferEarlyReturnStatesRule,
 		'prefer-ellipsis-character': preferEllipsisCharacterRule,
 		'prefer-explicit-variants': preferExplicitVariantsRule,
@@ -119,6 +120,8 @@ export const config = [
 		files: ['**/*.ts?(x)', '**/*.js?(x)'],
 		plugins: {
 			'@nerdfish/conventions': plugin,
+			'react-x': reactX,
+			unicorn,
 		},
 		rules: conventionsRules,
 	},
