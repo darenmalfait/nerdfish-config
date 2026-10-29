@@ -6,24 +6,44 @@ ruleTester.run(
 	specPartialMocksUseJestRequireActualRule,
 	{
 		valid: [
-			"jest.mock('./api', () => ({ ...jest.requireActual('./api'), fetchUser: jest.fn() }))",
-			"jest.mock('./api')",
-			"jest.mock('./api', () => ({}))",
-			`jest.mock('./api', () => {
+			`import { fetchUser } from './api'
+jest.mock('./api', () => ({ fetchUser: jest.fn() }))`,
+			`import { fetchUser, formatUser } from './api'
+jest.mock('./api', () => ({ ...jest.requireActual('./api'), fetchUser: jest.fn() }))`,
+			`import { fetchUser, formatUser } from './api'
+jest.mock('./api', () => {
 	const actual = jest.requireActual('./api')
 	return { ...actual, fetchUser: jest.fn() }
 })`,
+			`import { fetchUser, formatUser } from './api'
+jest.mock('./api', () => ({ ...mockApi, fetchUser: jest.fn() }))`,
+			`import api from './api'
+jest.mock('./api', () => ({ fetchUser: jest.fn() }))`,
+			`import { fetchUser } from './api'
+import type { User } from './api'
+jest.mock('./api', () => ({ fetchUser: jest.fn() }))`,
+			`import { render } from '@testing-library/react'
+jest.mock('./api', () => ({ fetchUser: jest.fn() }))`,
+			`import { fetchUser } from './api'
+jest.mock('./api')`,
 		],
 		invalid: [
 			{
-				code: "jest.mock('./api', () => ({ fetchUser: jest.fn() }))",
-				errors: [{ messageId: 'useJestRequireActual' }],
+				code: `import { fetchUser, formatUser } from './api'
+jest.mock('./api', () => ({ fetchUser: jest.fn() }))`,
+				errors: [{ messageId: 'missingExports' }],
 			},
 			{
-				code: `jest.mock('./api', () => {
+				code: `import { fetchUser, formatUser } from './api'
+jest.mock('./api', () => {
 	return { fetchUser: jest.fn() }
 })`,
-				errors: [{ messageId: 'useJestRequireActual' }],
+				errors: [{ messageId: 'missingExports' }],
+			},
+			{
+				code: `import api, { fetchUser } from './api'
+jest.mock('./api', () => ({ __esModule: true, fetchUser: jest.fn() }))`,
+				errors: [{ messageId: 'missingExports' }],
 			},
 		],
 	},

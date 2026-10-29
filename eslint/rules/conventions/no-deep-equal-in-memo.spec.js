@@ -6,6 +6,7 @@ ruleTester.run('no-deep-equal-in-memo', noDeepEqualInMemoRule, {
 		'memo(UserRow)',
 		'memo(UserRow, (prev, next) => prev.user.id === next.user.id)',
 		'React.memo(UserRow, (prev, next) => prev.id === next.id)',
+		'const key = JSON.stringify(filters)',
 	],
 	invalid: [
 		{
@@ -14,10 +15,11 @@ ruleTester.run('no-deep-equal-in-memo', noDeepEqualInMemoRule, {
 		},
 		{
 			code: 'memo(UserRow, (prev, next) => JSON.stringify(prev) === JSON.stringify(next))',
-			errors: [
-				{ messageId: 'noDeepEqualInMemo' },
-				{ messageId: 'noDeepEqualInMemo' },
-			],
+			errors: [{ messageId: 'noDeepEqualInMemo' }],
+		},
+		{
+			code: 'memo(UserRow, (prev, next) => JSON.stringify(prev.items) === next.key)',
+			errors: [{ messageId: 'noDeepEqualInMemo' }],
 		},
 		{
 			code: `function arePropsEqual(prev, next) { return _.isEqual(prev, next) }

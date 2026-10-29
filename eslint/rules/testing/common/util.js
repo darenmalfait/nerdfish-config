@@ -145,26 +145,21 @@ export function isLikelyTranslationKey(value) {
 	return /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/i.test(value)
 }
 
-export function factoryReturnsNonEmptyObject(factory) {
+/** The object literal a mock factory returns: `() => ({ … })` or `() => { return { … } }`, else null. */
+export function getFactoryReturnedObject(factory) {
 	if (factory.body.type === 'ObjectExpression') {
-		return factory.body.properties.length > 0
+		return factory.body
 	}
 
 	if (factory.body.type !== 'BlockStatement') {
-		return false
+		return null
 	}
 
-	for (const statement of factory.body.body) {
-		if (statement.type !== 'ReturnStatement') {
-			continue
-		}
-		const argument = statement.argument
-		if (argument?.type === 'ObjectExpression') {
-			return argument.properties.length > 0
-		}
-	}
+	const returned = factory.body.body.find(
+		(statement) => statement.type === 'ReturnStatement',
+	)?.argument
 
-	return false
+	return returned?.type === 'ObjectExpression' ? returned : null
 }
 
 export function factoryUsesJestRequireActual(factory) {

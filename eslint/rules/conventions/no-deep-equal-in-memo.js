@@ -11,6 +11,8 @@ const DEFAULT_FUNCTIONS = [
 	'isEqualWith',
 ]
 
+const EQUALITY_OPERATORS = new Set(['===', '==', '!==', '!='])
+
 /** `JSON.stringify(…)`: serializing props to compare them is a deep comparison too. */
 function isJsonStringify(node) {
 	return (
@@ -117,7 +119,17 @@ export const noDeepEqualInMemoRule = {
 				}
 
 				if (isJsonStringify(node)) {
-					deepComparisons.push({ node, name: 'JSON.stringify' })
+					const { parent } = node
+					// `JSON.stringify(prev) === JSON.stringify(next)` is one comparison: report it once.
+					const comparison =
+						parent.type === 'BinaryExpression' &&
+						EQUALITY_OPERATORS.has(parent.operator)
+							? parent
+							: node
+
+					if (!deepComparisons.some((entry) => entry.node === comparison)) {
+						deepComparisons.push({ node: comparison, name: 'JSON.stringify' })
+					}
 				} else if (functions.has(getCallName(node.callee))) {
 					deepComparisons.push({ node, name: sourceCode.getText(node.callee) })
 				}
