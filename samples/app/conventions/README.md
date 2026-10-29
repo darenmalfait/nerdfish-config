@@ -33,11 +33,12 @@ and these no longer pass.
 | `prefer-hook-return-object.ts` | `prefer-hook-return-object` — hooks returning more than 2 values return an object |
 | `prefer-early-return.ts` | `unicorn/prefer-early-return` — guard clause instead of a trailing `if` wrapping the rest of the function |
 | `no-negated-variables.ts` | `no-negated-variables` — no `isNot*` / `cannot*` / `dont*` names |
-| `module-constant-name.ts` | `module-constant-name` — non-exported module constants with a static value use `SCREAMING_SNAKE_CASE` |
+| `module-constant-name.ts` | `module-constant-name` — non-exported module constants with a static value use `SCREAMING_SNAKE_CASE`, and only module-level `const`s do |
 | `no-accumulator-spread.ts` | `no-accumulator-spread` — no `...acc` / `acc.concat()` in reduce callbacks |
 | `no-object-keys-includes.ts` | `no-object-keys-includes` — `Object.hasOwn(obj, key)` instead of `Object.keys(obj).includes(key)` |
 | `no-deep-equal-in-memo.tsx` | `no-deep-equal-in-memo` — `memo` comparators compare specific props, not `isEqual` / `JSON.stringify` |
 | `no-browser-globals-in-render.tsx` | `no-browser-globals-in-render` — `window` / `document` / `localStorage` only in effects and handlers; module scope only behind a `typeof` guard in SSR apps |
+| `no-context-menu.tsx` | `no-context-menu` — `contextmenu` handlers don't call `preventDefault()` |
 
 ```bash
 pnpm lint

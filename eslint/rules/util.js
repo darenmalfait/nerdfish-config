@@ -365,3 +365,76 @@ export function getRenameFixes(fixer, id, variable, name) {
 
 	return [declarationFix, ...referenceFixes]
 }
+
+/** True when `name` is free everywhere `variable` is used, so renaming cannot capture another binding. */
+export function canRename(variable, name) {
+	return (
+		!variable.scope.set.has(name) &&
+		!variable.scope.through.some(
+			(reference) => reference.identifier.name === name,
+		) &&
+		variable.references.every(
+			(reference) => !isShadowed(reference, name, variable.scope),
+		)
+	)
+}
+
+function findFunction(scope, name) {
+	for (let current = scope; current; current = current.upper) {
+		const definition = current.set.get(name)?.defs[0]
+
+		if (!definition) {
+			continue
+		}
+
+		if (definition.node.type === 'FunctionDeclaration') {
+			return definition.node
+		}
+
+		return isFunctionNode(definition.node.init) ? definition.node.init : null
+	}
+
+	return null
+}
+
+/** True when the handler calls `….preventDefault()` anywhere in its body. */
+export function callsPreventDefault(fn, visitorKeys) {
+	let isFound = false
+
+	function visit(node) {
+		if (isFound || !node?.type) {
+			return
+		}
+
+		if (
+			node.type === 'CallExpression' &&
+			getMemberPropertyName(node.callee) === 'preventDefault'
+		) {
+			isFound = true
+			return
+		}
+
+		for (const key of visitorKeys[node.type] ?? []) {
+			const value = node[key]
+
+			for (const child of Array.isArray(value) ? value : [value]) {
+				visit(child)
+			}
+		}
+	}
+
+	visit(fn.body)
+
+	return isFound
+}
+
+/** The function an event handler expression refers to: inline, or declared in an enclosing scope. */
+export function resolveHandler(sourceCode, expression) {
+	if (isFunctionNode(expression)) {
+		return expression
+	}
+
+	return expression?.type === 'Identifier'
+		? findFunction(sourceCode.getScope(expression), expression.name)
+		: null
+}

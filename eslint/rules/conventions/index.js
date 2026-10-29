@@ -10,6 +10,7 @@ import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 import { noBrowserGlobalsInRenderRule } from './no-browser-globals-in-render.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
+import { noContextMenuRule } from './no-context-menu.js'
 import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
 import { noNegatedVariablesRule } from './no-negated-variables.js'
@@ -50,6 +51,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-browser-globals-in-render': WARN,
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
 	'@nerdfish/conventions/no-compound-component-object': WARN,
+	'@nerdfish/conventions/no-context-menu': WARN,
 	'@nerdfish/conventions/no-deep-equal-in-memo': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
 	'@nerdfish/conventions/no-negated-variables': WARN,
@@ -100,6 +102,7 @@ export const plugin = {
 		'no-browser-globals-in-render': noBrowserGlobalsInRenderRule,
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
 		'no-compound-component-object': noCompoundComponentObjectRule,
+		'no-context-menu': noContextMenuRule,
 		'no-deep-equal-in-memo': noDeepEqualInMemoRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
 		'no-negated-variables': noNegatedVariablesRule,

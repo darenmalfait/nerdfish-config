@@ -21,3 +21,14 @@ export function getDefaults() {
 		api,
 	}
 }
+
+declare const env: { API_URL?: string }
+
+// SCREAMING_SNAKE_CASE is reserved for module-level constants: locals are camelCase,
+// unless destructured from a source that uses that name.
+export function getPagination(itemCount: number) {
+	const { API_URL } = env
+	const pageSize = itemCount > 50 ? 20 : 10
+
+	return { url: API_URL, pageSize }
+}

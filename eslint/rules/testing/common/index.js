@@ -1,5 +1,6 @@
 import { testFiles } from '../test-files.js'
 import { noCssSelectorsInTestsRule } from './no-css-selectors-in-tests.js'
+import { noSnapshotAssertionsRule } from './no-snapshot-assertions.js'
 import { noStoredElementQueriesRule } from './no-stored-element-queries.js'
 import { noTestidQueriesRule } from './no-testid-queries.js'
 import { noTestingInternalsRule } from './no-testing-internals.js'
@@ -15,6 +16,7 @@ export { testFiles }
 /** @type {import('eslint').Linter.RulesRecord} */
 export const testingRules = {
 	'@nerdfish/testing/no-css-selectors-in-tests': ERROR,
+	'@nerdfish/testing/no-snapshot-assertions': ERROR,
 	'@nerdfish/testing/no-stored-element-queries': ERROR,
 	'@nerdfish/testing/no-testid-queries': ERROR,
 	'@nerdfish/testing/no-testing-internals': ERROR,
@@ -28,6 +30,7 @@ export const testingRules = {
 export const plugin = {
 	rules: {
 		'no-css-selectors-in-tests': noCssSelectorsInTestsRule,
+		'no-snapshot-assertions': noSnapshotAssertionsRule,
 		'no-stored-element-queries': noStoredElementQueriesRule,
 		'no-testid-queries': noTestidQueriesRule,
 		'no-testing-internals': noTestingInternalsRule,

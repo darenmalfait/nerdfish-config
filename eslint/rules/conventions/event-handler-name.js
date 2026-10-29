@@ -1,8 +1,8 @@
 import {
+	canRename,
 	getCallName,
 	getRenameFixes,
 	isFunctionNode,
-	isShadowed,
 } from '../util.js'
 
 const MEMOIZED_HANDLER_HOOKS = new Set(['useCallback', 'useMemo'])
@@ -30,19 +30,6 @@ function isExported(variable) {
 		EXPORT_PARENTS.has(declaration.parent?.type) ||
 		variable.references.some((reference) =>
 			EXPORT_PARENTS.has(reference.identifier.parent.type),
-		)
-	)
-}
-
-/** True when `name` is free everywhere the handler is used, so renaming cannot capture another binding. */
-function canRename(variable, name) {
-	return (
-		!variable.scope.set.has(name) &&
-		!variable.scope.through.some(
-			(reference) => reference.identifier.name === name,
-		) &&
-		variable.references.every(
-			(reference) => !isShadowed(reference, name, variable.scope),
 		)
 	)
 }
@@ -106,9 +93,7 @@ export const eventHandlerNameRule = {
 				case 'Variable': {
 					const { init } = definition.node
 
-					return (
-						isFunctionNode(init) || isMemoizedHandlerDefinition(init)
-					)
+					return isFunctionNode(init) || isMemoizedHandlerDefinition(init)
 				}
 				default:
 					return false
