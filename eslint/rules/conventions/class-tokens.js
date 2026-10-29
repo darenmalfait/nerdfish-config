@@ -34,14 +34,19 @@ function hasClassRootAncestor(node) {
 	return false
 }
 
-function collectStrings(node, visitorKeys, strings) {
-	if (node.type === 'Literal' && typeof node.value === 'string') {
-		strings.push(node.value)
-		return
-	}
+/** Text of a string literal or template chunk. */
+export function getStringValue(node) {
+	return node.type === 'TemplateElement'
+		? (node.value.cooked ?? '')
+		: node.value
+}
 
-	if (node.type === 'TemplateElement') {
-		strings.push(node.value.cooked ?? '')
+function collectStrings(node, visitorKeys, strings) {
+	if (
+		(node.type === 'Literal' && typeof node.value === 'string') ||
+		node.type === 'TemplateElement'
+	) {
+		strings.push(node)
 		return
 	}
 
@@ -61,6 +66,7 @@ function collectStrings(node, visitorKeys, strings) {
  * Visit each outermost class root (`className={…}` or `cn(…)`) with every
  * class token found in its string literals, so checks can look across
  * conditional branches: `cn('outline-none', isActive && 'focus-visible:ring')`.
+ * The string nodes themselves are passed along for fixers.
  */
 export function createClassRootVisitor(context, check) {
 	function visit(node) {
@@ -76,11 +82,11 @@ export function createClassRootVisitor(context, check) {
 		}
 
 		const tokens = strings
-			.flatMap((value) => value.split(/\s+/))
+			.flatMap((string) => getStringValue(string).split(/\s+/))
 			.filter(Boolean)
 
 		if (tokens.length > 0) {
-			check(node, tokens)
+			check(node, tokens, strings)
 		}
 	}
 

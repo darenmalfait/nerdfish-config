@@ -1,10 +1,56 @@
-import { getCallName, isFunctionNode } from '../util.js'
+import {
+	getCallName,
+	getRenameFixes,
+	isFunctionNode,
+	isShadowed,
+} from '../util.js'
 
 const MEMOIZED_HANDLER_HOOKS = new Set(['useCallback', 'useMemo'])
+
+const EXPORT_PARENTS = new Set([
+	'ExportDefaultDeclaration',
+	'ExportNamedDeclaration',
+	'ExportSpecifier',
+])
+
+/** `submitForm` → `handleSubmitForm`, `onSave` → `handleSave`. */
+function toHandlerName(name) {
+	const base = /^on[A-Z]/.test(name) ? name.slice(2) : name
+
+	return `handle${base[0].toUpperCase()}${base.slice(1)}`
+}
+
+/** Exported handlers keep their name: renaming them would break importers. */
+function isExported(variable) {
+	const [definition] = variable.defs
+	const declaration =
+		definition.type === 'Variable' ? definition.parent : definition.node
+
+	return (
+		EXPORT_PARENTS.has(declaration.parent?.type) ||
+		variable.references.some((reference) =>
+			EXPORT_PARENTS.has(reference.identifier.parent.type),
+		)
+	)
+}
+
+/** True when `name` is free everywhere the handler is used, so renaming cannot capture another binding. */
+function canRename(variable, name) {
+	return (
+		!variable.scope.set.has(name) &&
+		!variable.scope.through.some(
+			(reference) => reference.identifier.name === name,
+		) &&
+		variable.references.every(
+			(reference) => !isShadowed(reference, name, variable.scope),
+		)
+	)
+}
 
 export const eventHandlerNameRule = {
 	meta: {
 		type: 'suggestion',
+		fixable: 'code',
 
 		docs: {
 			description:
@@ -154,7 +200,7 @@ export const eventHandlerNameRule = {
 			return false
 		}
 
-		function resolveHandlerDefinition(identifier) {
+		function resolveHandlerVariable(identifier) {
 			let scope = context.sourceCode.getScope(identifier)
 
 			while (scope) {
@@ -165,7 +211,7 @@ export const eventHandlerNameRule = {
 						referenceUsesIdentifier(reference, identifier),
 					)
 				) {
-					return variable.defs[0] ?? null
+					return variable
 				}
 
 				scope = scope.upper
@@ -224,11 +270,14 @@ export const eventHandlerNameRule = {
 					return
 				}
 
-				const definition = resolveHandlerDefinition(expression)
+				const variable = resolveHandlerVariable(expression)
 
-				if (!isLocallyDefinedHandler(definition)) {
+				if (!isLocallyDefinedHandler(variable?.defs[0])) {
 					return
 				}
+
+				const name = toHandlerName(handlerName)
+				const isFixable = !isExported(variable) && canRename(variable, name)
 
 				context.report({
 					node: expression,
@@ -236,6 +285,10 @@ export const eventHandlerNameRule = {
 					data: {
 						attributeName,
 					},
+					fix: isFixable
+						? (fixer) =>
+								getRenameFixes(fixer, variable.defs[0].name, variable, name)
+						: null,
 				})
 			},
 		}

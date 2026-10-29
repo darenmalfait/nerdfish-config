@@ -1,3 +1,5 @@
+import { getRenameFixes, isShadowed } from '../util.js'
+
 const SCREAMING_SNAKE_CASE = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$/
 
 const STATIC_COLLECTIONS = new Set(['Map', 'Set'])
@@ -129,45 +131,6 @@ function isMutation(reference) {
 		default:
 			return false
 	}
-}
-
-/** True when a scope between a reference and the module would shadow `name`. */
-function isShadowed(reference, name, moduleScope) {
-	for (let scope = reference.from; scope; scope = scope.upper) {
-		if (scope.set.has(name)) {
-			return true
-		}
-
-		if (scope === moduleScope) {
-			return false
-		}
-	}
-
-	return false
-}
-
-/** Renames the declaration and every reference; safe because the constant is not exported. */
-function getRenameFixes(fixer, id, variable, name) {
-	// The type annotation is part of the declared Identifier's range.
-	const declarationFix = fixer.replaceTextRange(
-		[id.range[0], id.range[0] + id.name.length],
-		name,
-	)
-
-	const referenceFixes = variable.references
-		.filter((reference) => reference.identifier !== id)
-		.map(({ identifier }) => {
-			const { parent } = identifier
-
-			// `{ bars }` must become `{ bars: BARS }` to keep the key.
-			return parent.type === 'Property' &&
-				parent.shorthand &&
-				parent.value === identifier
-				? fixer.replaceText(parent, `${identifier.name}: ${name}`)
-				: fixer.replaceText(identifier, name)
-		})
-
-	return [declarationFix, ...referenceFixes]
 }
 
 export const moduleConstantNameRule = {

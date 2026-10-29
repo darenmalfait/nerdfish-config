@@ -52,6 +52,37 @@ function isTrivialExpression(node) {
 	}
 }
 
+/** Expressions that bind tighter than anything around them, so they never need parentheses. */
+const PRIMARY_EXPRESSIONS = new Set([
+	'Identifier',
+	'Literal',
+	'TemplateLiteral',
+	'ThisExpression',
+])
+
+/** Positions where any expression can stand without parentheses. */
+const EXPRESSION_SLOTS = new Set([
+	'ArrayExpression',
+	'JSXExpressionContainer',
+	'ReturnStatement',
+	'VariableDeclarator',
+])
+
+function needsParentheses(call, expression) {
+	const { parent } = call
+
+	if (PRIMARY_EXPRESSIONS.has(expression.type)) {
+		return false
+	}
+
+	return !(
+		EXPRESSION_SLOTS.has(parent.type) ||
+		(parent.type === 'CallExpression' && parent.arguments.includes(call)) ||
+		(parent.type === 'Property' && parent.value === call) ||
+		(parent.type === 'ArrowFunctionExpression' && parent.body === call)
+	)
+}
+
 /** The single returned expression of `() => expr` or `() => { return expr }`. */
 function getReturnedExpression(callback) {
 	if (callback.body.type !== 'BlockStatement') {
@@ -69,6 +100,7 @@ function getReturnedExpression(callback) {
 export const noTrivialUseMemoRule = {
 	meta: {
 		type: 'suggestion',
+		fixable: 'code',
 
 		docs: {
 			description:
@@ -104,13 +136,31 @@ export const noTrivialUseMemoRule = {
 					return
 				}
 
-				if (!isTrivialExpression(getReturnedExpression(callback))) {
+				const expression = getReturnedExpression(callback)
+
+				if (!isTrivialExpression(expression)) {
 					return
 				}
+
+				// Inlining would drop comments and an explicit `useMemo<Type>` annotation.
+				const isFixable =
+					!node.typeArguments &&
+					!node.typeParameters &&
+					context.sourceCode.getCommentsInside(node).length === 0
 
 				context.report({
 					node,
 					messageId: 'noTrivialUseMemo',
+					fix: isFixable
+						? (fixer) => {
+								const text = context.sourceCode.getText(expression)
+
+								return fixer.replaceText(
+									node,
+									needsParentheses(node, expression) ? `(${text})` : text,
+								)
+							}
+						: null,
 				})
 			},
 		}

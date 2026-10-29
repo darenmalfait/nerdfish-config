@@ -1,4 +1,8 @@
-import { createClassRootVisitor, getUtility } from './class-tokens.js'
+import {
+	createClassRootVisitor,
+	getStringValue,
+	getUtility,
+} from './class-tokens.js'
 
 function isUnguardedAnimation(token) {
 	const utility = getUtility(token)
@@ -10,9 +14,26 @@ function isUnguardedAnimation(token) {
 	)
 }
 
+/** `'animate-spin p-2'` → `'motion-safe:animate-spin p-2'`, or null when the raw text has escapes. */
+function getGuardedRaw(literal) {
+	const quote = literal.raw[0]
+	const content = literal.raw.slice(1, -1)
+
+	if (content !== literal.value) {
+		return null
+	}
+
+	const guarded = content.replaceAll(/\S+/g, (token) =>
+		isUnguardedAnimation(token) ? `motion-safe:${token}` : token,
+	)
+
+	return `${quote}${guarded}${quote}`
+}
+
 export const requireReducedMotionRule = {
 	meta: {
 		type: 'suggestion',
+		fixable: 'code',
 
 		docs: {
 			description:
@@ -36,7 +57,7 @@ export const requireReducedMotionRule = {
 		 * cn('animate-pulse', 'motion-reduce:hidden') ✅
 		 * className="animate-bounce" ❌
 		 */
-		return createClassRootVisitor(context, (node, tokens) => {
+		return createClassRootVisitor(context, (node, tokens, strings) => {
 			const animation = tokens.find(isUnguardedAnimation)
 
 			if (
@@ -46,10 +67,24 @@ export const requireReducedMotionRule = {
 				return
 			}
 
+			const animatedStrings = strings.filter((string) =>
+				getStringValue(string).split(/\s+/).some(isUnguardedAnimation),
+			)
+			// Only plain string literals are rewritten; template chunks are left to the author.
+			const fixes = animatedStrings.every((string) => string.type === 'Literal')
+				? animatedStrings.map((literal) => [literal, getGuardedRaw(literal)])
+				: []
+			const isFixable =
+				fixes.length > 0 && fixes.every(([, raw]) => raw !== null)
+
 			context.report({
 				node,
 				messageId: 'requireReducedMotion',
 				data: { token: animation, utility: getUtility(animation) },
+				fix: isFixable
+					? (fixer) =>
+							fixes.map(([literal, raw]) => fixer.replaceText(literal, raw))
+					: null,
 			})
 		})
 	},
