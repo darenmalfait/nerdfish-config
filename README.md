@@ -194,9 +194,12 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/require-reduced-motion`, and
 `@nerdfish/conventions/prefer-hook-return-object`, and
 `@nerdfish/conventions/no-negated-variables`, and
-`@nerdfish/conventions/module-constant-name`. The conventions config also
-enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`
-and `unicorn/prefer-early-return`.
+`@nerdfish/conventions/module-constant-name`, and
+`@nerdfish/conventions/no-accumulator-spread`, and
+`@nerdfish/conventions/no-object-keys-includes`, and
+`@nerdfish/conventions/no-deep-equal-in-memo`. The conventions config also
+enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
+`unicorn/prefer-at` and `unicorn/prefer-early-return`.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a

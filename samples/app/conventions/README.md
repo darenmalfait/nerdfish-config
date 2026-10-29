@@ -34,6 +34,9 @@ and these no longer pass.
 | `prefer-early-return.ts` | `unicorn/prefer-early-return` — guard clause instead of a trailing `if` wrapping the rest of the function |
 | `no-negated-variables.ts` | `no-negated-variables` — no `isNot*` / `cannot*` / `dont*` names |
 | `module-constant-name.ts` | `module-constant-name` — non-exported module constants with a static value use `SCREAMING_SNAKE_CASE` |
+| `no-accumulator-spread.ts` | `no-accumulator-spread` — no `...acc` / `acc.concat()` in reduce callbacks |
+| `no-object-keys-includes.ts` | `no-object-keys-includes` — `Object.hasOwn(obj, key)` instead of `Object.keys(obj).includes(key)` |
+| `no-deep-equal-in-memo.tsx` | `no-deep-equal-in-memo` — `memo` comparators compare specific props, not `isEqual` / `JSON.stringify` |
 
 ```bash
 pnpm lint

@@ -5,11 +5,14 @@ import { eventHandlerNameRule } from './event-handler-name.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { moduleConstantNameRule } from './module-constant-name.js'
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
+import { noAccumulatorSpreadRule } from './no-accumulator-spread.js'
 import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
+import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
 import { noNegatedVariablesRule } from './no-negated-variables.js'
+import { noObjectKeysIncludesRule } from './no-object-keys-includes.js'
 import { noPasteBlockingRule } from './no-paste-blocking.js'
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noTransitionAllRule } from './no-transition-all.js'
@@ -41,11 +44,14 @@ export const conventionsRules = {
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/module-constant-name': WARN,
 	'@nerdfish/conventions/narrow-effect-deps': WARN,
+	'@nerdfish/conventions/no-accumulator-spread': WARN,
 	'@nerdfish/conventions/no-boolean-mode-props': WARN,
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
 	'@nerdfish/conventions/no-compound-component-object': WARN,
+	'@nerdfish/conventions/no-deep-equal-in-memo': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
 	'@nerdfish/conventions/no-negated-variables': WARN,
+	'@nerdfish/conventions/no-object-keys-includes': WARN,
 	'@nerdfish/conventions/no-paste-blocking': WARN,
 	'@nerdfish/conventions/no-static-render-prop': WARN,
 	'@nerdfish/conventions/no-transition-all': WARN,
@@ -74,6 +80,7 @@ export const conventionsRules = {
 		// Variables only: checking parameters would flag every `({ open, disabled })` prop
 		{ checkArguments: 'never', checkFunctions: 'never' },
 	],
+	'unicorn/prefer-at': WARN,
 	'unicorn/prefer-early-return': WARN,
 }
 
@@ -85,11 +92,14 @@ export const plugin = {
 		'map-transformer-name': mapTransformerNameRule,
 		'module-constant-name': moduleConstantNameRule,
 		'narrow-effect-deps': narrowEffectDepsRule,
+		'no-accumulator-spread': noAccumulatorSpreadRule,
 		'no-boolean-mode-props': noBooleanModePropsRule,
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
 		'no-compound-component-object': noCompoundComponentObjectRule,
+		'no-deep-equal-in-memo': noDeepEqualInMemoRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
 		'no-negated-variables': noNegatedVariablesRule,
+		'no-object-keys-includes': noObjectKeysIncludesRule,
 		'no-paste-blocking': noPasteBlockingRule,
 		'no-static-render-prop': noStaticRenderPropRule,
 		'no-transition-all': noTransitionAllRule,
