@@ -29,17 +29,29 @@
     "./eslint/conventions": "./eslint/rules/conventions/index.js"
   },
   "main": "index.js",
+  "files": [
+    "index.js",
+    "eslint.js",
+    "prettier.js",
+    "biome.json",
+    "typescript.json",
+    "reset.d.ts",
+    "eslint/rules/",
+    "!eslint/rules/**/*.spec.js",
+    "!eslint/rules/rule-tester.js"
+  ],
   "scripts": {
-    "checks": "npm-run-all --parallel lint typecheck",
+    "checks": "npm-run-all --parallel lint typecheck test",
     "clean": "rm -rf node_modules .turbo",
     "format": "prettier . --check --cache --cache-location=\"node_modules/.cache/prettiercache\"",
     "format:fix": "prettier . --write --cache --cache-location=\"node_modules/.cache/prettiercache\" --log-level=warn",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --cache --cache-location \"node_modules/.cache/.eslintcache\" --max-warnings 0",
     "prepare": "husky",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p samples/app/testing/__tests__",
     "skills:install": "DISABLE_TELEMETRY=1 npx --yes skills experimental_install",
-    "skills:update": "DISABLE_TELEMETRY=1 npx --yes skills update -p -y"
+    "skills:update": "DISABLE_TELEMETRY=1 npx --yes skills update -p -y",
+    "test": "node --test \"eslint/rules/**/*.spec.js\"",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p samples/app/testing/__tests__"
   },
   "dependencies": {
     "@eslint/compat": "^2.1.1",

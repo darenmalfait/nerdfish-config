@@ -3,6 +3,9 @@
 Valid examples for `@nerdfish/config/eslint/conventions`. CI fails if rules regress
 and these no longer pass.
 
+Invalid cases and autofix output are covered by the `*.spec.js` next to each
+rule in `eslint/rules/`, run with `pnpm test`.
+
 | Fixture | Rule |
 | --- | --- |
 | `map-transformer-name.ts` | `map-transformer-name` — named `.map()` / `.flatMap()` / `Array.from()` callbacks start with `to` |

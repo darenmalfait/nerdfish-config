@@ -9,4 +9,9 @@ export default [
 	...testingRules,
 	...bddRules,
 	...conventionsRules,
+	{
+		// Rule specs hold the code under test as strings, template literals included.
+		files: ['eslint/rules/**/*.spec.js'],
+		rules: { 'no-template-curly-in-string': 'off' },
+	},
 ]
