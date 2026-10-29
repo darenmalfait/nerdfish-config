@@ -7,6 +7,7 @@ import { moduleConstantNameRule } from './module-constant-name.js'
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
 import { noAccumulatorSpreadRule } from './no-accumulator-spread.js'
 import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
+import { noBrowserGlobalsInRenderRule } from './no-browser-globals-in-render.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
 import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
@@ -46,6 +47,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/narrow-effect-deps': WARN,
 	'@nerdfish/conventions/no-accumulator-spread': WARN,
 	'@nerdfish/conventions/no-boolean-mode-props': WARN,
+	'@nerdfish/conventions/no-browser-globals-in-render': WARN,
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
 	'@nerdfish/conventions/no-compound-component-object': WARN,
 	'@nerdfish/conventions/no-deep-equal-in-memo': WARN,
@@ -80,6 +82,7 @@ export const conventionsRules = {
 		// Variables only: checking parameters would flag every `({ open, disabled })` prop
 		{ checkArguments: 'never', checkFunctions: 'never' },
 	],
+	'unicorn/no-declarations-before-early-exit': WARN,
 	'unicorn/prefer-at': WARN,
 	'unicorn/prefer-early-return': WARN,
 }
@@ -94,6 +97,7 @@ export const plugin = {
 		'narrow-effect-deps': narrowEffectDepsRule,
 		'no-accumulator-spread': noAccumulatorSpreadRule,
 		'no-boolean-mode-props': noBooleanModePropsRule,
+		'no-browser-globals-in-render': noBrowserGlobalsInRenderRule,
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
 		'no-compound-component-object': noCompoundComponentObjectRule,
 		'no-deep-equal-in-memo': noDeepEqualInMemoRule,

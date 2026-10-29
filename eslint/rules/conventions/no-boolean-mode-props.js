@@ -135,11 +135,12 @@ export const noBooleanModePropsRule = {
 
 		function checkBranch(node) {
 			const branches = getJsxBranches(node)
-			const test = node.type === 'LogicalExpression' ? node.left : node.test
 
 			if (!branches) {
 				return
 			}
+
+			const test = node.type === 'LogicalExpression' ? node.left : node.test
 
 			const prop = getProp(test)
 

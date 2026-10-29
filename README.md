@@ -197,9 +197,16 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/module-constant-name`, and
 `@nerdfish/conventions/no-accumulator-spread`, and
 `@nerdfish/conventions/no-object-keys-includes`, and
-`@nerdfish/conventions/no-deep-equal-in-memo`. The conventions config also
-enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
+`@nerdfish/conventions/no-deep-equal-in-memo`, and
+`@nerdfish/conventions/no-browser-globals-in-render`. The conventions config
+also enables `react-x/no-unnecessary-use-prefix`,
+`unicorn/consistent-boolean-name`, `unicorn/no-declarations-before-early-exit`,
 `unicorn/prefer-at` and `unicorn/prefer-early-return`.
+
+`no-browser-globals-in-render` always reports browser globals read during
+render. Its module-scope check turns on automatically when an SSR framework
+(Next.js, Remix, React Router, Astro, …) is installed; set
+`{ moduleScope: true | false }` to override.
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a

@@ -37,6 +37,7 @@ and these no longer pass.
 | `no-accumulator-spread.ts` | `no-accumulator-spread` — no `...acc` / `acc.concat()` in reduce callbacks |
 | `no-object-keys-includes.ts` | `no-object-keys-includes` — `Object.hasOwn(obj, key)` instead of `Object.keys(obj).includes(key)` |
 | `no-deep-equal-in-memo.tsx` | `no-deep-equal-in-memo` — `memo` comparators compare specific props, not `isEqual` / `JSON.stringify` |
+| `no-browser-globals-in-render.tsx` | `no-browser-globals-in-render` — `window` / `document` / `localStorage` only in effects and handlers; module scope only behind a `typeof` guard in SSR apps |
 
 ```bash
 pnpm lint

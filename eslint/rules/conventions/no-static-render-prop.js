@@ -180,11 +180,12 @@ export const noStaticRenderPropRule = {
 				}
 
 				const messageId = getViolation(node.value)
-				const elementName = getJsxElementName(node.parent.name) ?? 'Parent'
 
 				if (!messageId) {
 					return
 				}
+
+				const elementName = getJsxElementName(node.parent.name) ?? 'Parent'
 
 				context.report({
 					node,
