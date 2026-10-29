@@ -23,6 +23,52 @@ const VITEST_FILES = ['**/__tests__/**/*', '**/*.test.*']
 const TEST_FILES = ['**/tests/**', '**/#tests/**', ...VITEST_FILES]
 const PLAYWRIGHT_FILES = ['**/e2e/**']
 
+/**
+ * Import blocks, each separated by a blank line. Side-effect imports move to the
+ * top but keep their order among themselves, since that decides what runs first.
+ * Keep in sync with the organizeImports groups in biome.json.
+ */
+function sortImportsRule(customGroups = []) {
+	return [
+		WARN,
+		{
+			customGroups: [
+				{
+					groupName: 'react',
+					selector: 'external',
+					elementNamePattern: '^react(-[^/]+)?(/.*)?$',
+				},
+				...customGroups,
+			],
+			groups: [
+				'side-effect',
+				'side-effect-style',
+				'builtin',
+				'react',
+				{ newlinesBetween: 0 },
+				'external',
+				...customGroups.map(({ groupName }) => groupName),
+				['internal', 'subpath'],
+				'style',
+				'parent',
+				['sibling', 'index'],
+				'unknown',
+			],
+		},
+	]
+}
+
+/**
+ * Adds project blocks between packages and aliases, in the given order, e.g.
+ * `sortImports({ customGroups: [{ groupName: 'ui', elementNamePattern: '^@acme/ui' }] })`.
+ * `customGroups` take perfectionist's custom group options.
+ */
+export function sortImports({ customGroups } = {}) {
+	return {
+		rules: { 'perfectionist/sort-imports': sortImportsRule(customGroups) },
+	}
+}
+
 export const config = [
 	{
 		ignores: [
@@ -40,6 +86,7 @@ export const config = [
 	{
 		plugins: {
 			import: (await import('eslint-plugin-import-x')).default,
+			perfectionist: (await import('eslint-plugin-perfectionist')).default,
 			unicorn: (await import('eslint-plugin-unicorn')).default,
 		},
 		languageOptions: {
@@ -223,33 +270,7 @@ export const config = [
 
 			// import
 			'import/no-duplicates': [WARN, { 'prefer-inline': true }],
-			// Keep in sync with the organizeImports groups in biome.json.
-			'import/order': [
-				WARN,
-				{
-					alphabetize: { order: 'asc', caseInsensitive: true },
-					'newlines-between': 'always',
-					// React and its ecosystem lead the packages block, without a blank line of their own.
-					pathGroups: [
-						{
-							pattern: '{react,react/**,react-*,react-*/**}',
-							group: 'external',
-							position: 'before',
-						},
-						// Same aliases as Biome's :ALIAS: group.
-						{ pattern: '{#*/**,@/**,~/**}', group: 'internal' },
-					],
-					pathGroupsExcludedImportTypes: ['builtin', 'object'],
-					distinctGroup: false,
-					groups: [
-						'builtin',
-						'external',
-						'internal',
-						'parent',
-						['sibling', 'index'],
-					],
-				},
-			],
+			'perfectionist/sort-imports': sortImportsRule(),
 
 			// complexity rules
 			complexity: [ERROR, 20],

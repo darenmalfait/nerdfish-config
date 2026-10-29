@@ -14,6 +14,8 @@
 							":BLANK_LINE:",
 							":ALIAS:",
 							":BLANK_LINE:",
+							":STYLE:",
+							":BLANK_LINE:",
 							"../**",
 							":BLANK_LINE:",
 							":PATH:"

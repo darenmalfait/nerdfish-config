@@ -132,6 +132,57 @@ import { config as defaultConfig } from '@nerdfish/config/eslint'
 export default [...defaultConfig]
 ```
 
+#### Import order
+
+`perfectionist/sort-imports` sorts imports into blocks separated by a blank
+line. Biome's `organizeImports` in `@nerdfish/config/biome` uses the same order.
+
+```ts
+import './polyfills' // side effects, kept in the order you wrote them
+
+import './globals.css' // side-effect styles
+
+import fs from 'node:fs'
+
+import { useState } from 'react' // react and react-* lead the packages
+import { z } from 'zod'
+
+import { cn } from '#app/utils' // aliases: #, @/, ~/
+
+import styles from './button.module.css'
+
+import { theme } from '../theme'
+
+import { Icon } from './icon'
+```
+
+Biome leaves side-effect imports where they are; ESLint moves them to the top.
+
+To give your own imports a block of their own between packages and aliases, such
+as a design system or test utilities, add `sortImports` after the default
+config. Each `customGroups` entry takes perfectionist's
+[custom group options](https://perfectionist.dev/rules/sort-imports#customgroups).
+Blocks appear in the order listed:
+
+```js
+import { config as defaultConfig, sortImports } from '@nerdfish/config/eslint'
+
+export default [
+	...defaultConfig,
+	sortImports({
+		customGroups: [
+			{ groupName: 'design-system', elementNamePattern: '^@acme/ui' },
+			{ groupName: 'test-utils', elementNamePattern: '^#tests/' },
+		],
+	}),
+]
+```
+
+If you also organize imports with Biome, copy the `groups` from
+`@nerdfish/config/biome` into your `biome.json` and add the same patterns after
+`:PACKAGE:`, each followed by `":BLANK_LINE:"`. Otherwise Biome folds them back
+into the packages or alias block.
+
 #### Opinionated testing rules (optional)
 
 Everything below is part of **`@nerdfish/config`** — install once, no extra
