@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noNegatedVariablesRule } from './no-negated-variables.js'
 
 ruleTester.run('no-negated-variables', noNegatedVariablesRule, {

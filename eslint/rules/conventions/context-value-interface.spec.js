@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { contextValueInterfaceRule } from './context-value-interface.js'
 
 ruleTester.run('context-value-interface', contextValueInterfaceRule, {

@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noMiscasedAcronymRule } from './no-miscased-acronym.js'
 
 ruleTester.run('no-miscased-acronym', noMiscasedAcronymRule, {

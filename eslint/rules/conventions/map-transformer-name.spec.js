@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { mapTransformerNameRule } from './map-transformer-name.js'
 
 ruleTester.run('map-transformer-name', mapTransformerNameRule, {

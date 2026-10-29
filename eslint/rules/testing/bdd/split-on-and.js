@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.split-on-and
 import { resolveStaticStringArg } from '../../util.js'
+
 import { isNamedTestBlock } from './util.js'
 
 const AND_REGEX = /\band\b/i

@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddUserStoryUsesUserRule } from './user-story-uses-user.js'
 
 ruleTester.run('user-story-uses-user', bddUserStoryUsesUserRule, {

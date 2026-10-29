@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddUserStoryStructureRule } from './user-story-structure.js'
 
 ruleTester.run('user-story-structure', bddUserStoryStructureRule, {

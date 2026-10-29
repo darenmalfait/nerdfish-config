@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requirePassiveEventListenerRule } from './require-passive-event-listener.js'
 
 ruleTester.run(

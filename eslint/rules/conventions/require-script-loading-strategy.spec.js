@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireScriptLoadingStrategyRule } from './require-script-loading-strategy.js'
 
 ruleTester.run(

@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { specHttpMockLifecycleRule } from './spec-http-mock-lifecycle.js'
 
 ruleTester.run('spec-http-mock-lifecycle', specHttpMockLifecycleRule, {

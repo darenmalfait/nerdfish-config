@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noBooleanModePropsRule } from './no-boolean-mode-props.js'
 
 ruleTester.run('no-boolean-mode-props', noBooleanModePropsRule, {

@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferEllipsisCharacterRule } from './prefer-ellipsis-character.js'
 
 ruleTester.run('prefer-ellipsis-character', preferEllipsisCharacterRule, {

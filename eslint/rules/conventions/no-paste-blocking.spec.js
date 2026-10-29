@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noPasteBlockingRule } from './no-paste-blocking.js'
 
 ruleTester.run('no-paste-blocking', noPasteBlockingRule, {

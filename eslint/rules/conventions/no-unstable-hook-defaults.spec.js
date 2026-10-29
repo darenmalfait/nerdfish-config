@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noUnstableHookDefaultsRule } from './no-unstable-hook-defaults.js'
 
 ruleTester.run('no-unstable-hook-defaults', noUnstableHookDefaultsRule, {

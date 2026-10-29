@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireInputAutocompleteRule } from './require-input-autocomplete.js'
 
 ruleTester.run('require-input-autocomplete', requireInputAutocompleteRule, {

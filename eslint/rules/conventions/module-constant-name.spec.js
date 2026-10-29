@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { moduleConstantNameRule } from './module-constant-name.js'
 
 ruleTester.run('module-constant-name', moduleConstantNameRule, {

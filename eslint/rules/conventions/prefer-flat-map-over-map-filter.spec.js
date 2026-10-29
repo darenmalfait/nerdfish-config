@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferFlatMapOverMapFilterRule } from './prefer-flat-map-over-map-filter.js'
 
 ruleTester.run(

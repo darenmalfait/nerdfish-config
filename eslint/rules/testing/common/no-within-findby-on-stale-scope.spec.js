@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noWithinFindbyOnStaleScopeRule } from './no-within-findby-on-stale-scope.js'
 
 ruleTester.run(

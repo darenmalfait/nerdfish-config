@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddArriveInGivenRule } from './arrive-in-given.js'
 
 ruleTester.run('arrive-in-given', bddArriveInGivenRule, {

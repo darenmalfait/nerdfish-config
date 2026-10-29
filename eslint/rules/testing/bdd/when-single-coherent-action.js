@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.when-single-coherent-action
 import { getSecondCallback, resolveStaticStringArg } from '../../util.js'
+
 import { callbackHasMultipleActions, isBddScopeBlock } from './util.js'
 
 const AND_REGEX = /\band\b/i

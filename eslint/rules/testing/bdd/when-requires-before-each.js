@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.when-requires-before-each
 import { getSecondCallback, resolveStaticStringArg } from '../../util.js'
+
 import { isBddScopeBlock, scopeBlockHasBeforeEach } from './util.js'
 
 export const bddWhenRequiresBeforeEachRule = {

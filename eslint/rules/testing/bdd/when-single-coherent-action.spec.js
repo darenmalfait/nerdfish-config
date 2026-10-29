@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddWhenSingleCoherentActionRule } from './when-single-coherent-action.js'
 
 ruleTester.run('when-single-coherent-action', bddWhenSingleCoherentActionRule, {

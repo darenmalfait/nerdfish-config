@@ -1,5 +1,6 @@
 import reactX from 'eslint-plugin-react-x'
 import unicorn from 'eslint-plugin-unicorn'
+
 import { componentPropsNamingRule } from './component-props-naming.js'
 import { contextValueInterfaceRule } from './context-value-interface.js'
 import { effectComponentsRule } from './effect-components.js'

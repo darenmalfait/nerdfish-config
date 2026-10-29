@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferExplicitVariantsRule } from './prefer-explicit-variants.js'
 
 ruleTester.run('prefer-explicit-variants', preferExplicitVariantsRule, {

@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noUnmergedClassnameRule } from './no-unmerged-classname.js'
 
 ruleTester.run('no-unmerged-classname', noUnmergedClassnameRule, {

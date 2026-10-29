@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noObjectKeysIncludesRule } from './no-object-keys-includes.js'
 
 ruleTester.run('no-object-keys-includes', noObjectKeysIncludesRule, {

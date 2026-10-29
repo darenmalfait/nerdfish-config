@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { eventHandlerNameRule } from './event-handler-name.js'
 
 ruleTester.run('event-handler-name', eventHandlerNameRule, {

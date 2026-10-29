@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.user-story-uses-user
 import { resolveStaticStringArg } from '../../util.js'
+
 import { isDescribeCall } from './util.js'
 
 const USER_STORY_PREFIX = 'User Story:'

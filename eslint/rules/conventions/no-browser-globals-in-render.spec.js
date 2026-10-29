@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noBrowserGlobalsInRenderRule } from './no-browser-globals-in-render.js'
 
 ruleTester.run('no-browser-globals-in-render', noBrowserGlobalsInRenderRule, {

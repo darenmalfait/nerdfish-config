@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { preferAccessibleQueriesRule } from './prefer-accessible-queries.js'
 
 ruleTester.run('prefer-accessible-queries', preferAccessibleQueriesRule, {

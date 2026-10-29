@@ -1,4 +1,5 @@
 import { testFiles } from '../test-files.js'
+
 import { noCssSelectorsInTestsRule } from './no-css-selectors-in-tests.js'
 import { noSnapshotAssertionsRule } from './no-snapshot-assertions.js'
 import { noStoredElementQueriesRule } from './no-stored-element-queries.js'

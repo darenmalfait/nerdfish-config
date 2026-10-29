@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noTrivialUseMemoRule } from './no-trivial-use-memo.js'
 
 ruleTester.run('no-trivial-use-memo', noTrivialUseMemoRule, {

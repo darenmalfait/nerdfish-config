@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noAccumulatorSpreadRule } from './no-accumulator-spread.js'
 
 ruleTester.run('no-accumulator-spread', noAccumulatorSpreadRule, {

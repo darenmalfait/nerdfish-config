@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { specPartialMocksUseJestRequireActualRule } from './spec-partial-mocks-use-jest-require-actual.js'
 
 ruleTester.run(

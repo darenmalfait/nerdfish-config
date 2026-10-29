@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
 
 ruleTester.run('no-dynamic-import-path', noDynamicImportPathRule, {

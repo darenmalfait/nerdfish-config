@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.arrive-in-given
 import { getMockServerName, mockServerNameSchema } from '../../util.js'
+
 import { getNearestTestBlock, isArriveCall, isGivenBlock } from './util.js'
 
 export const bddArriveInGivenRule = {

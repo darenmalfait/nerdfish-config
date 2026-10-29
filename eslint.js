@@ -1,5 +1,4 @@
 import { fixupPluginRules } from '@eslint/compat'
-
 import globals from 'globals'
 
 const ERROR = 'error'
@@ -224,18 +223,30 @@ export const config = [
 
 			// import
 			'import/no-duplicates': [WARN, { 'prefer-inline': true }],
+			// Keep in sync with the organizeImports groups in biome.json.
 			'import/order': [
 				WARN,
 				{
 					alphabetize: { order: 'asc', caseInsensitive: true },
-					pathGroups: [{ pattern: '#*/**', group: 'internal' }],
+					'newlines-between': 'always',
+					// React and its ecosystem lead the packages block, without a blank line of their own.
+					pathGroups: [
+						{
+							pattern: '{react,react/**,react-*,react-*/**}',
+							group: 'external',
+							position: 'before',
+						},
+						// Same aliases as Biome's :ALIAS: group.
+						{ pattern: '{#*/**,@/**,~/**}', group: 'internal' },
+					],
+					pathGroupsExcludedImportTypes: ['builtin', 'object'],
+					distinctGroup: false,
 					groups: [
 						'builtin',
 						'external',
 						'internal',
 						'parent',
-						'sibling',
-						'index',
+						['sibling', 'index'],
 					],
 				},
 			],

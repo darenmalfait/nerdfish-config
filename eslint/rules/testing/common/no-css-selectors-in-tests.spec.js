@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noCssSelectorsInTestsRule } from './no-css-selectors-in-tests.js'
 
 ruleTester.run('no-css-selectors-in-tests', noCssSelectorsInTestsRule, {

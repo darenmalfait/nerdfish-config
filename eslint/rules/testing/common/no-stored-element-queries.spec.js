@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noStoredElementQueriesRule } from './no-stored-element-queries.js'
 
 ruleTester.run('no-stored-element-queries', noStoredElementQueriesRule, {

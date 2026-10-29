@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { sortTransformerNameRule } from './sort-transformer-name.js'
 
 ruleTester.run('sort-transformer-name', sortTransformerNameRule, {

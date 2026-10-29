@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noContextMenuRule } from './no-context-menu.js'
 
 ruleTester.run('no-context-menu', noContextMenuRule, {

@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noTestingInternalsRule } from './no-testing-internals.js'
 
 ruleTester.run('no-testing-internals', noTestingInternalsRule, {

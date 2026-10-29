@@ -1,5 +1,6 @@
 // Guideline registry id: testing.bdd.gestures-in-when
 import { getCallName, getMemberPropertyName } from '../../util.js'
+
 import { getNearestTestBlock, isTestCaseCall } from './util.js'
 
 const USER_EVENT_OBJECTS = new Set(['user', 'userEvent'])

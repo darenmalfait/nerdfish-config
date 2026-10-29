@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
 
 ruleTester.run('narrow-effect-deps', narrowEffectDepsRule, {

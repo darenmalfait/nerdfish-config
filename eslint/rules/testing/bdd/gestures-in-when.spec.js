@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddGesturesInWhenRule } from './gestures-in-when.js'
 
 ruleTester.run('gestures-in-when', bddGesturesInWhenRule, {

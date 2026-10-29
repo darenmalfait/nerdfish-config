@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddWhenRequiresBeforeEachRule } from './when-requires-before-each.js'
 
 ruleTester.run('when-requires-before-each', bddWhenRequiresBeforeEachRule, {

@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { componentPropsNamingRule } from './component-props-naming.js'
 
 ruleTester.run('component-props-naming', componentPropsNamingRule, {

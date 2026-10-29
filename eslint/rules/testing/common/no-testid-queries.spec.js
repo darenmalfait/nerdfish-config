@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noTestidQueriesRule } from './no-testid-queries.js'
 
 ruleTester.run('no-testid-queries', noTestidQueriesRule, {

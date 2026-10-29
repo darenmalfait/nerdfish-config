@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
 
 ruleTester.run('no-compound-component-object', noCompoundComponentObjectRule, {

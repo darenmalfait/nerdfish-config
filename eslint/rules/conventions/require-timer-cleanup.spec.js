@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireTimerCleanupRule } from './require-timer-cleanup.js'
 
 ruleTester.run('require-timer-cleanup', requireTimerCleanupRule, {

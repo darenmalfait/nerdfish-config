@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferUseTransitionRule } from './prefer-use-transition.js'
 
 ruleTester.run('prefer-use-transition', preferUseTransitionRule, {

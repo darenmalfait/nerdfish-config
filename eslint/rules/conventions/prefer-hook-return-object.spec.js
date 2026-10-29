@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferHookReturnObjectRule } from './prefer-hook-return-object.js'
 
 ruleTester.run('prefer-hook-return-object', preferHookReturnObjectRule, {

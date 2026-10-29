@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noTransitionAllRule } from './no-transition-all.js'
 
 ruleTester.run('no-transition-all', noTransitionAllRule, {

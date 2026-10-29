@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { noSnapshotAssertionsRule } from './no-snapshot-assertions.js'
 
 ruleTester.run('no-snapshot-assertions', noSnapshotAssertionsRule, {

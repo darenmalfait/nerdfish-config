@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
 
 ruleTester.run('no-deep-equal-in-memo', noDeepEqualInMemoRule, {

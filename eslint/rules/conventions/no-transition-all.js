@@ -1,4 +1,5 @@
 import { resolveStaticStringValue } from '../util.js'
+
 import { createClassRootVisitor, getUtility } from './class-tokens.js'
 
 const TRANSITION_STYLE_KEYS = new Set(['transition', 'transitionProperty'])

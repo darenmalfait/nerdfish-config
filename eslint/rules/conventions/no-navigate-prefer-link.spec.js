@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noNavigatePreferLinkRule } from './no-navigate-prefer-link.js'
 
 ruleTester.run('no-navigate-prefer-link', noNavigatePreferLinkRule, {

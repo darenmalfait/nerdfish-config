@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireFocusVisibleReplacementRule } from './require-focus-visible-replacement.js'
 
 ruleTester.run(

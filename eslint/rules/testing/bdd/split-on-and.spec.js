@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddSplitOnAndRule } from './split-on-and.js'
 
 ruleTester.run('split-on-and', bddSplitOnAndRule, {

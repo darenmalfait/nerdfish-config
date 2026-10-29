@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireReducedMotionRule } from './require-reduced-motion.js'
 
 ruleTester.run('require-reduced-motion', requireReducedMotionRule, {

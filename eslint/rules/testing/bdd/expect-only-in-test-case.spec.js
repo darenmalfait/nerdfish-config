@@ -1,4 +1,5 @@
 import { ruleTester } from '../../rule-tester.js'
+
 import { bddExpectOnlyInTestCaseRule } from './expect-only-in-test-case.js'
 
 ruleTester.run('expect-only-in-test-case', bddExpectOnlyInTestCaseRule, {

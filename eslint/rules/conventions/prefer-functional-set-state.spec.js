@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferFunctionalSetStateRule } from './prefer-functional-set-state.js'
 
 ruleTester.run('prefer-functional-set-state', preferFunctionalSetStateRule, {

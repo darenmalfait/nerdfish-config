@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 
 ruleTester.run(

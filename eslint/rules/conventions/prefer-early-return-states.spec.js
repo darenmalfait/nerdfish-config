@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { preferEarlyReturnStatesRule } from './prefer-early-return-states.js'
 
 ruleTester.run('prefer-early-return-states', preferEarlyReturnStatesRule, {

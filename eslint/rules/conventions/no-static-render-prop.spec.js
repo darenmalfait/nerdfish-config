@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 
 ruleTester.run('no-static-render-prop', noStaticRenderPropRule, {

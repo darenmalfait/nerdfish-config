@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { requireImgDimensionsRule } from './require-img-dimensions.js'
 
 ruleTester.run('require-img-dimensions', requireImgDimensionsRule, {

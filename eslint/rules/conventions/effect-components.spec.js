@@ -1,4 +1,5 @@
 import { ruleTester } from '../rule-tester.js'
+
 import { effectComponentsRule } from './effect-components.js'
 
 ruleTester.run('effect-components', effectComponentsRule, {
