@@ -247,6 +247,7 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/map-transformer-name`, and
 `@nerdfish/conventions/sort-transformer-name`, and
 `@nerdfish/conventions/no-static-render-prop`, and
+`@nerdfish/conventions/no-render-functions`, and
 `@nerdfish/conventions/no-boolean-mode-props`, and
 `@nerdfish/conventions/prefer-explicit-variants`, and
 `@nerdfish/conventions/context-value-interface`, and

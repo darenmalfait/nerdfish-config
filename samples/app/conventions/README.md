@@ -13,6 +13,7 @@ rule in `eslint/rules/`, run with `pnpm test`.
 | `event-handler-name.tsx` | `event-handler-name` — named JSX `on*` handlers start with `handle` |
 | `boolean-name.ts` | `unicorn/consistent-boolean-name` — boolean locals start with `is`, `has`, … |
 | `no-static-render-prop.tsx` | `no-static-render-prop` — `render*` props must take arguments; static structure goes in children |
+| `no-render-functions.tsx` | `no-render-functions` — no functions inside a component that return JSX and are called or mapped over; extract a component |
 | `narrow-effect-deps.tsx` | `narrow-effect-deps` — effect, `useMemo` and `useCallback` deps list the properties read, not the whole object |
 | `no-callback-only-subscription.tsx` | `no-callback-only-subscription` — no `useSearchParams()` (configurable) read only in event handlers |
 | `prefer-use-transition.tsx` | `prefer-use-transition` — `useTransition` instead of `setLoading(true)` … `await` … `setLoading(false)` |
