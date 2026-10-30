@@ -5,6 +5,7 @@ import { componentPropsNamingRule } from './component-props-naming.js'
 import { contextValueInterfaceRule } from './context-value-interface.js'
 import { effectComponentsRule } from './effect-components.js'
 import { eventHandlerNameRule } from './event-handler-name.js'
+import { featureFolderStructureRule } from './feature-folder-structure.js'
 import { mapTransformerNameRule } from './map-transformer-name.js'
 import { moduleConstantNameRule } from './module-constant-name.js'
 import { narrowEffectDepsRule } from './narrow-effect-deps.js'
@@ -14,6 +15,7 @@ import { noBrowserGlobalsInRenderRule } from './no-browser-globals-in-render.js'
 import { noCallbackOnlySubscriptionRule } from './no-callback-only-subscription.js'
 import { noCompoundComponentObjectRule } from './no-compound-component-object.js'
 import { noContextMenuRule } from './no-context-menu.js'
+import { noCrossFeatureImportsRule } from './no-cross-feature-imports.js'
 import { noDeepEqualInMemoRule } from './no-deep-equal-in-memo.js'
 import { noDynamicImportPathRule } from './no-dynamic-import-path.js'
 import { noMiscasedAcronymRule } from './no-miscased-acronym.js'
@@ -50,6 +52,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/context-value-interface': WARN,
 	'@nerdfish/conventions/effect-components': WARN,
 	'@nerdfish/conventions/event-handler-name': WARN,
+	'@nerdfish/conventions/feature-folder-structure': WARN,
 	'@nerdfish/conventions/map-transformer-name': WARN,
 	'@nerdfish/conventions/module-constant-name': WARN,
 	'@nerdfish/conventions/narrow-effect-deps': WARN,
@@ -59,6 +62,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-callback-only-subscription': WARN,
 	'@nerdfish/conventions/no-compound-component-object': WARN,
 	'@nerdfish/conventions/no-context-menu': WARN,
+	'@nerdfish/conventions/no-cross-feature-imports': WARN,
 	'@nerdfish/conventions/no-deep-equal-in-memo': WARN,
 	'@nerdfish/conventions/no-dynamic-import-path': WARN,
 	'@nerdfish/conventions/no-miscased-acronym': WARN,
@@ -105,6 +109,7 @@ export const plugin = {
 		'context-value-interface': contextValueInterfaceRule,
 		'effect-components': effectComponentsRule,
 		'event-handler-name': eventHandlerNameRule,
+		'feature-folder-structure': featureFolderStructureRule,
 		'map-transformer-name': mapTransformerNameRule,
 		'module-constant-name': moduleConstantNameRule,
 		'narrow-effect-deps': narrowEffectDepsRule,
@@ -114,6 +119,7 @@ export const plugin = {
 		'no-callback-only-subscription': noCallbackOnlySubscriptionRule,
 		'no-compound-component-object': noCompoundComponentObjectRule,
 		'no-context-menu': noContextMenuRule,
+		'no-cross-feature-imports': noCrossFeatureImportsRule,
 		'no-deep-equal-in-memo': noDeepEqualInMemoRule,
 		'no-dynamic-import-path': noDynamicImportPathRule,
 		'no-miscased-acronym': noMiscasedAcronymRule,

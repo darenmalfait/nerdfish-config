@@ -46,6 +46,7 @@ rule in `eslint/rules/`, run with `pnpm test`.
 | `component-props-naming.tsx` | `component-props-naming` — a component's own props type is named `${Component}Props` |
 | `no-navigate-prefer-link.tsx` | `no-navigate-prefer-link` — `onClick` handlers that only navigate become links |
 | `no-miscased-acronym.ts` | `no-miscased-acronym` — acronyms in declared names and file names are PascalCase (`apiUrl`, `userId`) |
+| `feature-structure/` | `feature-folder-structure` — features hold only `api`, `components`, `hooks`, … folders; `no-cross-feature-imports` — no imports between features or from shared code into a feature |
 
 ```bash
 pnpm lint

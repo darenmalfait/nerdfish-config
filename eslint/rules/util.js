@@ -1,3 +1,5 @@
+import path from 'node:path'
+
 export function getMemberPropertyName(callee) {
 	if (
 		callee?.type === 'MemberExpression' &&
@@ -72,7 +74,24 @@ export function getJsxElementName(name) {
 }
 
 /** Import paths that point at the project's own code: relative, or a `@/`, `~/` or `#` alias. */
-const LOCAL_IMPORT_SOURCE = /^(\.|@\/|~\/|#)/
+export const LOCAL_IMPORT_SOURCE = /^(\.|@\/|~\/|#)/
+
+/** Folders that hold one folder per feature, bulletproof-react style. */
+export const DEFAULT_FEATURE_ROOTS = ['features', 'modules']
+
+/** `src/features/users/api/get-user.ts` → `['src', 'features', 'users', 'api', 'get-user.ts']`, relative to the working directory. */
+export function getPathSegments(context) {
+	return path
+		.relative(context.cwd, path.resolve(context.cwd, context.filename))
+		.split(path.sep)
+}
+
+/** Index of the first feature root folder in `segments`, or -1. The last segment is the file, so it never counts. */
+export function findFeatureRootIndex(segments, roots) {
+	return segments.findIndex(
+		(segment, index) => index < segments.length - 1 && roots.includes(segment),
+	)
+}
 
 /** `<Route>` imported from `react-router`: its prop API is not ours to change. */
 export function isThirdPartyJsxElement(sourceCode, name) {

@@ -270,8 +270,10 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/effect-components`, and
 `@nerdfish/conventions/component-props-naming`, and
 `@nerdfish/conventions/no-navigate-prefer-link`, and
-`@nerdfish/conventions/no-miscased-acronym`. The conventions config also enables
-`react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
+`@nerdfish/conventions/no-miscased-acronym`, and
+`@nerdfish/conventions/feature-folder-structure`, and
+`@nerdfish/conventions/no-cross-feature-imports`. The conventions config also
+enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
 `unicorn/no-declarations-before-early-exit`, `unicorn/prefer-at` and
 `unicorn/prefer-early-return`.
 
@@ -286,6 +288,26 @@ render. Its module-scope check turns on automatically when an SSR framework
 `no-miscased-acronym` enforces `API`, `ID`, `OIDC`, `SAML`, `SSO` and `URL` as
 `Api`, `Id`, … inside names; pass `{ acronyms: ['API', 'URL', …] }` to change
 the list.
+
+`feature-folder-structure` and `no-cross-feature-imports` follow
+[bulletproof-react](https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md):
+one folder per feature in `features/` or `modules/`, each holding only `api`,
+`assets`, `components`, `hooks`, `providers`, `types` and `utils` folders.
+Features don't import from each other, and shared folders (`components`,
+`config`, `hooks`, `lib`, `providers`, `types`, `utils`) next to `features/`
+don't import from features. Routes and pages compose them. Pass
+`{ roots: ['domains'] }` to either rule to rename the feature folder,
+`{ folders: […] }` to `feature-folder-structure` and `{ shared: […] }` to
+`no-cross-feature-imports` to change the folder lists.
+
+```txt
+src/features/users/api/get-user.ts                    ✓
+src/features/users/users.tsx                          ✗ no loose files
+src/features/users/helpers/format.ts                  ✗ not a feature folder
+src/features/comments/… imports @/features/users/…    ✗ cross-feature
+src/components/… imports @/features/users/…           ✗ shared → feature
+src/app/routes/… imports @/features/users/…           ✓
+```
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
