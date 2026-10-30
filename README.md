@@ -285,7 +285,8 @@ names but only label rule IDs, e.g. `@nerdfish/testing/no-testid-queries`,
 `@nerdfish/conventions/no-navigate-prefer-link`, and
 `@nerdfish/conventions/no-miscased-acronym`, and
 `@nerdfish/conventions/feature-folder-structure`, and
-`@nerdfish/conventions/no-cross-feature-imports`. The conventions config also
+`@nerdfish/conventions/no-cross-feature-imports`, and
+`@nerdfish/conventions/no-requests-outside-api`. The conventions config also
 enables `react-x/no-unnecessary-use-prefix`, `unicorn/consistent-boolean-name`,
 `unicorn/no-declarations-before-early-exit`, `unicorn/prefer-at` and
 `unicorn/prefer-early-return`.
@@ -345,6 +346,23 @@ what it imports:
 const user = useUser(userId)
 
 return <Comments author={user.data} avatar={<UserAvatar user={user.data} />} />
+```
+
+`no-requests-outside-api` keeps a feature's requests in its `api/` folder,
+[as bulletproof-react does](https://github.com/alan2207/bulletproof-react/blob/master/docs/api-layer.md):
+each file there exports the fetcher, its query options and a hook, and the rest
+of the feature calls the hook. It reports `fetch`, API client calls (`axios`,
+`ky`, `apiClient`; add yours with `{ clients: […] }`) and TanStack Query or SWR
+calls that define their own `queryFn`, `mutationFn` or fetcher. Spreading
+options from `api/` and adding UI-only ones stays fine. Tests, mocks and stories
+are skipped.
+
+```txt
+src/features/discussions/api/get-discussions.ts      useQuery({ queryKey, queryFn })   ✓
+src/features/discussions/components/…                useDiscussions()                  ✓
+src/features/discussions/components/…                useQuery({ ...getDiscussionsQueryOptions(), select })  ✓
+src/features/discussions/components/…                useQuery({ queryKey, queryFn })   ✗
+src/features/discussions/components/…                fetch('/api/discussions')         ✗
 ```
 
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and

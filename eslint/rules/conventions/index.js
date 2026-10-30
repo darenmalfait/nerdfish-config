@@ -24,6 +24,7 @@ import { noNegatedVariablesRule } from './no-negated-variables.js'
 import { noObjectKeysIncludesRule } from './no-object-keys-includes.js'
 import { noPasteBlockingRule } from './no-paste-blocking.js'
 import { noRenderFunctionsRule } from './no-render-functions.js'
+import { noRequestsOutsideApiRule } from './no-requests-outside-api.js'
 import { noStaticRenderPropRule } from './no-static-render-prop.js'
 import { noTransitionAllRule } from './no-transition-all.js'
 import { noTrivialUseMemoRule } from './no-trivial-use-memo.js'
@@ -72,6 +73,7 @@ export const conventionsRules = {
 	'@nerdfish/conventions/no-object-keys-includes': WARN,
 	'@nerdfish/conventions/no-paste-blocking': WARN,
 	'@nerdfish/conventions/no-render-functions': WARN,
+	'@nerdfish/conventions/no-requests-outside-api': WARN,
 	'@nerdfish/conventions/no-static-render-prop': WARN,
 	'@nerdfish/conventions/no-transition-all': WARN,
 	'@nerdfish/conventions/no-trivial-use-memo': WARN,
@@ -130,6 +132,7 @@ export const plugin = {
 		'no-object-keys-includes': noObjectKeysIncludesRule,
 		'no-paste-blocking': noPasteBlockingRule,
 		'no-render-functions': noRenderFunctionsRule,
+		'no-requests-outside-api': noRequestsOutsideApiRule,
 		'no-static-render-prop': noStaticRenderPropRule,
 		'no-transition-all': noTransitionAllRule,
 		'no-trivial-use-memo': noTrivialUseMemoRule,
