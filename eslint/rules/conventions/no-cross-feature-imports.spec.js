@@ -80,6 +80,42 @@ ruleTester.run('no-cross-feature-imports', noCrossFeatureImportsRule, {
 		{
 			code: "const users = () => import('@/features/users/components/users-list')",
 			filename: FEATURE_FILE,
+			errors: [{ messageId: 'crossFeatureComponentImport' }],
+		},
+		{
+			code: "import { UserCard } from '@/features/users/components/user-card'",
+			filename: FEATURE_FILE,
+			errors: [
+				{
+					messageId: 'crossFeatureComponentImport',
+					data: { feature: 'comments', target: 'users' },
+				},
+			],
+		},
+		{
+			code: "import type { User } from '@/features/users/api/get-user'",
+			filename: FEATURE_FILE,
+			errors: [{ messageId: 'crossFeatureTypeImport' }],
+		},
+		{
+			code: "import { type User } from '@/features/users'",
+			filename: FEATURE_FILE,
+			errors: [{ messageId: 'crossFeatureTypeImport' }],
+		},
+		{
+			code: "import { User } from '@/features/users/types/user'",
+			filename: FEATURE_FILE,
+			errors: [{ messageId: 'crossFeatureTypeImport' }],
+		},
+		{
+			code: "export type { User } from '@/features/users'",
+			filename: FEATURE_FILE,
+			errors: [{ messageId: 'crossFeatureTypeImport' }],
+		},
+		{
+			// One value specifier is enough to couple the code, not just the types
+			code: "import { type User, useUser } from '@/features/users'",
+			filename: FEATURE_FILE,
 			errors: [{ messageId: 'crossFeatureImport' }],
 		},
 		{

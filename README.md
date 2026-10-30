@@ -321,6 +321,26 @@ src/components/… imports @/features/users/…           ✗ shared → feature
 src/app/routes/… imports @/features/users/…           ✓
 ```
 
+When a feature needs something from another one, the error names the way out for
+what it imports:
+
+- **Data or logic** (`api/`, `hooks/`, …): the route calls `users` and passes
+  the result to `comments` as props, typed with only the fields `comments`
+  reads. If many features need it, move it to shared `lib/`. If `comments` needs
+  the data in its own shape, give it its own `api/` call.
+- **Types**: `comments` declares the fields it reads itself; structural typing
+  accepts `users` data passed in from the route. A domain model many features
+  share goes in shared `types/`.
+- **Components**: `comments` takes a slot (`children` or an element prop) and
+  the route passes `<UserCard />` in.
+
+```tsx
+// src/app/routes/discussion.tsx
+const user = useUser(userId)
+
+return <Comments author={user.data} avatar={<UserAvatar user={user.data} />} />
+```
+
 We use two namespaces so you can spread `@nerdfish/config/eslint/testing` and
 `.../testing/bdd` in the same `eslint.config.js` without ESLint erroring on a
 redefined plugin. BDD stays a separate subpath export; the namespace split is an

@@ -19,7 +19,7 @@ const DEFAULT_SHARED = [
 	'utils',
 ]
 
-/** The feature an import points at, e.g. `@/features/users/api` → `{ base: '@', name: 'users' }`. */
+/** The feature an import points at, e.g. `@/features/users/api` → `{ base: '@', name: 'users', folder: 'api' }`. */
 function getImportedFeature(source, fileSegments, roots) {
 	let segments
 
@@ -41,7 +41,39 @@ function getImportedFeature(source, fileSegments, roots) {
 		isRelative: source.startsWith('.'),
 		base: segments.slice(0, rootIndex).join('/'),
 		name: segments[rootIndex + 1],
+		folder: segments[rootIndex + 2],
 	}
+}
+
+/** `import type { User }` or `import { type User }`: only the shape crosses over. */
+function isTypeOnly(node) {
+	const kind = node.importKind ?? node.exportKind
+
+	if (kind === 'type') {
+		return true
+	}
+
+	const specifiers = node.specifiers ?? []
+
+	return (
+		specifiers.length > 0 &&
+		specifiers.every(
+			(specifier) => (specifier.importKind ?? specifier.exportKind) === 'type',
+		)
+	)
+}
+
+/** Each kind of import has its own way out, so the message names the one that fits. */
+function getCrossFeatureMessageId(target, isType) {
+	if (isType || target.folder === 'types') {
+		return 'crossFeatureTypeImport'
+	}
+
+	if (target.folder === 'components') {
+		return 'crossFeatureComponentImport'
+	}
+
+	return 'crossFeatureImport'
 }
 
 /**
@@ -99,9 +131,13 @@ export const noCrossFeatureImportsRule = {
 
 		messages: {
 			crossFeatureImport:
-				'The `{{feature}}` feature imports from the `{{target}}` feature. Keep features independent so each can change or go away on its own: compose them in a route or page, or move the shared code out of the feature.',
+				'The `{{feature}}` feature imports from the `{{target}}` feature. Keep features independent so each can change or go away on its own. Compose them one level up instead: call `{{target}}` in the route or page and pass the result to `{{feature}}` as props, typed with only the fields `{{feature}}` reads. If many features need it, move it out of `{{target}}` into shared code (`lib/`, `hooks/`, `utils/`). If `{{feature}}` needs the data in its own shape, give it its own `api/` call.',
+			crossFeatureTypeImport:
+				'The `{{feature}}` feature imports types from the `{{target}}` feature. Declare the fields `{{feature}}` reads in its own props or `types/`: structural typing still accepts `{{target}}` data passed in from the route or page. If it is a domain model many features share, move it to the shared `types/` folder.',
+			crossFeatureComponentImport:
+				'The `{{feature}}` feature renders a component from the `{{target}}` feature. Give `{{feature}}` a slot (`children` or an element prop) and let the route or page pass the `{{target}}` component in. If many features render it, move it to the shared `components/` folder.',
 			sharedImportsFeature:
-				'Shared code in `{{folder}}/` imports from the `{{target}}` feature, so everything using it now depends on that feature. Move what it needs into shared code, or pass it in from the route.',
+				'Shared code in `{{folder}}/` imports from the `{{target}}` feature, so everything using it now depends on that feature. Take what it needs as props or `children` and let the route or page pass it in, or move the code it needs out of the feature into shared code.',
 		},
 	},
 
@@ -122,13 +158,15 @@ export const noCrossFeatureImportsRule = {
 		 * Checks, from src/features/comments/components/comments.tsx:
 		 * import { getComments } from '../api/get-comments' ✅
 		 * import { Button } from '@/components/ui/button' ✅
-		 * import { useUser } from '@/features/users/api/get-user' ❌
+		 * import { useUser } from '@/features/users/api/get-user' ❌ pass the data in from the route
 		 * import { useUser } from '../../users/api/get-user' ❌
+		 * import type { User } from '@/features/users/types' ❌ declare the fields it reads
+		 * import { UserCard } from '@/features/users/components/user-card' ❌ take it as a slot
 		 *
 		 * From src/components/layouts/dashboard-layout.tsx:
 		 * import { useUser } from '@/features/users/api/get-user' ❌
 		 */
-		function check(sourceNode) {
+		function check(sourceNode, isType = false) {
 			const source = resolveStaticStringValue(sourceNode)
 
 			if (source === null || (!feature && !sharedBase)) {
@@ -152,7 +190,7 @@ export const noCrossFeatureImportsRule = {
 
 				context.report({
 					node: sourceNode,
-					messageId: 'crossFeatureImport',
+					messageId: getCrossFeatureMessageId(target, isType),
 					data: { feature, target: target.name },
 				})
 				return
@@ -171,14 +209,14 @@ export const noCrossFeatureImportsRule = {
 
 		return {
 			ImportDeclaration(node) {
-				check(node.source)
+				check(node.source, isTypeOnly(node))
 			},
 			ExportAllDeclaration(node) {
-				check(node.source)
+				check(node.source, isTypeOnly(node))
 			},
 			ExportNamedDeclaration(node) {
 				if (node.source) {
-					check(node.source)
+					check(node.source, isTypeOnly(node))
 				}
 			},
 			ImportExpression(node) {
