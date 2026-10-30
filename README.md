@@ -132,6 +132,22 @@ import { config as defaultConfig } from '@nerdfish/config/eslint'
 export default [...defaultConfig]
 ```
 
+#### File and folder names
+
+`unicorn/filename-case` keeps file and folder names kebab-case. It only checks
+letters, digits, `_` and `-`, so route syntax from React Router and Next.js
+passes: `blog.$slug`, `($lang)`, `_auth`, `(group)`, `[slug]`, `@slot`.
+`__tests__`, `__mocks__` and React Router's layout opt-out (`concerts_.mine`)
+are skipped.
+
+```txt
+src/features/user-profile/components/avatar-menu.tsx   ✓
+src/features/userProfile/AvatarMenu.tsx                ✗ folder and file
+app/routes/blog.$slug/route.tsx                        ✓
+app/(marketing)/blog/[post-id]/page.tsx                ✓
+app/(marketing)/blog/[postId]/page.tsx                 ✗ use [post-id]
+```
+
 #### Import order
 
 `perfectionist/sort-imports` sorts imports into blocks separated by a blank

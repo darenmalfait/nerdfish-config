@@ -247,9 +247,19 @@ export const config = [
 			radix: ERROR,
 			'require-yield': ERROR,
 			'symbol-description': ERROR,
+			// Checks folder names too. Only letters, digits, _ and - are checked, so
+			// route syntax like $slug, (group), @slot and blog.$slug passes.
 			'unicorn/filename-case': [
 				WARN,
-				{ case: 'kebabCase', ignore: [String.raw`^__tests__$`] },
+				{
+					case: 'kebabCase',
+					ignore: [
+						'^__tests__$',
+						'^__mocks__$',
+						// React Router layout opt-out: concerts_.mine
+						String.raw`_\.`,
+					],
+				},
 			],
 			'unicorn/no-array-reverse': ERROR,
 			'unicorn/no-array-sort': ERROR,
