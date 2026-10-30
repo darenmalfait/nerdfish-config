@@ -163,6 +163,8 @@ import fs from 'node:fs'
 import { useState } from 'react' // react and react-* lead the packages
 import { z } from 'zod'
 
+import { i18n } from '@repo/i18n/config' // monorepo packages: @repo/*
+
 import { cn } from '#app/utils' // aliases: #, @/, ~/
 
 import styles from './button.module.css'
@@ -174,8 +176,8 @@ import { Icon } from './icon'
 
 Biome leaves side-effect imports where they are; ESLint moves them to the top.
 
-To give your own imports a block of their own between packages and aliases, such
-as a design system or test utilities, add `sortImports` after the default
+To give your own imports a block of their own between `@repo/*` and aliases,
+such as a design system or test utilities, add `sortImports` after the default
 config. Each `customGroups` entry takes perfectionist's
 [custom group options](https://perfectionist.dev/rules/sort-imports#customgroups).
 Blocks appear in the order listed:
@@ -195,9 +197,19 @@ export default [
 ```
 
 If you also organize imports with Biome, copy the `groups` from
-`@nerdfish/config/biome` into your `biome.json` and add the same patterns after
-`:PACKAGE:`, each followed by `":BLANK_LINE:"`. Otherwise Biome folds them back
-into the packages or alias block.
+`@nerdfish/config/biome` into your `biome.json`. Add the same patterns after
+`"@repo/**"`, each followed by `":BLANK_LINE:"`, and exclude them from the
+packages group, since Biome puts an import in the first group that matches:
+
+```json
+[":PACKAGE:", "!@repo/**", "!@acme/ui/**"],
+":BLANK_LINE:",
+"@repo/**",
+":BLANK_LINE:",
+"@acme/ui/**",
+":BLANK_LINE:",
+":ALIAS:",
+```
 
 #### Opinionated testing rules (optional)
 

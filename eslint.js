@@ -38,6 +38,8 @@ function sortImportsRule(customGroups = []) {
 					selector: 'external',
 					elementNamePattern: '^react(-[^/]+)?(/.*)?$',
 				},
+				// Monorepo packages, Turborepo's default scope
+				{ groupName: 'workspace', elementNamePattern: '^@repo/' },
 				...customGroups,
 			],
 			groups: [
@@ -47,6 +49,7 @@ function sortImportsRule(customGroups = []) {
 				'react',
 				{ newlinesBetween: 0 },
 				'external',
+				'workspace',
 				...customGroups.map(({ groupName }) => groupName),
 				['internal', 'subpath'],
 				'style',
