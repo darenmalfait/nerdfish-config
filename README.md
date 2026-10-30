@@ -211,6 +211,30 @@ packages group, since Biome puts an import in the first group that matches:
 ":ALIAS:",
 ```
 
+#### Import cycles
+
+`import/no-cycle` warns when a module imports itself back through other modules,
+like `components/list.tsx` → `utils/format.ts` → `components/list.tsx`. In a
+cycle one module runs before its imports finish initializing, which shows up as
+`Cannot access 'X' before initialization` or a silent `undefined` depending on
+load order. Type-only imports are skipped, since they're erased. The config
+swaps in its own copy of import-x's rule, with the same name and options, whose
+messages name the import that closes the cycle and how to break it: move what
+both sides need into a module neither imports, make the import type-only, or
+merge the files.
+
+Imports resolve through your tsconfig or jsconfig `paths` (via
+`eslint-import-resolver-typescript`), so cycles through `@/` or `~/` aliases
+count too. The rule follows at most 10 imports deep. On a large app it is the
+slowest rule in the config; to run it only in CI, turn it off locally:
+
+```js
+export default [
+	...defaultConfig,
+	process.env.CI ? {} : { rules: { 'import/no-cycle': 'off' } },
+]
+```
+
 #### Opinionated testing rules (optional)
 
 Everything below is part of **`@nerdfish/config`** — install once, no extra

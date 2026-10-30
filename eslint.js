@@ -1,5 +1,9 @@
 import { fixupPluginRules } from '@eslint/compat'
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript'
+import importX, { createNodeResolver } from 'eslint-plugin-import-x'
 import globals from 'globals'
+
+import { noCycleRule } from './eslint/rules/import/no-cycle.js'
 
 const ERROR = 'error'
 const WARN = 'warn'
@@ -22,6 +26,16 @@ const hasVitest = has('vitest')
 const VITEST_FILES = ['**/__tests__/**/*', '**/*.test.*']
 const TEST_FILES = ['**/tests/**', '**/#tests/**', ...VITEST_FILES]
 const PLAYWRIGHT_FILES = ['**/e2e/**']
+const IMPORT_EXTENSIONS = [
+	'.ts',
+	'.tsx',
+	'.cts',
+	'.mts',
+	'.js',
+	'.jsx',
+	'.cjs',
+	'.mjs',
+]
 
 /**
  * Import blocks, each separated by a blank line. Side-effect imports move to the
@@ -88,7 +102,11 @@ export const config = [
 	// all files
 	{
 		plugins: {
-			import: (await import('eslint-plugin-import-x')).default,
+			// Same rules, with a no-cycle whose messages say how to break the cycle
+			import: {
+				...importX,
+				rules: { ...importX.rules, 'no-cycle': noCycleRule },
+			},
 			perfectionist: (await import('eslint-plugin-perfectionist')).default,
 			unicorn: (await import('eslint-plugin-unicorn')).default,
 		},
@@ -97,6 +115,27 @@ export const config = [
 				...globals.browser,
 				...globals.node,
 			},
+		},
+		settings: {
+			// Without these, import rules that follow imports (no-cycle) only read .js files.
+			'import-x/extensions': IMPORT_EXTENSIONS,
+			'import-x/external-module-folders': [
+				'node_modules',
+				'node_modules/@types',
+			],
+			...(hasTypeScript
+				? {
+						'import-x/parsers': {
+							'@typescript-eslint/parser': ['.ts', '.tsx', '.cts', '.mts'],
+						},
+					}
+				: {}),
+			// Follows tsconfig/jsconfig `paths`, so `@/`, `~/` and `#app/` imports
+			// resolve for import rules like no-cycle; Node resolution as fallback.
+			'import-x/resolver-next': [
+				createTypeScriptImportResolver({ alwaysTryTypes: true }),
+				createNodeResolver(),
+			],
 		},
 		rules: {
 			// base rules
@@ -283,6 +322,9 @@ export const config = [
 
 			// import
 			'import/no-duplicates': [WARN, { 'prefer-inline': true }],
+			// Modules in a cycle can run before their imports finish initializing.
+			// Type-only imports are skipped; maxDepth keeps large apps fast.
+			'import/no-cycle': [WARN, { ignoreExternal: true, maxDepth: 10 }],
 			'perfectionist/sort-imports': sortImportsRule(),
 
 			// complexity rules
