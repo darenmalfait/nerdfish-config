@@ -55,6 +55,11 @@ ruleTester.run('no-cross-feature-imports', noCrossFeatureImportsRule, {
 			filename: 'app/features/comments/components/comments.tsx',
 		},
 		{
+			// `@/*` mapped to the repo root: `@/app/` is the root, not the app layer
+			code: "import { Button } from '@/app/components/ui/button'",
+			filename: 'app/features/comments/components/comments.tsx',
+		},
+		{
 			// Routes compose the app layer itself
 			code: "import { AppProvider } from '@/app/provider'",
 			filename: 'src/app/routes/discussion.tsx',
@@ -189,6 +194,17 @@ ruleTester.run('no-cross-feature-imports', noCrossFeatureImportsRule, {
 		{
 			code: "import { loader } from '#app/routes/discussion'",
 			filename: 'app/features/comments/api/get-comments.ts',
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			code: "import { loader } from '@/app/routes/discussion'",
+			filename: 'app/features/comments/api/get-comments.ts',
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			// `@/*` mapped to the repo root in a `src/` layout
+			code: "import { AppProvider } from '@/src/app/provider'",
+			filename: FEATURE_FILE,
 			errors: [{ messageId: 'featureImportsApp' }],
 		},
 		{

@@ -56,7 +56,15 @@ function getImportedFeature(importSegments, roots) {
  */
 function getImportedAppFolder(importSegments, isRelative, base, appFolders) {
 	if (!isRelative) {
-		return appFolders.includes(importSegments[1]) ? importSegments[1] : null
+		// With `@/*` mapped above Remix's `app/`, `@/app/components` is the root,
+		// so the app layer is the segment after it: `@/app/routes`.
+		const baseName = base.split('/').at(-1)
+		const folder =
+			baseName && importSegments[1] === baseName
+				? importSegments[2]
+				: importSegments[1]
+
+		return appFolders.includes(folder) ? folder : null
 	}
 
 	const baseLength = base ? base.split('/').length : 0
