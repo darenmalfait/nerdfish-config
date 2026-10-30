@@ -91,8 +91,7 @@ function getReturnedExpression(callback) {
 
 	const [statement] = callback.body.body
 
-	return callback.body.body.length === 1 &&
-		statement.type === 'ReturnStatement'
+	return callback.body.body.length === 1 && statement.type === 'ReturnStatement'
 		? statement.argument
 		: null
 }

@@ -1,7 +1,9 @@
 import { getCallName, isFunctionNode } from '../util.js'
 
 function isWithin(node, container) {
-	return node.range[0] >= container.range[0] && node.range[1] <= container.range[1]
+	return (
+		node.range[0] >= container.range[0] && node.range[1] <= container.range[1]
+	)
 }
 
 function isNameVisible(scope, name) {

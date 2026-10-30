@@ -7,12 +7,13 @@ longer pass.
 Supports Jest/Vitest (`describe` / `it` / `test`) and Playwright (`test` /
 `test.describe` / `test.beforeEach` with `{ page }` fixtures).
 
-| Fixture | Runtime stub |
-| --- | --- |
-| `__tests__/*.test.tsx` | `testing-runtime.ts` (RTL-style `render`, `screen`) |
+| Fixture                   | Runtime stub                                                   |
+| ------------------------- | -------------------------------------------------------------- |
+| `__tests__/*.test.tsx`    | `testing-runtime.ts` (RTL-style `render`, `screen`)            |
 | `__tests__/e2e/*.test.ts` | `e2e/playwright-runtime.ts` (`page`, `expect().toBeVisible()`) |
 
-No real test runner in this repo — files exist so ESLint can parse valid patterns.
+No real test runner in this repo — files exist so ESLint can parse valid
+patterns.
 
 ## Commands
 
