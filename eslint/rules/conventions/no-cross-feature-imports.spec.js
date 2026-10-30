@@ -45,6 +45,29 @@ ruleTester.run('no-cross-feature-imports', noCrossFeatureImportsRule, {
 			filename: 'src/modules/comments/api/get-comments.ts',
 			options: [{ roots: ['features'] }],
 		},
+		{
+			// Remix: `app/` is the root holding `features/`, not the app layer
+			code: "import { Button } from '../../../components/ui/button'\nimport { env } from '~/config/env'",
+			filename: 'app/features/comments/components/comments.tsx',
+		},
+		{
+			code: "import { Button } from '#app/components/ui/button'",
+			filename: 'app/features/comments/components/comments.tsx',
+		},
+		{
+			// Routes compose the app layer itself
+			code: "import { AppProvider } from '@/app/provider'",
+			filename: 'src/app/routes/discussion.tsx',
+		},
+		{
+			code: "import { AppProvider } from '@/app/provider'",
+			filename: FEATURE_FILE,
+			options: [{ app: ['shell'] }],
+		},
+		{
+			code: "import { app } from 'some-package/app'",
+			filename: FEATURE_FILE,
+		},
 	],
 	invalid: [
 		{
@@ -132,6 +155,63 @@ ruleTester.run('no-cross-feature-imports', noCrossFeatureImportsRule, {
 			code: "import { getUser } from '@/features/users/api/get-user'",
 			filename: SHARED_FILE,
 			errors: [{ messageId: 'sharedImportsFeature' }],
+		},
+		{
+			code: "import { AppProvider } from '@/app/provider'",
+			filename: FEATURE_FILE,
+			errors: [
+				{
+					messageId: 'featureImportsApp',
+					data: { feature: 'comments', target: 'app' },
+				},
+			],
+		},
+		{
+			code: "import { paths } from '../../../app/routes/paths'",
+			filename: FEATURE_FILE,
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			code: "import { loader } from '~/routes/discussion'",
+			filename: 'app/features/comments/api/get-comments.ts',
+			errors: [
+				{
+					messageId: 'featureImportsApp',
+					data: { feature: 'comments', target: 'routes' },
+				},
+			],
+		},
+		{
+			code: "import { loader } from '../../../routes/discussion'",
+			filename: 'app/features/comments/api/get-comments.ts',
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			code: "import { loader } from '#app/routes/discussion'",
+			filename: 'app/features/comments/api/get-comments.ts',
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			code: "import { Shell } from '@/shell/layout'",
+			filename: FEATURE_FILE,
+			options: [{ app: ['shell'] }],
+			errors: [{ messageId: 'featureImportsApp' }],
+		},
+		{
+			code: "import { AppProvider } from '@/app/provider'",
+			filename: SHARED_FILE,
+			errors: [
+				{
+					messageId: 'sharedImportsApp',
+					data: { folder: 'components', target: 'app' },
+				},
+			],
+		},
+		{
+			// `samples/app/…` sits above the feature root, so only this `app/` counts
+			code: "import { AppProvider } from '../app/provider'",
+			filename: SHARED_FILE,
+			errors: [{ messageId: 'sharedImportsApp' }],
 		},
 	],
 })

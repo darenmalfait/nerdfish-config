@@ -305,12 +305,15 @@ the list.
 [bulletproof-react](https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md):
 one folder per feature in `features/` or `modules/`, each holding only `api`,
 `assets`, `components`, `forms`, `hooks`, `providers`, `types` and `utils`
-folders. Features don't import from each other, and shared folders
-(`components`, `config`, `hooks`, `lib`, `providers`, `types`, `utils`) next to
-`features/` don't import from features. Routes and pages compose them. Pass
+folders. Imports flow one way, shared → features → app: features don't import
+from each other, shared folders (`components`, `config`, `hooks`, `lib`,
+`providers`, `types`, `utils`) next to `features/` don't import from features,
+and neither imports from the app layer (`app/` or `routes/` next to
+`features/`). Routes and pages compose them. In Remix, `app/` is the root
+holding `features/`, so only `app/routes/` counts as the app layer. Pass
 `{ roots: ['domains'] }` to either rule to rename the feature folder,
-`{ folders: […] }` to `feature-folder-structure` and `{ shared: […] }` to
-`no-cross-feature-imports` to change the folder lists.
+`{ folders: […] }` to `feature-folder-structure` and `{ shared: […] }` or
+`{ app: […] }` to `no-cross-feature-imports` to change the folder lists.
 
 ```txt
 src/features/users/api/get-user.ts                    ✓
@@ -318,6 +321,8 @@ src/features/users/users.tsx                          ✗ no loose files
 src/features/users/helpers/format.ts                  ✗ not a feature folder
 src/features/comments/… imports @/features/users/…    ✗ cross-feature
 src/components/… imports @/features/users/…           ✗ shared → feature
+src/features/users/… imports @/app/provider           ✗ feature → app
+src/components/… imports @/app/routes/paths           ✗ shared → app
 src/app/routes/… imports @/features/users/…           ✓
 ```
 
