@@ -292,10 +292,10 @@ the list.
 `feature-folder-structure` and `no-cross-feature-imports` follow
 [bulletproof-react](https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md):
 one folder per feature in `features/` or `modules/`, each holding only `api`,
-`assets`, `components`, `hooks`, `providers`, `types` and `utils` folders.
-Features don't import from each other, and shared folders (`components`,
-`config`, `hooks`, `lib`, `providers`, `types`, `utils`) next to `features/`
-don't import from features. Routes and pages compose them. Pass
+`assets`, `components`, `forms`, `hooks`, `providers`, `types` and `utils`
+folders. Features don't import from each other, and shared folders
+(`components`, `config`, `hooks`, `lib`, `providers`, `types`, `utils`) next to
+`features/` don't import from features. Routes and pages compose them. Pass
 `{ roots: ['domains'] }` to either rule to rename the feature folder,
 `{ folders: […] }` to `feature-folder-structure` and `{ shared: […] }` to
 `no-cross-feature-imports` to change the folder lists.

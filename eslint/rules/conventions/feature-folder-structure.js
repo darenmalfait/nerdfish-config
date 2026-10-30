@@ -8,6 +8,7 @@ const DEFAULT_FOLDERS = [
 	'api',
 	'assets',
 	'components',
+	'forms',
 	'hooks',
 	'providers',
 	'types',

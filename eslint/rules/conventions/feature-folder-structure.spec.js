@@ -61,7 +61,7 @@ ruleTester.run('feature-folder-structure', featureFolderStructureRule, {
 					data: {
 						folder: 'helpers',
 						folders:
-							'`api`, `assets`, `components`, `hooks`, `providers`, `types`, `utils`',
+							'`api`, `assets`, `components`, `forms`, `hooks`, `providers`, `types`, `utils`',
 					},
 				},
 			],
